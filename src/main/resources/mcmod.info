@@ -1,0 +1,17 @@
+[
+{
+    "modid": "horseinforeloaded",
+    "name": "HorseInfoReloaded",
+    "description": "HorseInfoReloaded is inspired by HorseInfo(by TTTA2)",
+    "mcversion": "$mcversion",
+    "version": "$version",
+    "url": "",
+    "updateUrl": "",
+    "authors": [
+        "fubira"
+    ],
+    "credits": "HoseInfoReloaded by fubira",
+    "screenshots": [],
+    "dependencies": []
+}
+]
