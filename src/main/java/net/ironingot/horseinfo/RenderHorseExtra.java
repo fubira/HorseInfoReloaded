@@ -39,10 +39,9 @@ public class RenderHorseExtra extends RenderHorse
     }
 
     @Override
-    // public void doRender(EntityHorse entityHorse, double x, double y, double z, float yaw, float partialTicks)
-    public void doRender(EntityLiving entityLiving, double x, double y, double z, float yaw, float partialTicks) // 1.8
+    public void doRender(EntityLiving entityLiving, double x, double y, double z, float yaw, float partialTicks)
     {
-        EntityHorse entityHorse = (EntityHorse)entityLiving; // 1.8
+        EntityHorse entityHorse = (EntityHorse)entityLiving;
         super.doRender(entityHorse, x, y, z, yaw, partialTicks);
 
         if (HorseInfo.isShowHorseInfo())
@@ -121,14 +120,6 @@ public class RenderHorseExtra extends RenderHorse
             worldrenderer.addVertex((double)(-statusWidthHarf - 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D);
             worldrenderer.addVertex((double)(statusWidthHarf + 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D);
             worldrenderer.addVertex((double)(statusWidthHarf + 1), baseY , 0.0D);
-/*
-            // 1.8.8
-            worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-            worldrenderer.pos((double)(-statusWidthHarf - 1), baseY , 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(-statusWidthHarf - 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(statusWidthHarf + 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(statusWidthHarf + 1), -9.0D, 0.0D).color(r, g, b, a).endVertex();
-*/
             tessellator.draw();
             GlStateManager.enableTexture2D();
             GlStateManager.depthMask(true);

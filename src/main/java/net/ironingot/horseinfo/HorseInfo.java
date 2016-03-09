@@ -33,7 +33,6 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 @Mod(modid="horseinforeloaded",
      name="HorseInfoReloaded",
-     // dependencies = "required-after:Forge@[11.14.4,)",
      dependencies = "required-after:Forge@[11.14.0,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",
@@ -56,14 +55,6 @@ public class HorseInfo
     {
         ClientRegistry.registerKeyBinding(KEYBINDING_MODE);
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityHorse.class);
-        // 1.8.9
-        /*
-        RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new IRenderFactory<EntityHorse>() {
-            public Render<EntityHorse> createRenderFor(RenderManager manager) {
-                return new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F);
-            }
-        });
-        */
         RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F));
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -100,22 +91,4 @@ public class HorseInfo
         if (HorseInfo.isShowKeyDown())
             toggleShowHide();
     }
-/*
-    @SubscribeEvent
-    public void onLivingSpawn(LivingSpawnEvent event)
-    {
-        if (event.entity instanceof EntityHorse)
-        {
-            EntityHorse entity = (EntityHorse)event.entity;
-            double rank = HorseUtils.getEvaluateValue(entity);
-            if (rank > 0.80)
-            {
-                String displayName = HorseUtils.getDisplayNameWithRank(entity);
-                String information = String.format("%s spawned at (%.2f, %.2f, %.2f)",
-                                displayName, event.x, event.y, event.z);
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(information));
-            }
-        }
-    }
-    */
 }
