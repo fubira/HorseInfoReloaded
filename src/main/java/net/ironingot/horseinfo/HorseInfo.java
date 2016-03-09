@@ -33,8 +33,7 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 @Mod(modid="horseinforeloaded",
      name="HorseInfoReloaded",
-     // dependencies = "required-after:Forge@[11.14.4,)",
-     dependencies = "required-after:Forge@[11.14.0,)",
+     dependencies = "required-after:Forge@[11.14.4,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",
      version="1.0.0")
@@ -67,7 +66,6 @@ public class HorseInfo
         RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F));
 
         MinecraftForge.EVENT_BUS.register(this);
-        FMLCommonHandler.instance().bus().register(this); // 1.8
     }
 
     public static boolean isShowKeyDown()
@@ -100,22 +98,4 @@ public class HorseInfo
         if (HorseInfo.isShowKeyDown())
             toggleShowHide();
     }
-/*
-    @SubscribeEvent
-    public void onLivingSpawn(LivingSpawnEvent event)
-    {
-        if (event.entity instanceof EntityHorse)
-        {
-            EntityHorse entity = (EntityHorse)event.entity;
-            double rank = HorseUtils.getEvaluateValue(entity);
-            if (rank > 0.80)
-            {
-                String displayName = HorseUtils.getDisplayNameWithRank(entity);
-                String information = String.format("%s spawned at (%.2f, %.2f, %.2f)",
-                                displayName, event.x, event.y, event.z);
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(information));
-            }
-        }
-    }
-    */
 }

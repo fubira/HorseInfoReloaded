@@ -22,7 +22,6 @@ public class PlayerNameManager
     public PlayerNameManager()
     {
         MinecraftForge.EVENT_BUS.register(this);
-        FMLCommonHandler.instance().bus().register(this); // 1.8
     }
 
     @SubscribeEvent
