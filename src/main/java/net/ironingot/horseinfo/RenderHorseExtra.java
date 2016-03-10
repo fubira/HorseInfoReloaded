@@ -116,7 +116,7 @@ public class RenderHorseExtra extends RenderHorse
             worldrenderer.pos((double)(-statusWidthHarf - 1), baseY , 0.0D).color(r, g, b, a).endVertex();
             worldrenderer.pos((double)(-statusWidthHarf - 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
             worldrenderer.pos((double)(statusWidthHarf + 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(statusWidthHarf + 1), -9.0D, 0.0D).color(r, g, b, a).endVertex();
+            worldrenderer.pos((double)(statusWidthHarf + 1), baseY, 0.0D).color(r, g, b, a).endVertex();
             tessellator.draw();
             GlStateManager.enableTexture2D();
             GlStateManager.depthMask(true);
