@@ -36,7 +36,7 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
      dependencies = "required-after:Forge@[11.14.4,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",
-     version="1.0.0")
+     version="@VERSION@")
 public class HorseInfo
 {
     private static final Logger logger = FMLLog.getLogger();
