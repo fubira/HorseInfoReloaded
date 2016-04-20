@@ -21,8 +21,6 @@ public class PlayerNameFetcher
         try
         {
             URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + suuid);
-            logger.info("get PlayerName from Mojang: " + url);
-
             URLConnection con = url.openConnection();
             InputStream in = con.getInputStream();
             byte[] buffer = new byte[con.getContentLength()];
