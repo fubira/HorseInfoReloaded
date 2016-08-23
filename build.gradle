@@ -13,13 +13,13 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.8.8-a"
+version = "1.9.4-a"
 group = "net.ironingot.horseinfo"
 archivesBaseName = "HorseInfoReloaded"
 
 minecraft {
-    version = "1.8.8-11.15.0.1655"
-    mappings = "stable_20"
+    version = "12.17.0.1976"
+    mappings = "stable_26"
 
     runDir = "run"
     makeObfSourceJar = false

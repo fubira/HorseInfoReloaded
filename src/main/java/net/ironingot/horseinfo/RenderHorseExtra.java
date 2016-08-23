@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -63,11 +63,16 @@ public class RenderHorseExtra extends RenderHorse
 
     public void renderHorseInfo(EntityHorse entity, double x, double y, double z)
     {
-        Entity riddenByEntity = entity.riddenByEntity;
-        if (Minecraft.getMinecraft().thePlayer.equals(riddenByEntity))
-            return;
+        List<Entity> passengers = entity.getPassengers();
+        Entity riddenByEntity = null;
+        if (passengers != null && passengers.size() > 0)
+        {
+            riddenByEntity = passengers.get(0);
+            if (Minecraft.getMinecraft().thePlayer.equals(riddenByEntity))
+                return;
+        }
 
-        double d0 = entity.getDistanceSqToEntity(this.renderManager.livingPlayer);
+        double d0 = entity.getDistanceSqToEntity(this.renderManager.renderViewEntity);
         final float f = NAME_TAG_RANGE / 2;
         final float scale = 0.02666667F;
         Color baseColor = getLabelColor(entity);
@@ -106,17 +111,17 @@ public class RenderHorseExtra extends RenderHorse
             int statusWidthHarf = statusWidth / 2;
 
             Tessellator tessellator = Tessellator.getInstance();
-            WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+            VertexBuffer vertexBuffer = tessellator.getBuffer();
             float r = (baseColor.getRed() / 255.0F) / 2.0F;
             float g = (baseColor.getGreen() / 255.0F) / 2.0F;
             float b = (baseColor.getBlue() / 255.0F) / 2.0F;
             float a = 0.4F;
 
-            worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-            worldrenderer.pos((double)(-statusWidthHarf - 1), baseY , 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(-statusWidthHarf - 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(statusWidthHarf + 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
-            worldrenderer.pos((double)(statusWidthHarf + 1), baseY, 0.0D).color(r, g, b, a).endVertex();
+            vertexBuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+            vertexBuffer.pos((double)(-statusWidthHarf - 1), baseY , 0.0D).color(r, g, b, a).endVertex();
+            vertexBuffer.pos((double)(-statusWidthHarf - 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
+            vertexBuffer.pos((double)(statusWidthHarf + 1), baseY + 9.0D * (stringListHorseInfo.size() + 1), 0.0D).color(r, g, b, a).endVertex();
+            vertexBuffer.pos((double)(statusWidthHarf + 1), baseY, 0.0D).color(r, g, b, a).endVertex();
             tessellator.draw();
             GlStateManager.enableTexture2D();
             GlStateManager.depthMask(true);

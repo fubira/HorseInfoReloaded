@@ -2,6 +2,7 @@ package net.ironingot.horseinfo;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -14,16 +15,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelHorse;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.util.ChatComponentText;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -33,7 +34,7 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 @Mod(modid="horseinforeloaded",
      name="HorseInfoReloaded",
-     dependencies = "required-after:Forge@[11.14.4,)",
+     dependencies = "required-after:Forge@[12.17.0,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",
      version="@VERSION@")
@@ -55,16 +56,15 @@ public class HorseInfo
     {
         ClientRegistry.registerKeyBinding(KEYBINDING_MODE);
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityHorse.class);
-        // 1.8.9
-        /*
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F));
+/*
         RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new IRenderFactory<EntityHorse>() {
             public Render<EntityHorse> createRenderFor(RenderManager manager) {
-                return new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F);
+                return new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F);
             }
         });
-        */
-        RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F));
-
+*/
         MinecraftForge.EVENT_BUS.register(this);
     }
 

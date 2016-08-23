@@ -19,7 +19,7 @@ class HorseUtils {
 
     public static double getSpeed(EntityHorse entityHorse)
     {
-        return entityHorse.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.movementSpeed).getAttributeValue();
+        return entityHorse.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
     }
 
     public static double getJumpHeight(double jumpStrength)
@@ -95,7 +95,11 @@ class HorseUtils {
 
     public static Color getRiderHelmColor(EntityHorse entityHorse)
     {
-        Entity ridingEntity = entityHorse.riddenByEntity;
+        List<Entity> passengers = entityHorse.getPassengers();
+        if (passengers == null || passengers.size() == 0)
+            return null;
+
+        Entity ridingEntity = passengers.get(0);
         if (ridingEntity instanceof EntityPlayer)
         {
             EntityPlayer ridingPlayer = (EntityPlayer)ridingEntity;
@@ -122,8 +126,8 @@ class HorseUtils {
     public static List<String> getHorseInfoString(EntityHorse entityHorse)
     {
         List<String> stringArray = new ArrayList<String>();
-
-        if (entityHorse.riddenByEntity == null)
+        List<Entity> passengers = entityHorse.getPassengers();
+        if (passengers == null || passengers.size() == 0)
         {
             double paramHealth = entityHorse.getHealth();
             double paramMaxHealth = entityHorse.getMaxHealth();
@@ -137,20 +141,20 @@ class HorseUtils {
             stringArray.add(String.format("JP: %.4f [%.1f(m)]", paramJump, jumpHeight));
 
             int age = entityHorse.getGrowingAge();
-            if (age > 0)
-            {
-                stringArray.add("... cooling down ...");
-            }
-            else if (age < 0)
+            if (entityHorse.isAdultHorse() == false)
             {
                 stringArray.add("... growing ...");
             }
+            else  if (entityHorse.getHasReproduced() == true)
+            {
+                stringArray.add("... cooling down ...");
+            }
             else
             {
-                String ownerId = entityHorse.getOwnerId();
-                if (ownerId != null && ownerId.length() > 0)
+                UUID ownerUUID = entityHorse.getOwnerUniqueId();
+                if (ownerUUID != null)
                 {
-                    UUID uuid = UUID.fromString(entityHorse.getOwnerId());
+                    UUID uuid = ownerUUID;
                     String ownerName = "Unknown";
                     if (UsernameCache.containsUUID(uuid))
                         ownerName = UsernameCache.getLastKnownUsername(uuid);
