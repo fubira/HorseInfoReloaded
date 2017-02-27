@@ -33,9 +33,9 @@ public class RenderHorseExtra extends RenderHorse
     private static Logger logger = FMLLog.getLogger();
     public static float NAME_TAG_RANGE = 64.0f;
 
-    public RenderHorseExtra(RenderManager renderManager, ModelHorse modelBase, float partialTicks)
+    public RenderHorseExtra(RenderManager renderManager)
     {
-        super(renderManager, modelBase, partialTicks);
+        super(renderManager);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class RenderHorseExtra extends RenderHorse
         if (passengers != null && passengers.size() > 0)
         {
             riddenByEntity = passengers.get(0);
-            if (Minecraft.getMinecraft().thePlayer.equals(riddenByEntity))
+            if (Minecraft.getMinecraft().player.equals(riddenByEntity))
                 return;
         }
 

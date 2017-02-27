@@ -141,13 +141,13 @@ class HorseUtils {
             stringArray.add(String.format("JP: %.4f [%.1f(m)]", paramJump, jumpHeight));
 
             int age = entityHorse.getGrowingAge();
-            if (entityHorse.isAdultHorse() == false)
+            if (age > 0)
             {
-                stringArray.add("... growing ...");
+                stringArray.add("[WAITING]");
             }
-            else  if (entityHorse.getHasReproduced() == true)
+            else if (age < 1)
             {
-                stringArray.add("... cooling down ...");
+                stringArray.add("[BABY]");
             }
             else
             {
@@ -165,7 +165,7 @@ class HorseUtils {
                 }
                 else
                 {
-                    stringArray.add("NO OWNER");
+                    stringArray.add("[UNOWNED]");
                 }
             }
         }

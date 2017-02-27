@@ -34,7 +34,7 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 @Mod(modid="horseinforeloaded",
      name="HorseInfoReloaded",
-     dependencies = "required-after:Forge@[12.17.0,)",
+     dependencies = "required-after:forge@[13.19.1,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",
      version="@VERSION@")
@@ -57,14 +57,14 @@ public class HorseInfo
         ClientRegistry.registerKeyBinding(KEYBINDING_MODE);
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityHorse.class);
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F));
-/*
+        // RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F));
+
         RenderingRegistry.registerEntityRenderingHandler(EntityHorse.class, new IRenderFactory<EntityHorse>() {
             public Render<EntityHorse> createRenderFor(RenderManager manager) {
-                return new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75F);
+                return new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager());
             }
         });
-*/
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
