@@ -125,6 +125,10 @@ class HorseInfoUtil {
             {
                 str = "(Baby)";
             }
+            else if (entity.getHasReproduced())
+            {
+                str = "(Waiting)";
+            }
             else
             {
                 str = getOwner(entity);
