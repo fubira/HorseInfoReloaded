@@ -1,6 +1,7 @@
 package net.ironingot.horseinfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,14 +33,18 @@ public class RenderWolfExtra extends RenderWolf
 
         if (HorseInfoMod.isActive())
         {
-            List<String> stringInfo = new ArrayList<String>();
-            stringInfo.add(AnimalInfoUtil.getDisplayName(entity));
+            String stringName = AnimalInfoUtil.getDisplayName(entity);
+            String stringOwner = AnimalInfoUtil.getOwner(entity);
 
-            String stringAgeOrOwner = AnimalInfoUtil.getAgeOrOwnerString(entity);
-            if (stringAgeOrOwner != null)
-                stringInfo.add(stringAgeOrOwner);
-
-            RenderUtil.renderEntityInfo(renderManager, getFontRendererFromRenderManager(), entity, x, y, z, stringInfo);
+            if (stringOwner != null)
+            {
+                RenderUtil.renderEntityInfo(
+                    renderManager,
+                    getFontRendererFromRenderManager(),
+                    entity,
+                    x, y, z,
+                    new ArrayList<String>(Arrays.asList(stringName + " (" + stringOwner + ")")));
+            }
         }
     }
 }

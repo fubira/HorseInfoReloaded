@@ -18,33 +18,18 @@ class AnimalInfoUtil {
         return entity.getDisplayName().getFormattedText();
     }
 
-    public static String getAgeOrOwnerString(EntityTameable entity)
+    public static String getOwner(EntityTameable entity)
     {
-        String str = null;
-        List<Entity> passengers = entity.getPassengers();
-        if (passengers == null || passengers.size() == 0)
-        {
-            int age = entity.getGrowingAge();
-            if (age < 1)
-            {
-                str = "<BABY>";
-            }
-            else
-            {
-                UUID ownerUUID = entity.getOwnerId();
-                if (ownerUUID != null)
-                {
-                    UUID uuid = ownerUUID;
-                    String ownerName = "Unknown";
-                    if (UsernameCache.containsUUID(uuid))
-                        ownerName = UsernameCache.getLastKnownUsername(uuid);
-                    else
-                        ownerName = HorseInfoMod.playerNameManager.getPlayerName(uuid);
+        UUID ownerUUID = entity.getOwnerId();
+        if (ownerUUID == null)
+            return null;
 
-                    str = ("OWNER: " + ownerName);
-                }
-            }
-        }
-        return str;
+        String ownerName = "Unknown Player";
+        if (UsernameCache.containsUUID(ownerUUID))
+            ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
+        else
+            ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
+
+        return "Owner: " + ownerName;
     }
 }

@@ -100,6 +100,21 @@ class HorseInfoUtil {
                " [" + HorseInfoUtil.getEvaluateRankString(HorseInfoUtil.getEvaluateValue(entity)) + "]";
     }
 
+    public static String getOwner(AbstractHorse entity)
+    {
+        UUID ownerUUID = entity.getOwnerUniqueId();
+        if (ownerUUID == null)
+            return null;
+
+        String ownerName = "Unknown Player";
+        if (UsernameCache.containsUUID(ownerUUID))
+            ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
+        else
+            ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
+
+        return "Owner: " + ownerName;
+    }
+
     public static String getAgeOrOwnerString(AbstractHorse entity)
     {
         String str = null;
@@ -113,18 +128,7 @@ class HorseInfoUtil {
             }
             else
             {
-                UUID ownerUUID = entity.getOwnerUniqueId();
-                if (ownerUUID != null)
-                {
-                    UUID uuid = ownerUUID;
-                    String ownerName = "Unknown";
-                    if (UsernameCache.containsUUID(uuid))
-                        ownerName = UsernameCache.getLastKnownUsername(uuid);
-                    else
-                        ownerName = HorseInfoMod.playerNameManager.getPlayerName(uuid);
-
-                    str = ("OWNER: " + ownerName);
-                }
+                str = getOwner(entity);
             }
         }
         return str;
