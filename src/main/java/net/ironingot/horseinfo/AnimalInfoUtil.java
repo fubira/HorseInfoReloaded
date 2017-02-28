@@ -24,12 +24,12 @@ class AnimalInfoUtil {
         if (ownerUUID == null)
             return null;
 
-        String ownerName = "Unknown Player";
+        String ownerName = "Unknown";
         if (UsernameCache.containsUUID(ownerUUID))
             ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
         else
             ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
 
-        return "Owner: " + ownerName;
+        return "(Owner: " + ownerName + ")";
     }
 }

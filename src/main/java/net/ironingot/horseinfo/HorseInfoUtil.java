@@ -106,13 +106,13 @@ class HorseInfoUtil {
         if (ownerUUID == null)
             return null;
 
-        String ownerName = "Unknown Player";
+        String ownerName = "Unknown";
         if (UsernameCache.containsUUID(ownerUUID))
             ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
         else
             ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
 
-        return "Owner: " + ownerName;
+        return "(Owner: " + ownerName + ")";
     }
 
     public static String getAgeOrOwnerString(AbstractHorse entity)
@@ -121,10 +121,9 @@ class HorseInfoUtil {
         List<Entity> passengers = entity.getPassengers();
         if (passengers == null || passengers.size() == 0)
         {
-            int age = entity.getGrowingAge();
-            if (age < 1)
+            if (entity.isChild())
             {
-                str = "<BABY>";
+                str = "(Baby)";
             }
             else
             {

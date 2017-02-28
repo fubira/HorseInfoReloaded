@@ -43,7 +43,7 @@ public class RenderWolfExtra extends RenderWolf
                     getFontRendererFromRenderManager(),
                     entity,
                     x, y, z,
-                    new ArrayList<String>(Arrays.asList(stringName + " (" + stringOwner + ")")));
+                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)));
             }
         }
     }

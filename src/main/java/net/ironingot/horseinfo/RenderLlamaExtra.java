@@ -41,7 +41,7 @@ public class RenderLlamaExtra extends RenderLlama
                     getFontRendererFromRenderManager(),
                     entity,
                     x, y, z,
-                    new ArrayList<String>(Arrays.asList(stringName + " (" + stringOwner + ")")));
+                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)));
             }
 
         }

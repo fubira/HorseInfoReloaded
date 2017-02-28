@@ -42,7 +42,7 @@ public class RenderOcelotExtra extends RenderOcelot
                     getFontRendererFromRenderManager(),
                     entity,
                     x, y, z,
-                    new ArrayList<String>(Arrays.asList(stringName + " (" + stringOwner + ")")));
+                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)));
             }
         }
     }

@@ -109,7 +109,7 @@ public class RenderUtil
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 
         int fontHeight = 9;
-        float baseY = -((getRider(entity) != null) ? fontHeight * 3 : fontHeight);
+        float baseY = (4 - infoString.size()) * fontHeight - ((getRider(entity) != null) ? fontHeight * 3 : fontHeight);
 
         int width = fontrenderer.getStringWidth(entity.getName());
         for (int i = 0; i < infoString.size(); i++) {
