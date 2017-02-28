@@ -7,19 +7,15 @@ import java.util.UUID;
 
 import net.minecraftforge.common.UsernameCache;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemArmor;
-
 import net.ironingot.horseinfo.playername.PlayerNameManager;
 
-class HorseUtils {
+class HorseInfoUtil {
 
-    public static double getSpeed(EntityHorse entityHorse)
+    public static double getSpeed(AbstractHorse entity)
     {
-        return entityHorse.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
+        return entity.getEntityAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
     }
 
     public static double getJumpHeight(double jumpStrength)
@@ -37,10 +33,10 @@ class HorseUtils {
         return Math.floor(jumpHeight * 10.0D) / 10.0D ;
     }
 
-    public static double getEvaluateValue(EntityHorse entityHorse)
+    public static double getEvaluateValue(AbstractHorse entity)
     {
-        double paramSpeed = HorseUtils.getSpeed(entityHorse);
-        double jumpHeight = HorseUtils.getJumpHeight(entityHorse.getHorseJumpStrength());
+        double paramSpeed = HorseInfoUtil.getSpeed(entity);
+        double jumpHeight = HorseInfoUtil.getJumpHeight(entity.getHorseJumpStrength());
         double jumpRating = Math.floor(jumpHeight * 2.0D) / (2.0D * 5.0D);
 
         final double speedHeavy = 10.0D;
@@ -93,65 +89,31 @@ class HorseUtils {
         return rankColor[pt];
     }
 
-    public static Color getRiderHelmColor(EntityHorse entityHorse)
+    public static String getDisplayName(AbstractHorse entity)
     {
-        List<Entity> passengers = entityHorse.getPassengers();
-        if (passengers == null || passengers.size() == 0)
-            return null;
-
-        Entity ridingEntity = passengers.get(0);
-        if (ridingEntity instanceof EntityPlayer)
-        {
-            EntityPlayer ridingPlayer = (EntityPlayer)ridingEntity;
-            ItemStack helmStack = ridingPlayer.inventory.armorItemInSlot(3);
-
-            if (helmStack != null && helmStack.getItem() instanceof ItemArmor)
-            {
-                ItemArmor helmItem = (ItemArmor)helmStack.getItem();
-                if (helmItem.hasColor(helmStack))
-                {
-                    return new Color(helmItem.getColor(helmStack));
-                }
-            }
-        }
-        return null;
+        return entity.getDisplayName().getFormattedText();
     }
 
-    public static String getDisplayNameWithRank(EntityHorse entityHorse)
+    public static String getDisplayNameWithRank(AbstractHorse entity)
     {
-        return entityHorse.getDisplayName().getFormattedText() +
-               " [" + HorseUtils.getEvaluateRankString(HorseUtils.getEvaluateValue(entityHorse)) + "]";
+        return getDisplayName(entity) +
+               " [" + HorseInfoUtil.getEvaluateRankString(HorseInfoUtil.getEvaluateValue(entity)) + "]";
     }
 
-    public static List<String> getHorseInfoString(EntityHorse entityHorse)
+    public static String getAgeOrOwnerString(AbstractHorse entity)
     {
-        List<String> stringArray = new ArrayList<String>();
-        List<Entity> passengers = entityHorse.getPassengers();
+        String str = null;
+        List<Entity> passengers = entity.getPassengers();
         if (passengers == null || passengers.size() == 0)
         {
-            double paramHealth = entityHorse.getHealth();
-            double paramMaxHealth = entityHorse.getMaxHealth();
-            double paramSpeed = getSpeed(entityHorse);
-            double paramJump = entityHorse.getHorseJumpStrength();
-            double jumpHeight = getJumpHeight(paramJump);
-            double paramRank = getEvaluateValue(entityHorse);
-
-            stringArray.add(String.format("HP: %.2f/%.2f", paramHealth, paramMaxHealth));
-            stringArray.add(String.format("SP: %.4f [%.1f(m/s)]", paramSpeed, paramSpeed * 43.0D));
-            stringArray.add(String.format("JP: %.4f [%.1f(m)]", paramJump, jumpHeight));
-
-            int age = entityHorse.getGrowingAge();
-            if (age > 0)
+            int age = entity.getGrowingAge();
+            if (age < 1)
             {
-                stringArray.add("[WAITING]");
-            }
-            else if (age < 1)
-            {
-                stringArray.add("[BABY]");
+                str = "<BABY>";
             }
             else
             {
-                UUID ownerUUID = entityHorse.getOwnerUniqueId();
+                UUID ownerUUID = entity.getOwnerUniqueId();
                 if (ownerUUID != null)
                 {
                     UUID uuid = ownerUUID;
@@ -159,17 +121,32 @@ class HorseUtils {
                     if (UsernameCache.containsUUID(uuid))
                         ownerName = UsernameCache.getLastKnownUsername(uuid);
                     else
-                        ownerName = HorseInfo.playerNameManager.getPlayerName(uuid);
+                        ownerName = HorseInfoMod.playerNameManager.getPlayerName(uuid);
 
-                    stringArray.add("OWNER: " + ownerName);
-                }
-                else
-                {
-                    stringArray.add("[UNOWNED]");
+                    str = ("OWNER: " + ownerName);
                 }
             }
         }
-        return stringArray;
+        return str;
     }
 
+    public static List<String> getHorseInfoString(AbstractHorse entity)
+    {
+        List<String> stringArray = new ArrayList<String>();
+        List<Entity> passengers = entity.getPassengers();
+        if (passengers == null || passengers.size() == 0)
+        {
+            double paramHealth = entity.getHealth();
+            double paramMaxHealth = entity.getMaxHealth();
+            double paramSpeed = getSpeed(entity);
+            double paramJump = entity.getHorseJumpStrength();
+            double jumpHeight = getJumpHeight(paramJump);
+            double paramRank = getEvaluateValue(entity);
+
+            stringArray.add(String.format("HP: %.2f/%.2f", paramHealth, paramMaxHealth));
+            stringArray.add(String.format("SP: %.4f [%.1f(m/s)]", paramSpeed, paramSpeed * 43.0D));
+            stringArray.add(String.format("JP: %.4f [%.1f(m)]", paramJump, jumpHeight));
+        }
+        return stringArray;
+    }
 }

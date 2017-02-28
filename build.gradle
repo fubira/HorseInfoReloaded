@@ -28,7 +28,7 @@ minecraft {
     makeObfSourceJar = false
 
     replace "@VERSION@", project.version
-    replaceIn "HorseInfo.java"
+    replaceIn "HorseInfoMod.java"
 }
 
 sourceCompatibility = 1.8
@@ -55,7 +55,7 @@ dependencies {
 allprojects {
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            options.compilerArgs << "-Xlint:all,-serial"
         }
     }
 }
