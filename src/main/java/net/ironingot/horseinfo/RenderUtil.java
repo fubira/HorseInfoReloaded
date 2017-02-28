@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor;
@@ -63,9 +63,9 @@ public class RenderUtil
     {
         Color color = Color.BLACK;
 
-        if (entity instanceof AbstractHorse)
+        if (entity instanceof EntityHorse)
         {
-            double evaluateValue = HorseInfoUtil.getEvaluateValue((AbstractHorse)entity);
+            double evaluateValue = HorseInfoUtil.getEvaluateValue((EntityHorse)entity);
             Color evaluateColor = HorseInfoUtil.getEvaluateRankColor(evaluateValue);
             if (evaluateColor != null)
                 color = evaluateColor;

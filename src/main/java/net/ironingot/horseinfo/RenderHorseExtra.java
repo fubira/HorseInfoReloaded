@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.model.ModelHorse;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityHorse;
 
@@ -21,7 +22,7 @@ public class RenderHorseExtra extends RenderHorse
 
     public RenderHorseExtra(RenderManager renderManager)
     {
-        super(renderManager);
+        super(renderManager, new ModelHorse(), 0.75f);
     }
 
     @Override

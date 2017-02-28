@@ -14,11 +14,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntitySkeletonHorse;
-import net.minecraft.entity.passive.EntityZombieHorse;
-import net.minecraft.entity.passive.EntityDonkey;
-import net.minecraft.entity.passive.EntityMule;
-import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityWolf;
 
@@ -30,7 +25,7 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 @Mod(modid="horseinforeloaded",
      name="HorseInfoReloaded",
-     dependencies = "required-after:forge@[13.19.1,)",
+     dependencies = "required-after:Forge@[12.17.0,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",
      version="@VERSION@")
@@ -54,16 +49,6 @@ public class HorseInfoMod
 
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityHorse.class);
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityHorse.class, new RenderHorseExtra(Minecraft.getMinecraft().getRenderManager()));
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntitySkeletonHorse.class);
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntitySkeletonHorse.class, new RenderAbstractHorseExtra(Minecraft.getMinecraft().getRenderManager()));
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityZombieHorse.class);
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityZombieHorse.class, new RenderAbstractHorseExtra(Minecraft.getMinecraft().getRenderManager()));
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityMule.class);
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityMule.class, new RenderAbstractHorseExtra(Minecraft.getMinecraft().getRenderManager()));
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityDonkey.class);
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityDonkey.class, new RenderAbstractHorseExtra(Minecraft.getMinecraft().getRenderManager()));
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityLlama.class);
-        Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityLlama.class, new RenderLlamaExtra(Minecraft.getMinecraft().getRenderManager()));
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityWolf.class);
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntityWolf.class, new RenderWolfExtra(Minecraft.getMinecraft().getRenderManager()));
         Minecraft.getMinecraft().getRenderManager().entityRenderMap.remove(EntityOcelot.class);

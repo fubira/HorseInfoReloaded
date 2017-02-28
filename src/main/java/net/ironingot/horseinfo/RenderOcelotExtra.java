@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraft.client.renderer.entity.RenderOcelot;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.model.ModelOcelot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityOcelot;
 
@@ -22,7 +23,7 @@ public class RenderOcelotExtra extends RenderOcelot
 
     public RenderOcelotExtra(RenderManager renderManager)
     {
-        super(renderManager);
+        super(renderManager, new ModelOcelot(), 0.4f);
     }
 
     @Override

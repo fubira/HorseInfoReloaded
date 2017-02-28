@@ -10,6 +10,7 @@ import net.minecraftforge.common.UsernameCache;
 import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelWolf;
 import net.minecraft.entity.passive.EntityWolf;
 import org.lwjgl.opengl.GL11;
 
@@ -23,7 +24,7 @@ public class RenderWolfExtra extends RenderWolf
 
     public RenderWolfExtra(RenderManager renderManager)
     {
-        super(renderManager);
+        super(renderManager, new ModelWolf(), 0.5f);
     }
 
     @Override
