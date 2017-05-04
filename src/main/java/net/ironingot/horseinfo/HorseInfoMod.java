@@ -81,7 +81,7 @@ public class HorseInfoMod
     {
         Minecraft.getMinecraft().player.sendMessage(new TextComponentString("")
             .appendSibling((new TextComponentString("[")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
-            .appendSibling((new TextComponentString("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.ORANGE)))
+            .appendSibling((new TextComponentString("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.GOLD)))
             .appendSibling((new TextComponentString("] ")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
             .appendSibling((new TextComponentString(s))));
     }
