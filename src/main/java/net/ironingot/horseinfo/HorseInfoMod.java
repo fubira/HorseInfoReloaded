@@ -72,6 +72,15 @@ public class HorseInfoMod
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    public static void message(String s)
+    {
+        Minecraft.getMinecraft().player.sendMessage(new TextComponentString("")
+            .appendSibling((new TextComponentString("[")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
+            .appendSibling((new TextComponentString("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.GREEN)))
+            .appendSibling((new TextComponentString("] ")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
+            .appendSibling((new TextComponentString(s))));
+    }
+
     public static boolean isShowKeyDown()
     {
         int keyCode = KEYBINDING_MODE.getKeyCode();
@@ -93,6 +102,7 @@ public class HorseInfoMod
     public static void toggle()
     {
         isActive = isActive ? false : true;
+        message("HorseInfo " + ((isActive) ? "is Activeated." : "is Deactivated."));
     }
 
     @SideOnly(Side.CLIENT)
