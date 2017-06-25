@@ -2,7 +2,6 @@ package net.ironingot.horseinfo;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -22,13 +21,13 @@ import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityWolf;
 
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.ironingot.horseinfo.playername.PlayerNameManager;
@@ -41,7 +40,7 @@ import net.ironingot.horseinfo.playername.PlayerNameManager;
      version="@VERSION@")
 public class HorseInfoMod
 {
-    private static final Logger logger = FMLLog.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     public static final KeyBinding KEYBINDING_MODE = new KeyBinding("HorseInfo Mode", Keyboard.KEY_H, "HorseInfoReloaded");
     public static final PlayerNameManager playerNameManager = new PlayerNameManager();
 

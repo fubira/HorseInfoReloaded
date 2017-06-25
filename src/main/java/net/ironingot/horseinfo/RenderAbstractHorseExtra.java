@@ -5,19 +5,17 @@ import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderAbstractHorse;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.AbstractHorse;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import net.minecraftforge.fml.common.FMLLog;
 
 @SideOnly(Side.CLIENT)
 public class RenderAbstractHorseExtra extends RenderAbstractHorse
 {
-    private static Logger logger = FMLLog.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     public  RenderAbstractHorseExtra(RenderManager renderManager)
     {

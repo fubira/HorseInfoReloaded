@@ -8,8 +8,6 @@ import java.util.UUID;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.player.EntityPlayer;
-import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 class HorseInfoUtil {
 

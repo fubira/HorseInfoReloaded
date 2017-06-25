@@ -1,18 +1,14 @@
 package net.ironingot.horseinfo;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import net.minecraftforge.common.UsernameCache;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
@@ -21,12 +17,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor;
 import org.lwjgl.opengl.GL11;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import net.minecraftforge.fml.common.FMLLog;
 
 public class RenderUtil
 {
-    private static Logger logger = FMLLog.getLogger();
+    private static Logger logger = LogManager.getLogger();
     public static float NAME_TAG_RANGE = 64.0f;
 
     public static Entity getRider(Entity entity)
@@ -118,7 +114,7 @@ public class RenderUtil
         int widthHarf = width / 2;
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexBuffer = tessellator.getBuffer();
+        BufferBuilder vertexBuffer = tessellator.getBuffer();
         float r = (baseColor.getRed() / 255.0F) / 2.0F;
         float g = (baseColor.getGreen() / 255.0F) / 2.0F;
         float b = (baseColor.getBlue() / 255.0F) / 2.0F;

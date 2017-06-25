@@ -16,13 +16,13 @@ plugins {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.11.2-a"
+version = "1.12-a"
 group = "net.ironingot.horseinfo"
 archivesBaseName = "HorseInfoReloaded"
 
 minecraft {
-    version = "13.20.0.2203"
-    mappings = "snapshot_20170105"
+    version = "14.21.0.2346"
+    mappings = "snapshot_20170617"
 
     runDir = "run"
     makeObfSourceJar = false

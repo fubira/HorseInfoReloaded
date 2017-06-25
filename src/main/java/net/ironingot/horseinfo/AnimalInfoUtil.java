@@ -1,16 +1,9 @@
 package net.ironingot.horseinfo;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import net.minecraftforge.common.UsernameCache;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-
-import net.ironingot.horseinfo.playername.PlayerNameManager;
 
 class AnimalInfoUtil {
     public static String getDisplayName(EntityTameable entity)

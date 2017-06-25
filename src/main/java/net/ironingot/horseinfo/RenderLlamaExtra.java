@@ -2,22 +2,20 @@ package net.ironingot.horseinfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.entity.RenderLlama;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.passive.EntityLlama;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import net.minecraftforge.fml.common.FMLLog;
 
 @SideOnly(Side.CLIENT)
 public class RenderLlamaExtra extends RenderLlama
 {
-    private static Logger logger = FMLLog.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     public RenderLlamaExtra(RenderManager renderManager)
     {
