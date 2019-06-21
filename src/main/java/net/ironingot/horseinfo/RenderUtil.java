@@ -14,7 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemArmorDyeable;
 import org.lwjgl.opengl.GL11;
 
 import org.apache.logging.log4j.LogManager;
@@ -43,13 +43,10 @@ public class RenderUtil
             EntityPlayer ridingPlayer = (EntityPlayer)ridingEntity;
             ItemStack helmStack = ridingPlayer.inventory.armorItemInSlot(3);
 
-            if (helmStack != null && helmStack.getItem() instanceof ItemArmor)
+            if (helmStack != null && helmStack.getItem() instanceof ItemArmorDyeable)
             {
-                ItemArmor helmItem = (ItemArmor)helmStack.getItem();
-                if (helmItem.hasColor(helmStack))
-                {
-                    return new Color(helmItem.getColor(helmStack));
-                }
+                ItemArmorDyeable helmItem = (ItemArmorDyeable)helmStack.getItem();
+                return new Color(helmItem.getColor(helmStack));
             }
         }
         return null;
@@ -76,10 +73,10 @@ public class RenderUtil
 
     public static void renderEntityInfo(RenderManager renderManager, FontRenderer fontRenderer, Entity entity, double x, double y, double z, List<String> infoString)
     {
-        if (Minecraft.getMinecraft().player.equals(getRider(entity)))
+        if (Minecraft.getInstance().player.equals(getRider(entity)))
             return;
 
-        double d0 = entity.getDistanceSqToEntity(renderManager.renderViewEntity);
+        double d0 = entity.getDistanceSq(renderManager.renderViewEntity);
         final float f = NAME_TAG_RANGE / 2;
         final float scale = 0.02666667F;
         Color baseColor = getLabelColor(entity);
@@ -92,22 +89,22 @@ public class RenderUtil
         GlStateManager.alphaFunc(516, 0.1F);
         FontRenderer fontrenderer = fontRenderer;
         GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y + entity.height + 1.8F /*- (entity.isChild() ? entity.height / 2.0F : 0.0F)*/, (float)z);
+        GlStateManager.translatef((float)x, (float)y + entity.height + 1.8F /*- (entity.isChild() ? entity.height / 2.0F : 0.0F)*/, (float)z);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(-scale, -scale, scale);
-        GlStateManager.translate(0.0F, 9.374999F, 0.0F);
+        GlStateManager.rotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scalef(-scale, -scale, scale);
+        GlStateManager.translatef(0.0F, 9.374999F, 0.0F);
         GlStateManager.disableLighting();
         GlStateManager.depthMask(false);
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.blendFuncSeparate(770, 771, 1, 0);
 
         int fontHeight = 9;
         float baseY = (4 - infoString.size()) * fontHeight - ((getRider(entity) != null) ? fontHeight * 3 : fontHeight);
 
-        int width = fontrenderer.getStringWidth(entity.getName());
+        int width = fontrenderer.getStringWidth(entity.getName().getString());
         for (int i = 0; i < infoString.size(); i++) {
             width = Math.max(fontrenderer.getStringWidth(infoString.get(i)), width);
         }
@@ -133,7 +130,7 @@ public class RenderUtil
         }
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.popMatrix();
     }
 }

@@ -3,8 +3,8 @@ package net.ironingot.horseinfo;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.RenderOcelot;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.EntityOcelot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class RenderOcelotExtra extends RenderOcelot
 {
     private static Logger logger = LogManager.getLogger();

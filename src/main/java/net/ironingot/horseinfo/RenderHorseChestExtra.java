@@ -5,20 +5,19 @@ import java.util.List;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.client.renderer.entity.RenderHorse;
+import net.minecraft.client.renderer.entity.RenderHorseChest;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.AbstractHorse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderHorseExtra extends RenderHorse {
+public class RenderHorseChestExtra extends RenderHorseChest {
     private static Logger logger = LogManager.getLogger();
 
-    public RenderHorseExtra(RenderManager renderManager) {
-        super(renderManager);
+    public RenderHorseChestExtra(RenderManager renderManager, float f) {
+        super(renderManager, f);
     }
 
     @Override

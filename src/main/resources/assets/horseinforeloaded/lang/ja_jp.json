@@ -1,5 +1,4 @@
 {
-    "keybinding.category.skipsign": "HorseInfoReloaded",
-    "keybinding.desc.option": "設定画面を開く",
-    "keybinding.desc.zoom": "一時無効",
+    "keybinding.category.horseinfo": "HorseInfoReloaded",
+    "keybinding.desc.toggle": "有効/無効切り替え"
 }
