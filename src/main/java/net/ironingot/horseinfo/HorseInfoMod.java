@@ -104,7 +104,7 @@ public class HorseInfoMod
 
     public static void toggle() {
         isActive = isActive ? false : true;
-        message("HorseInfo " + ((isActive) ? " ON" : " OFF"));
+        message("HorseInfo " + ((isActive) ? "Enabled" : "Disabled"));
     }
 
     @OnlyIn(Dist.CLIENT)
