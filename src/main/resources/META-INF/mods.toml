@@ -5,7 +5,7 @@ author="fubira"
 issueTrackerURL="https://github.com/fubira/HorseInfoReloaded/issues"
 
 [[mods]]
-modId="horseinforeloaded"
+modId="horseinfo"
 version="${file.jarVersion}"
 displayName="HorseInfoReloaded"
 displayURL="https://github.com/fubira/HorseInfoReloaded/"

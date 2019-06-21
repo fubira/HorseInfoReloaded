@@ -41,7 +41,7 @@ public class HorseInfoMod
 {
     private static final Logger logger = LogManager.getLogger();
 
-    public static final String modId ="horseinforeloaded";
+    public static final String modId ="horseinfo";
     public static final String buildId ="2019-6";
     public static String modVersion;
 
