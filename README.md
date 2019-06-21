@@ -23,6 +23,10 @@ Also, this mod can show the following animal names and owners:
 1. Install to mod directory.
 2. Press H key after starting the client.
 
+## Download
+
+[Releases](https://github.com/fubira/HorseInfoReloaded/releases)
+
 ## Getting the source
 
-[GitHub](https://github.com/fubira/SkipSign.git)
+[GitHub](https://github.com/fubira/HorseInfoReloaded.git)
