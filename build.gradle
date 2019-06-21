@@ -21,7 +21,7 @@ group = "net.ironingot.horseinfo"
 archivesBaseName = "HorseInfoReloaded"
 
 minecraft {
-    version = "14.22.0.2458"
+    version = "1.12.1-14.22.0.2458"
     mappings = "snapshot_20170624"
 
     runDir = "run"
