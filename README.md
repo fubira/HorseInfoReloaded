@@ -1,6 +1,6 @@
 # HorseInfoReloaded
 
-HorseInfo is an information mod that displays the horse's detailed parameter.
+HorseInfo is an information mod for Minecraft forge that displays the horse's detailed parameter.
 
 * Name
 * Life

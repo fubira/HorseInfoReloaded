@@ -45,7 +45,8 @@ public class HorseInfoMod
     public static final String buildId ="2019-6";
     public static String modVersion;
 
-    public static final KeyBinding KEYBINDING_MODE = new KeyBinding("keybinding.desc.toggle", GLFW.GLFW_KEY_H, "keybinding.category.horseinfo");
+    public static final KeyBinding KEYBINDING_MODE =
+        new KeyBinding("horseinforeloaded.keybinding.desc.toggle", GLFW.GLFW_KEY_H, "horseinforeloaded.keybinding.category");
 
     public static final PlayerNameManager playerNameManager = new PlayerNameManager();
 
