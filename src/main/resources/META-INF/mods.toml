@@ -17,14 +17,14 @@ HorseInfoReloaded is display mod for ability of Horses.
 inspired by HorseInfo/(by TTTA2)
 '''
 
-[[dependencies.examplemod]]
+[[dependencies.horseinfo]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.13.2]"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.skipsign]]
+[[dependencies.horseinfo]]
     modId="forge"
     mandatory=true
     versionRange="[25,)"
