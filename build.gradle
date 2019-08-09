@@ -59,11 +59,11 @@ jar {
     manifest {
         attributes([
             'Specification-Title'  : 'HorseInfoReloaded',
-            'Specification-Vendor' : 'TTTA2 / fubira / kenmomine.club',
+            'Specification-Vendor' : 'fubira / kenmomine.club',
             'Specification-Version': '1',
 
             'Implementation-Title'  : 'HorseInforeloaded',
-            'Implementation-Vendor' : 'TTTA2 / fubira / kenmomine.club',
+            'Implementation-Vendor' : 'fubira / kenmomine.club',
             'Implementation-Version': version,
 
             'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
