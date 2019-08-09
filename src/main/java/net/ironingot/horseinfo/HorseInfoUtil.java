@@ -7,11 +7,11 @@ import java.util.UUID;
 
 import net.minecraftforge.common.UsernameCache;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 
 class HorseInfoUtil {
 
-    public static double getSpeed(AbstractHorse entity) {
+    public static double getSpeed(AbstractHorseEntity entity) {
         return entity.getAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
     }
 
@@ -28,7 +28,7 @@ class HorseInfoUtil {
         return Math.floor(jumpHeight * 10.0D) / 10.0D ;
     }
 
-    public static double getEvaluateValue(AbstractHorse entity) {
+    public static double getEvaluateValue(AbstractHorseEntity entity) {
         double paramSpeed = HorseInfoUtil.getSpeed(entity);
         double jumpHeight = HorseInfoUtil.getJumpHeight(entity.getHorseJumpStrength());
         double jumpRating = Math.floor(jumpHeight * 2.0D) / (2.0D * 5.0D);
@@ -83,16 +83,16 @@ class HorseInfoUtil {
         return rankColor[pt];
     }
 
-    public static String getDisplayName(AbstractHorse entity) {
+    public static String getDisplayName(AbstractHorseEntity entity) {
         return entity.getDisplayName().getFormattedText();
     }
 
-    public static String getDisplayNameWithRank(AbstractHorse entity) {
+    public static String getDisplayNameWithRank(AbstractHorseEntity entity) {
         return getDisplayName(entity) +
                " [" + HorseInfoUtil.getEvaluateRankString(HorseInfoUtil.getEvaluateValue(entity)) + "]";
     }
 
-    public static String getOwner(AbstractHorse entity) {
+    public static String getOwner(AbstractHorseEntity entity) {
         UUID ownerUUID = entity.getOwnerUniqueId();
         if (ownerUUID == null)
             return null;
@@ -106,7 +106,7 @@ class HorseInfoUtil {
         return "(Owner: " + ownerName + ")";
     }
 
-    public static String getAgeOrOwnerString(AbstractHorse entity) {
+    public static String getAgeOrOwnerString(AbstractHorseEntity entity) {
         String str = null;
         List<Entity> passengers = entity.getPassengers();
         if (passengers == null || passengers.size() == 0) {
@@ -119,7 +119,7 @@ class HorseInfoUtil {
         return str;
     }
 
-    public static List<String> getHorseInfoString(AbstractHorse entity) {
+    public static List<String> getHorseInfoString(AbstractHorseEntity entity) {
         List<String> stringArray = new ArrayList<String>();
         List<Entity> passengers = entity.getPassengers();
         if (passengers == null || passengers.size() == 0) {

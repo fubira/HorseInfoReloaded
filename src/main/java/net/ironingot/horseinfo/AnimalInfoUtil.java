@@ -3,15 +3,15 @@ package net.ironingot.horseinfo;
 import java.util.UUID;
 
 import net.minecraftforge.common.UsernameCache;
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.TameableEntity;
 
 class AnimalInfoUtil {
-    public static String getDisplayName(EntityTameable entity)
+    public static String getDisplayName(TameableEntity entity)
     {
         return entity.getDisplayName().getFormattedText();
     }
 
-    public static String getOwner(EntityTameable entity)
+    public static String getOwner(TameableEntity entity)
     {
         UUID ownerUUID = entity.getOwnerId();
         if (ownerUUID == null)

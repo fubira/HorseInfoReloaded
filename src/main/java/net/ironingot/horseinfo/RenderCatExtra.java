@@ -5,25 +5,25 @@ import java.util.ArrayList;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.client.renderer.entity.RenderOcelot;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.client.renderer.entity.CatRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.entity.passive.CatEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderOcelotExtra extends RenderOcelot
+public class RenderCatExtra extends CatRenderer
 {
     private static Logger logger = LogManager.getLogger();
 
-    public RenderOcelotExtra(RenderManager renderManager)
+    public RenderCatExtra(EntityRendererManager renderManager)
     {
         super(renderManager);
     }
 
     @Override
-    public void doRender(EntityOcelot entity, double x, double y, double z, float yaw, float partialTicks)
+    public void doRender(CatEntity entity, double x, double y, double z, float yaw, float partialTicks)
     {
         super.doRender(entity, x, y, z, yaw, partialTicks);
 

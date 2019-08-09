@@ -4,18 +4,19 @@ import java.awt.Color;
 import java.util.List;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemArmorDyeable;
+import net.minecraft.item.DyeableArmorItem;
 import org.lwjgl.opengl.GL11;
+
+import com.mojang.blaze3d.platform.GlStateManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,14 +39,14 @@ public class RenderUtil
     {
         Entity ridingEntity = getRider(entity);
 
-        if (ridingEntity instanceof EntityPlayer)
+        if (ridingEntity instanceof PlayerEntity)
         {
-            EntityPlayer ridingPlayer = (EntityPlayer)ridingEntity;
+            PlayerEntity ridingPlayer = (PlayerEntity)ridingEntity;
             ItemStack helmStack = ridingPlayer.inventory.armorItemInSlot(3);
 
-            if (helmStack != null && helmStack.getItem() instanceof ItemArmorDyeable)
+            if (helmStack != null && helmStack.getItem() instanceof DyeableArmorItem)
             {
-                ItemArmorDyeable helmItem = (ItemArmorDyeable)helmStack.getItem();
+                DyeableArmorItem helmItem = (DyeableArmorItem)helmStack.getItem();
                 return new Color(helmItem.getColor(helmStack));
             }
         }
@@ -56,9 +57,9 @@ public class RenderUtil
     {
         Color color = Color.BLACK;
 
-        if (entity instanceof AbstractHorse)
+        if (entity instanceof AbstractHorseEntity)
         {
-            double evaluateValue = HorseInfoUtil.getEvaluateValue((AbstractHorse)entity);
+            double evaluateValue = HorseInfoUtil.getEvaluateValue((AbstractHorseEntity)entity);
             Color evaluateColor = HorseInfoUtil.getEvaluateRankColor(evaluateValue);
             if (evaluateColor != null)
                 color = evaluateColor;
@@ -71,12 +72,12 @@ public class RenderUtil
         return color;
     }
 
-    public static void renderEntityInfo(RenderManager renderManager, FontRenderer fontRenderer, Entity entity, double x, double y, double z, List<String> infoString)
+    public static void renderEntityInfo(EntityRendererManager renderManager, FontRenderer fontRenderer, Entity entity, double x, double y, double z, List<String> infoString)
     {
         if (Minecraft.getInstance().player.equals(getRider(entity)))
             return;
 
-        double d0 = entity.getDistanceSq(renderManager.renderViewEntity);
+        double d0 = entity.getDistanceSq(Minecraft.getInstance().getRenderViewEntity());
         final float f = NAME_TAG_RANGE / 2;
         final float scale = 0.02666667F;
         Color baseColor = getLabelColor(entity);
@@ -89,7 +90,7 @@ public class RenderUtil
         GlStateManager.alphaFunc(516, 0.1F);
         FontRenderer fontrenderer = fontRenderer;
         GlStateManager.pushMatrix();
-        GlStateManager.translatef((float)x, (float)y + entity.height + 1.8F /*- (entity.isChild() ? entity.height / 2.0F : 0.0F)*/, (float)z);
+        GlStateManager.translatef((float)x, (float)y + entity.getHeight() + 1.8F /*- (entity.isChild() ? entity.height / 2.0F : 0.0F)*/, (float)z);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
         GlStateManager.rotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
@@ -98,7 +99,7 @@ public class RenderUtil
         GlStateManager.disableLighting();
         GlStateManager.depthMask(false);
         GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
+        GlStateManager.disableTexture();
         GlStateManager.blendFuncSeparate(770, 771, 1, 0);
 
         int fontHeight = 9;
@@ -123,7 +124,7 @@ public class RenderUtil
         vertexBuffer.pos((double)(widthHarf + 1), baseY + fontHeight * (infoString.size()), 0.0D).color(r, g, b, a).endVertex();
         vertexBuffer.pos((double)(widthHarf + 1), baseY, 0.0D).color(r, g, b, a).endVertex();
         tessellator.draw();
-        GlStateManager.enableTexture2D();
+        GlStateManager.enableTexture();
         GlStateManager.depthMask(true);
         for (int i = 0; i < infoString.size(); i++) {
             fontrenderer.drawString(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB());

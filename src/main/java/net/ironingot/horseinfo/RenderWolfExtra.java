@@ -5,25 +5,25 @@ import java.util.Arrays;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.client.renderer.entity.RenderWolf;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.client.renderer.entity.WolfRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.entity.passive.WolfEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderWolfExtra extends RenderWolf
+public class RenderWolfExtra extends WolfRenderer
 {
     private static Logger logger = LogManager.getLogger();
 
-    public RenderWolfExtra(RenderManager renderManager)
+    public RenderWolfExtra(EntityRendererManager renderManager)
     {
         super(renderManager);
     }
 
     @Override
-    public void doRender(EntityWolf entity, double x, double y, double z, float yaw, float partialTicks)
+    public void doRender(WolfEntity entity, double x, double y, double z, float yaw, float partialTicks)
     {
         super.doRender(entity, x, y, z, yaw, partialTicks);
 

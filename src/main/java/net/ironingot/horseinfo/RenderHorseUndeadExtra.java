@@ -5,23 +5,23 @@ import java.util.List;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.client.renderer.entity.RenderHorseUndead;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderHorseUndeadExtra extends RenderHorseUndead {
+public class RenderHorseUndeadExtra extends UndeadHorseRenderer {
     private static Logger logger = LogManager.getLogger();
 
-    public RenderHorseUndeadExtra(RenderManager renderManager) {
+    public RenderHorseUndeadExtra(EntityRendererManager renderManager) {
         super(renderManager);
     }
 
     @Override
-    public void doRender(AbstractHorse entity, double x, double y, double z, float yaw, float partialTicks) {
+    public void doRender(AbstractHorseEntity entity, double x, double y, double z, float yaw, float partialTicks) {
         super.doRender(entity, x, y, z, yaw, partialTicks);
 
         if (HorseInfoMod.isActive()) {

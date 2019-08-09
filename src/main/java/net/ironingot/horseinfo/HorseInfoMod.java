@@ -15,19 +15,19 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntitySkeletonHorse;
-import net.minecraft.entity.passive.EntityZombieHorse;
-import net.minecraft.entity.passive.EntityDonkey;
-import net.minecraft.entity.passive.EntityMule;
-import net.minecraft.entity.passive.EntityLlama;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.passive.horse.HorseEntity;
+import net.minecraft.entity.passive.horse.SkeletonHorseEntity;
+import net.minecraft.entity.passive.horse.ZombieHorseEntity;
+import net.minecraft.entity.passive.horse.DonkeyEntity;
+import net.minecraft.entity.passive.horse.MuleEntity;
+import net.minecraft.entity.passive.horse.LlamaEntity;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.WolfEntity;
 
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import org.apache.logging.log4j.LogManager;
@@ -71,32 +71,32 @@ public class HorseInfoMod
 
 	@SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
-        RenderManager manager = Minecraft.getInstance().getRenderManager();
+        EntityRendererManager manager = Minecraft.getInstance().getRenderManager();
 
-        manager.entityRenderMap.remove(EntityHorse.class);
-        manager.entityRenderMap.put(EntityHorse.class, new RenderHorseExtra(manager));
-        manager.entityRenderMap.remove(EntitySkeletonHorse.class);
-        manager.entityRenderMap.put(EntitySkeletonHorse.class, new RenderHorseUndeadExtra(manager));
-        manager.entityRenderMap.remove(EntityZombieHorse.class);
-        manager.entityRenderMap.put(EntityZombieHorse.class, new RenderHorseUndeadExtra(manager));
-        manager.entityRenderMap.remove(EntityMule.class);
-        manager.entityRenderMap.put(EntityMule.class, new RenderHorseChestExtra(manager, 0.92f));
-        manager.entityRenderMap.remove(EntityDonkey.class);
-        manager.entityRenderMap.put(EntityDonkey.class, new RenderHorseChestExtra(manager, 0.87f));
-        manager.entityRenderMap.remove(EntityLlama.class);
-        manager.entityRenderMap.put(EntityLlama.class, new RenderLlamaExtra(manager));
-        manager.entityRenderMap.remove(EntityWolf.class);
-        manager.entityRenderMap.put(EntityWolf.class, new RenderWolfExtra(manager));
-        manager.entityRenderMap.remove(EntityOcelot.class);
-        manager.entityRenderMap.put(EntityOcelot.class, new RenderOcelotExtra(manager));
+        manager.renderers.remove(HorseEntity.class);
+        manager.renderers.put(HorseEntity.class, new RenderHorseExtra(manager));
+        manager.renderers.remove(SkeletonHorseEntity.class);
+        manager.renderers.put(SkeletonHorseEntity.class, new RenderHorseUndeadExtra(manager));
+        manager.renderers.remove(ZombieHorseEntity.class);
+        manager.renderers.put(ZombieHorseEntity.class, new RenderHorseUndeadExtra(manager));
+        manager.renderers.remove(MuleEntity.class);
+        manager.renderers.put(MuleEntity.class, new RenderHorseChestExtra(manager, 0.92f));
+        manager.renderers.remove(DonkeyEntity.class);
+        manager.renderers.put(DonkeyEntity.class, new RenderHorseChestExtra(manager, 0.87f));
+        manager.renderers.remove(LlamaEntity.class);
+        manager.renderers.put(LlamaEntity.class, new RenderLlamaExtra(manager));
+        manager.renderers.remove(WolfEntity.class);
+        manager.renderers.put(WolfEntity.class, new RenderWolfExtra(manager));
+        manager.renderers.remove(CatEntity.class);
+        manager.renderers.put(CatEntity.class, new RenderCatExtra(manager));
     }
 
     public static void message(String s) {
-        Minecraft.getInstance().player.sendMessage(new TextComponentString("")
-            .appendSibling((new TextComponentString("[")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
-            .appendSibling((new TextComponentString("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.GOLD)))
-            .appendSibling((new TextComponentString("] ")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
-            .appendSibling((new TextComponentString(s))));
+        Minecraft.getInstance().player.sendMessage(new StringTextComponent("")
+            .appendSibling((new StringTextComponent("[")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
+            .appendSibling((new StringTextComponent("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.GOLD)))
+            .appendSibling((new StringTextComponent("] ")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
+            .appendSibling((new StringTextComponent(s))));
     }
 
     public static boolean isActive() {

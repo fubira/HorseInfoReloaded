@@ -12,19 +12,26 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 
-def mc_version = "1.13.2"
-def forge_version = "25.0.193"
-def postfix_version = "b"
+def mc_version = "1.14.4"
+def forge_version = "28.0.40"
+def postfix_version = "a"
 
 version = "${mc_version}-${postfix_version}"
 group = "net.ironingot.horseinfo"
 archivesBaseName = "HorseInfoReloaded"
 
+sourceCompatibility =
+targetCompatibility =
+compileJava.sourceCompatibility =
+compileJava.targetCompatibility = '1.8'
+
 minecraft {
-    mappings channel: 'snapshot', version: '20180921-1.13'
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
     runs {
         client {
             workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
             mods {
                 horseinfo {
                     source sourceSets.main
@@ -33,6 +40,8 @@ minecraft {
         }
         server {
             workingDirectory file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
             mods {
                 horseinfo {
                     source sourceSets.main
