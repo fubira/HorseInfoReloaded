@@ -2,7 +2,7 @@ package net.ironingot.horseinfo;
 
 import java.util.UUID;
 
-import net.minecraftforge.common.UsernameCache;
+// import net.minecraftforge.common.UsernameCache;
 import net.minecraft.entity.passive.EntityTameable;
 
 class AnimalInfoUtil {
@@ -18,10 +18,7 @@ class AnimalInfoUtil {
             return null;
 
         String ownerName = "Unknown";
-        if (UsernameCache.containsUUID(ownerUUID))
-            ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
-        else
-            ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
+        ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
 
         return "(Owner: " + ownerName + ")";
     }

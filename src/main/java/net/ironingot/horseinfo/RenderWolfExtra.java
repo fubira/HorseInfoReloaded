@@ -2,9 +2,10 @@ package net.ironingot.horseinfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/*
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+*/
 import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.passive.EntityWolf;
@@ -12,7 +13,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@OnlyIn(Dist.CLIENT)
+// @OnlyIn(Dist.CLIENT)
 public class RenderWolfExtra extends RenderWolf
 {
     private static Logger logger = LogManager.getLogger();

@@ -3,8 +3,10 @@ package net.ironingot.horseinfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+*/
 import net.minecraft.client.renderer.entity.RenderLlama;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.passive.EntityLlama;
@@ -12,7 +14,7 @@ import net.minecraft.entity.passive.EntityLlama;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@OnlyIn(Dist.CLIENT)
+// @OnlyIn(Dist.CLIENT)
 public class RenderLlamaExtra extends RenderLlama
 {
     private static Logger logger = LogManager.getLogger();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraftforge.common.UsernameCache;
+// import net.minecraftforge.common.UsernameCache;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 
@@ -98,10 +98,12 @@ class HorseInfoUtil {
             return null;
 
         String ownerName = "Unknown";
+        /*
         if (UsernameCache.containsUUID(ownerUUID))
             ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
         else
-            ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
+        */
+        ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
 
         return "(Owner: " + ownerName + ")";
     }

@@ -1,0 +1,15 @@
+{
+    "id": "horseinfo",
+    "name": "HorseInfoReloaded",
+    "authors": [
+        "fubira"
+    ],
+    "listeners": [
+        "net.ironingot.horseinfo.HorseInfoMod",
+        "net.ironingot.horseinfo.HorseInfoKeyBinding",
+        {
+            "class": "net.ironingot.horseinfo.HorseInfoRenderer",
+            "side": "client"
+        }
+    ]
+}
