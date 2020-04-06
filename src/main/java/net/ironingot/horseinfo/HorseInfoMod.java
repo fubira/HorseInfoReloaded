@@ -10,21 +10,15 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.entity.passive.horse.SkeletonHorseEntity;
-import net.minecraft.entity.passive.horse.ZombieHorseEntity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.horse.DonkeyEntity;
 import net.minecraft.entity.passive.horse.MuleEntity;
-import net.minecraft.entity.passive.horse.LlamaEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.WolfEntity;
 
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.StringTextComponent;
@@ -71,28 +65,33 @@ public class HorseInfoMod
 
 	@SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
-        EntityRendererManager manager = Minecraft.getInstance().getRenderManager();
+        Minecraft mc = Minecraft.getInstance();
+        EntityRendererManager manager = mc.getRenderManager();
 
-        manager.renderers.remove(HorseEntity.class);
-        manager.renderers.put(HorseEntity.class, new RenderHorseExtra(manager));
-        manager.renderers.remove(SkeletonHorseEntity.class);
-        manager.renderers.put(SkeletonHorseEntity.class, new RenderHorseUndeadExtra(manager));
-        manager.renderers.remove(ZombieHorseEntity.class);
-        manager.renderers.put(ZombieHorseEntity.class, new RenderHorseUndeadExtra(manager));
-        manager.renderers.remove(MuleEntity.class);
-        manager.renderers.put(MuleEntity.class, new RenderHorseChestExtra(manager, 0.92f));
-        manager.renderers.remove(DonkeyEntity.class);
-        manager.renderers.put(DonkeyEntity.class, new RenderHorseChestExtra(manager, 0.87f));
-        manager.renderers.remove(LlamaEntity.class);
-        manager.renderers.put(LlamaEntity.class, new RenderLlamaExtra(manager));
-        manager.renderers.remove(WolfEntity.class);
-        manager.renderers.put(WolfEntity.class, new RenderWolfExtra(manager));
-        manager.renderers.remove(CatEntity.class);
-        manager.renderers.put(CatEntity.class, new RenderCatExtra(manager));
+        manager.register(EntityType.HORSE, new RenderHorseExtra(manager));
+        /*
+        manager.renderers.remove(EntityType.HORSE);
+        manager.renderers.put(EntityType.HORSE, new RenderHorseExtra(manager));
+        */
+        manager.renderers.remove(EntityType.SKELETON_HORSE);
+        manager.renderers.put(EntityType.SKELETON_HORSE, new RenderHorseUndeadExtra(manager));
+        manager.renderers.remove(EntityType.ZOMBIE_HORSE);
+        manager.renderers.put(EntityType.ZOMBIE_HORSE, new RenderHorseUndeadExtra(manager));
+        manager.renderers.remove(EntityType.MULE);
+        manager.renderers.put(EntityType.MULE, new RenderHorseChestExtra<MuleEntity>(manager, 0.92f));
+        manager.renderers.remove(EntityType.DONKEY);
+        manager.renderers.put(EntityType.DONKEY, new RenderHorseChestExtra<DonkeyEntity>(manager, 0.87f));
+        manager.renderers.remove(EntityType.LLAMA);
+        manager.renderers.put(EntityType.LLAMA, new RenderLlamaExtra(manager));
+        manager.renderers.remove(EntityType.WOLF);
+        manager.renderers.put(EntityType.WOLF, new RenderWolfExtra(manager));
+        manager.renderers.remove(EntityType.CAT);
+        manager.renderers.put(EntityType.CAT, new RenderCatExtra(manager));
     }
 
     public static void message(String s) {
-        Minecraft.getInstance().player.sendMessage(new StringTextComponent("")
+        Minecraft mc = Minecraft.getInstance();
+        mc.player.sendMessage(new StringTextComponent("")
             .appendSibling((new StringTextComponent("[")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
             .appendSibling((new StringTextComponent("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.GOLD)))
             .appendSibling((new StringTextComponent("] ")).setStyle((new Style()).setColor(TextFormatting.GRAY)))

@@ -72,12 +72,17 @@ public class RenderUtil
         return color;
     }
 
-    public static void renderEntityInfo(EntityRendererManager renderManager, FontRenderer fontRenderer, Entity entity, double x, double y, double z, List<String> infoString)
+    public static void renderEntityInfo(EntityRendererManager renderManager, FontRenderer fontRenderer, Entity entity, List<String> infoString)
     {
-        if (Minecraft.getInstance().player.equals(getRider(entity)))
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player.equals(getRider(entity)))
             return;
 
-        double d0 = entity.getDistanceSq(Minecraft.getInstance().getRenderViewEntity());
+        double x = entity.getPosX();
+        double y = entity.getPosY();
+        double z = entity.getPosZ();
+
+        double d0 = entity.getDistanceSq(mc.getRenderViewEntity());
         final float f = NAME_TAG_RANGE / 2;
         final float scale = 0.02666667F;
         Color baseColor = getLabelColor(entity);
@@ -92,8 +97,8 @@ public class RenderUtil
         GlStateManager.pushMatrix();
         GlStateManager.translatef((float)x, (float)y + entity.getHeight() + 1.8F /*- (entity.isChild() ? entity.height / 2.0F : 0.0F)*/, (float)z);
         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotatef(-renderManager.info.getYaw(), 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(renderManager.info.getPitch(), 1.0F, 0.0F, 0.0F);
         GlStateManager.scalef(-scale, -scale, scale);
         GlStateManager.translatef(0.0F, 9.374999F, 0.0F);
         GlStateManager.disableLighting();

@@ -3,10 +3,12 @@ package net.ironingot.horseinfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,8 +23,8 @@ public class RenderHorseUndeadExtra extends UndeadHorseRenderer {
     }
 
     @Override
-    public void doRender(AbstractHorseEntity entity, double x, double y, double z, float yaw, float partialTicks) {
-        super.doRender(entity, x, y, z, yaw, partialTicks);
+    public void render(AbstractHorseEntity entity, float yaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+        super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (HorseInfoMod.isActive()) {
             List<String> stringInfo = new ArrayList<String>();
@@ -33,7 +35,7 @@ public class RenderHorseUndeadExtra extends UndeadHorseRenderer {
             if (stringAgeOrOwner != null)
                 stringInfo.add(stringAgeOrOwner);
 
-            RenderUtil.renderEntityInfo(renderManager, getFontRendererFromRenderManager(), entity, x, y, z, stringInfo);
+            RenderUtil.renderEntityInfo(renderManager, getFontRendererFromRenderManager(), entity, stringInfo);
         }
     }
 }

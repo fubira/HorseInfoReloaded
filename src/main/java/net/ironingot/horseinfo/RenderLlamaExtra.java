@@ -3,10 +3,12 @@ package net.ironingot.horseinfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.LlamaRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,9 +25,8 @@ public class RenderLlamaExtra extends LlamaRenderer
     }
 
     @Override
-    public void doRender(LlamaEntity entity, double x, double y, double z, float yaw, float partialTicks)
-    {
-        super.doRender(entity, x, y, z, yaw, partialTicks);
+    public void render(LlamaEntity entity, float yaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+        super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (HorseInfoMod.isActive())
         {
@@ -38,7 +39,6 @@ public class RenderLlamaExtra extends LlamaRenderer
                     renderManager,
                     getFontRendererFromRenderManager(),
                     entity,
-                    x, y, z,
                     new ArrayList<String>(Arrays.asList(stringName, stringOwner)));
             }
 
