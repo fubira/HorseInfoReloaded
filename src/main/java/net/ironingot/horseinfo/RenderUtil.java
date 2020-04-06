@@ -3,20 +3,28 @@ package net.ironingot.horseinfo;
 import java.awt.Color;
 import java.util.List;
 
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Matrix4f;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.DyeableArmorItem;
+import net.minecraft.util.math.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,42 +80,32 @@ public class RenderUtil
         return color;
     }
 
-    public static void renderEntityInfo(EntityRendererManager renderManager, FontRenderer fontRenderer, Entity entity, List<String> infoString)
+    public static void renderEntityInfo(EntityRendererManager renderManager, Entity entity, List<String> infoString, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn)
     {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player.equals(getRider(entity)))
             return;
 
-        double x = entity.getPosX();
-        double y = entity.getPosY();
-        double z = entity.getPosZ();
-
         double d0 = entity.getDistanceSq(mc.getRenderViewEntity());
-        final float f = NAME_TAG_RANGE / 2;
-        final float scale = 0.02666667F;
+        if (d0 >= 4096.0D) {
+            return;
+        }
+
+        final float scale = 0.025F;
         Color baseColor = getLabelColor(entity);
         Color titleColor = baseColor.equals(Color.BLACK) ? Color.WHITE : baseColor;
         Color fontColor = Color.WHITE;
 
-        if (d0 >= (double)(f * f))
-            return;
+        float f = entity.getHeight() + 2.0F;
 
-        GlStateManager.alphaFunc(516, 0.1F);
-        FontRenderer fontrenderer = fontRenderer;
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef((float)x, (float)y + entity.getHeight() + 1.8F /*- (entity.isChild() ? entity.height / 2.0F : 0.0F)*/, (float)z);
-        GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotatef(-renderManager.info.getYaw(), 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotatef(renderManager.info.getPitch(), 1.0F, 0.0F, 0.0F);
-        GlStateManager.scalef(-scale, -scale, scale);
-        GlStateManager.translatef(0.0F, 9.374999F, 0.0F);
-        GlStateManager.disableLighting();
-        GlStateManager.depthMask(false);
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture();
-        GlStateManager.blendFuncSeparate(770, 771, 1, 0);
+        matrixStackIn.push();
+        matrixStackIn.translate(0.0D, (double)f, 0.0D);
+        matrixStackIn.rotate(renderManager.getCameraOrientation());
+        matrixStackIn.scale(-scale, -scale, scale);
 
-        int fontHeight = 9;
+        FontRenderer fontrenderer = renderManager.getFontRenderer();
+
+        int fontHeight = 10;
         float baseY = (4 - infoString.size()) * fontHeight - ((getRider(entity) != null) ? fontHeight * 3 : fontHeight);
 
         int width = fontrenderer.getStringWidth(entity.getName().getString());
@@ -116,27 +114,28 @@ public class RenderUtil
         }
         int widthHarf = width / 2;
 
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder vertexBuffer = tessellator.getBuffer();
+
+        Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
+        float f1 = mc.gameSettings.getTextBackgroundOpacity(0.4F);
         float r = (baseColor.getRed() / 255.0F) / 2.0F;
         float g = (baseColor.getGreen() / 255.0F) / 2.0F;
         float b = (baseColor.getBlue() / 255.0F) / 2.0F;
+        int j = ((int)(f1 * 255.0F) << 24) + ((int)(r * 255.0F) << 16) + ((int)(g * 255.0F) << 8) + ((int)(b * 255.0F));
+
+        /*
         float a = 0.4F;
 
-        vertexBuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        vertexBuffer.pos((double)(-widthHarf - 1), baseY , 0.0D).color(r, g, b, a).endVertex();
-        vertexBuffer.pos((double)(-widthHarf - 1), baseY + fontHeight * (infoString.size()), 0.0D).color(r, g, b, a).endVertex();
-        vertexBuffer.pos((double)(widthHarf + 1), baseY + fontHeight * (infoString.size()), 0.0D).color(r, g, b, a).endVertex();
-        vertexBuffer.pos((double)(widthHarf + 1), baseY, 0.0D).color(r, g, b, a).endVertex();
-        tessellator.draw();
-        GlStateManager.enableTexture();
-        GlStateManager.depthMask(true);
+
+        float x1 = (float)(-widthHarf - 1);
+        float x2 = (float)(widthHarf + 1);
+        float y1 = baseY;
+        float y2 = baseY + fontHeight * (infoString.size());
+        WorldRenderer.drawBoundingBox(matrixStackIn, bufferIn.getBuffer(RenderType.getLines()), x1, y1, 0, x2, y2, 0, r, g, b, a);
+        */
+
         for (int i = 0; i < infoString.size(); i++) {
-            fontrenderer.drawString(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB());
+            fontrenderer.renderString(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, false, j, packedLightIn);
         }
-        GlStateManager.enableLighting();
-        GlStateManager.disableBlend();
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.popMatrix();
+        matrixStackIn.pop();
     }
 }

@@ -59,7 +59,14 @@ public class RenderHorseExtra extends AbstractHorseRenderer<HorseEntity, HorseMo
             if (stringAgeOrOwner != null)
                 stringInfo.add(stringAgeOrOwner);
 
-            RenderUtil.renderEntityInfo(renderManager, getFontRendererFromRenderManager(), entity, stringInfo);
+            RenderUtil.renderEntityInfo(
+                renderManager,
+                entity,
+                stringInfo,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn
+            );
         }
     }
 }

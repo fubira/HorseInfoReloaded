@@ -32,16 +32,19 @@ public class RenderLlamaExtra extends LlamaRenderer
         {
             String stringName = HorseInfoUtil.getDisplayName(entity);
             String stringOwner = HorseInfoUtil.getOwner(entity);
+            logger.debug(stringName + ":" + stringOwner);
 
             if (stringOwner != null)
             {
                 RenderUtil.renderEntityInfo(
                     renderManager,
-                    getFontRendererFromRenderManager(),
                     entity,
-                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)));
+                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)),
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
+                );
             }
-
         }
     }
 }

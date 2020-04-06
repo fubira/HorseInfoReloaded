@@ -68,11 +68,8 @@ public class HorseInfoMod
         Minecraft mc = Minecraft.getInstance();
         EntityRendererManager manager = mc.getRenderManager();
 
-        manager.register(EntityType.HORSE, new RenderHorseExtra(manager));
-        /*
         manager.renderers.remove(EntityType.HORSE);
         manager.renderers.put(EntityType.HORSE, new RenderHorseExtra(manager));
-        */
         manager.renderers.remove(EntityType.SKELETON_HORSE);
         manager.renderers.put(EntityType.SKELETON_HORSE, new RenderHorseUndeadExtra(manager));
         manager.renderers.remove(EntityType.ZOMBIE_HORSE);

@@ -36,7 +36,14 @@ public class RenderHorseChestExtra<T extends AbstractChestedHorseEntity> extends
             if (stringAgeOrOwner != null)
                 stringInfo.add(stringAgeOrOwner);
 
-            RenderUtil.renderEntityInfo(renderManager, getFontRendererFromRenderManager(), entity, stringInfo);
+            RenderUtil.renderEntityInfo(
+                renderManager,
+                entity,
+                stringInfo,
+                matrixStackIn,
+                bufferIn,
+                packedLightIn
+            );
         }
     }
 }

@@ -37,9 +37,13 @@ public class RenderWolfExtra extends WolfRenderer
             {
                 RenderUtil.renderEntityInfo(
                     renderManager,
-                    getFontRendererFromRenderManager(),
                     entity,
-                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)));
+                    new ArrayList<String>(Arrays.asList(stringName, stringOwner)),
+                    matrixStackIn,
+                    bufferIn,
+                    packedLightIn
+                );
+        
             }
         }
     }
