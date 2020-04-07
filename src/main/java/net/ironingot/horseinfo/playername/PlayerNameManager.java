@@ -35,7 +35,7 @@ public class PlayerNameManager
                 @Override
                 public void run() {
                     String suuid = uuid.toString().toLowerCase().replaceAll("-", "");
-                    String name = "Unknown Player";
+                    // String name = "Unknown Player";
 
                     try
                     {
@@ -55,8 +55,9 @@ public class PlayerNameManager
                     }
 
                     int index = requestList.indexOf(uuid);
-                    if (index >= 0)
+                    if (index >= 0) {
                         requestList.remove(index);
+                    }
                 }
             }).start();
         }

@@ -6,32 +6,22 @@ import java.util.List;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.DyeableArmorItem;
-import net.minecraft.util.math.AxisAlignedBB;
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+// import org.apache.logging.log4j.LogManager;
+// import org.apache.logging.log4j.Logger;
 
 public class RenderUtil
 {
-    private static Logger logger = LogManager.getLogger();
+    // private static Logger logger = LogManager.getLogger();
     public static float NAME_TAG_RANGE = 64.0f;
 
     public static Entity getRider(Entity entity)
@@ -114,24 +104,12 @@ public class RenderUtil
         }
         int widthHarf = width / 2;
 
-
         Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
         float f1 = mc.gameSettings.getTextBackgroundOpacity(0.4F);
         float r = (baseColor.getRed() / 255.0F) / 2.0F;
         float g = (baseColor.getGreen() / 255.0F) / 2.0F;
         float b = (baseColor.getBlue() / 255.0F) / 2.0F;
         int j = ((int)(f1 * 255.0F) << 24) + ((int)(r * 255.0F) << 16) + ((int)(g * 255.0F) << 8) + ((int)(b * 255.0F));
-
-        /*
-        float a = 0.4F;
-
-
-        float x1 = (float)(-widthHarf - 1);
-        float x2 = (float)(widthHarf + 1);
-        float y1 = baseY;
-        float y2 = baseY + fontHeight * (infoString.size());
-        WorldRenderer.drawBoundingBox(matrixStackIn, bufferIn.getBuffer(RenderType.getLines()), x1, y1, 0, x2, y2, 0, r, g, b, a);
-        */
 
         for (int i = 0; i < infoString.size(); i++) {
             fontrenderer.renderString(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, false, j, packedLightIn);

@@ -128,7 +128,7 @@ class HorseInfoUtil {
             double paramSpeed = getSpeed(entity);
             double paramJump = entity.getHorseJumpStrength();
             double jumpHeight = getJumpHeight(paramJump);
-            double paramRank = getEvaluateValue(entity);
+            // double paramRank = getEvaluateValue(entity);
 
             stringArray.add(String.format("HP: %.2f/%.2f", paramHealth, paramMaxHealth));
             stringArray.add(String.format("SP: %.4f [%.1f(m/s)]", paramSpeed, paramSpeed * 43.0D));

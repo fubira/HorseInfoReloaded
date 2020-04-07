@@ -15,9 +15,7 @@ import net.minecraft.client.renderer.entity.model.HorseModel;
 import net.minecraft.client.renderer.entity.layers.LeatherHorseArmorLayer;
 import net.minecraft.client.renderer.texture.LayeredTexture;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.util.ResourceLocation;
 
 import com.google.common.collect.Maps;
