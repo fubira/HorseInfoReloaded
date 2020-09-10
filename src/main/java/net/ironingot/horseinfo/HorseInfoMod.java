@@ -20,11 +20,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.horse.DonkeyEntity;
 import net.minecraft.entity.passive.horse.MuleEntity;
 
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-import java.awt.Color;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
