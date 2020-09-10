@@ -24,6 +24,9 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
+import java.awt.Color;
+import java.util.UUID;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
@@ -89,10 +92,10 @@ public class HorseInfoMod
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
         mc.player.sendMessage(new StringTextComponent("")
-            .appendSibling((new StringTextComponent("[")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
-            .appendSibling((new StringTextComponent("HorseInfo")).setStyle((new Style()).setColor(TextFormatting.GOLD)))
-            .appendSibling((new StringTextComponent("] ")).setStyle((new Style()).setColor(TextFormatting.GRAY)))
-            .appendSibling((new StringTextComponent(s))));
+            .func_230529_a_((new StringTextComponent("[")).func_240699_a_(TextFormatting.GRAY))
+            .func_230529_a_((new StringTextComponent("HorseInfo")).func_240699_a_(TextFormatting.GOLD))
+            .func_230529_a_((new StringTextComponent("] ")).func_240699_a_(TextFormatting.GRAY))
+            .func_230529_a_((new StringTextComponent(s))), UUID.randomUUID());
     }
 
     public static boolean isActive() {

@@ -8,7 +8,7 @@ import net.minecraft.entity.passive.TameableEntity;
 class AnimalInfoUtil {
     public static String getDisplayName(TameableEntity entity)
     {
-        return entity.getDisplayName().getFormattedText();
+        return entity.getDisplayName().getString();
     }
 
     public static String getOwner(TameableEntity entity)

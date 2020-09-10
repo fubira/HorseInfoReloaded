@@ -8,11 +8,12 @@ import java.util.UUID;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 
 class HorseInfoUtil {
 
     public static double getSpeed(AbstractHorseEntity entity) {
-        return entity.getAttribute(net.minecraft.entity.SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
+        return entity.getAttribute(Attributes.field_233821_d_).getValue();
     }
 
     public static double getJumpHeight(double jumpStrength) {
@@ -84,7 +85,7 @@ class HorseInfoUtil {
     }
 
     public static String getDisplayName(AbstractHorseEntity entity) {
-        return entity.getDisplayName().getFormattedText();
+        return entity.getDisplayName().getString();
     }
 
     public static String getDisplayNameWithRank(AbstractHorseEntity entity) {
