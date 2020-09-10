@@ -77,7 +77,7 @@ public class RenderUtil
             return;
 
         double d0 = entity.getDistanceSq(mc.getRenderViewEntity());
-        if (d0 >= 4096.0D) {
+        if (d0 >= 2048.0D) {
             return;
         }
 
