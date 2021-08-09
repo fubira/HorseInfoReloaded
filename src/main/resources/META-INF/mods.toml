@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[33,)" 
+loaderVersion="[37,)" 
 
 author="fubira"
 license="Copyright (c) 2016-2020 fubira"
@@ -21,14 +21,14 @@ inspired by HorseInfo/(by TTTA2)
 [[dependencies.horseinfo]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,)"
+    versionRange="[1.17,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.horseinfo]]
     modId="forge"
     mandatory=true
-    versionRange="[33,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
 
