@@ -1,16 +1,16 @@
 package net.ironingot.horseinfo;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.CatRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.entity.animal.Cat;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,12 +20,12 @@ public class RenderCatExtra extends CatRenderer
 {
     private static Logger logger = LogManager.getLogger();
 
-    public RenderCatExtra(EntityRendererManager renderManager) {
-        super(renderManager);
+    public RenderCatExtra(EntityRendererProvider.Context context) {
+        super(context);
     }
 
     @Override
-    public void render(CatEntity entity, float yaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(Cat entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         if (HorseInfoMod.isActive())
         {
@@ -35,7 +35,6 @@ public class RenderCatExtra extends CatRenderer
             if (stringOwner != null)
             {
                 RenderUtil.renderEntityInfo(
-                    renderManager,
                     entity,
                     new ArrayList<String>(Arrays.asList(stringName, stringOwner)),
                     matrixStackIn,

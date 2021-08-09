@@ -7,22 +7,24 @@ import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.horse.DonkeyEntity;
-import net.minecraft.entity.passive.horse.MuleEntity;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.horse.Donkey;
+import net.minecraft.world.entity.animal.horse.Mule;
 
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.ChatFormatting;
 
 import java.util.UUID;
 
@@ -38,11 +40,11 @@ public class HorseInfoMod
     private static final Logger logger = LogManager.getLogger();
 
     public static final String modId ="horseinfo";
-    public static final String buildId ="2019-6";
+    public static final String buildId ="2021-1";
     public static String modVersion;
 
-    public static final KeyBinding KEYBINDING_MODE =
-        new KeyBinding("horseinforeloaded.keybinding.desc.toggle", GLFW.GLFW_KEY_H, "horseinforeloaded.keybinding.category");
+    public static final KeyMapping KEYBINDING_MODE =
+        new KeyMapping("horseinforeloaded.keybinding.desc.toggle", GLFW.GLFW_KEY_H, "horseinforeloaded.keybinding.category");
 
     public static final PlayerNameManager playerNameManager = new PlayerNameManager();
 
@@ -62,39 +64,32 @@ public class HorseInfoMod
     }
 
 	@SubscribeEvent
-	public void onConfigLoading(final ModConfig.Loading event) {
+	public void onConfigLoading(final ModConfigEvent.Loading event) {
 	}
 
+    @OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
-        Minecraft mc = Minecraft.getInstance();
-        EntityRendererManager manager = mc.getRenderManager();
-
-        manager.renderers.remove(EntityType.HORSE);
-        manager.renderers.put(EntityType.HORSE, new RenderHorseExtra(manager));
-        manager.renderers.remove(EntityType.SKELETON_HORSE);
-        manager.renderers.put(EntityType.SKELETON_HORSE, new RenderHorseUndeadExtra(manager));
-        manager.renderers.remove(EntityType.ZOMBIE_HORSE);
-        manager.renderers.put(EntityType.ZOMBIE_HORSE, new RenderHorseUndeadExtra(manager));
-        manager.renderers.remove(EntityType.MULE);
-        manager.renderers.put(EntityType.MULE, new RenderHorseChestExtra<MuleEntity>(manager, 0.92f));
-        manager.renderers.remove(EntityType.DONKEY);
-        manager.renderers.put(EntityType.DONKEY, new RenderHorseChestExtra<DonkeyEntity>(manager, 0.87f));
-        manager.renderers.remove(EntityType.LLAMA);
-        manager.renderers.put(EntityType.LLAMA, new RenderLlamaExtra(manager));
-        manager.renderers.remove(EntityType.WOLF);
-        manager.renderers.put(EntityType.WOLF, new RenderWolfExtra(manager));
-        manager.renderers.remove(EntityType.CAT);
-        manager.renderers.put(EntityType.CAT, new RenderCatExtra(manager));
+        EntityRenderers.register(EntityType.HORSE, RenderHorseExtra::new);
+        EntityRenderers.register(EntityType.SKELETON_HORSE, context -> new RenderHorseUndeadExtra(context, ModelLayers.SKELETON_HORSE));
+        EntityRenderers.register(EntityType.ZOMBIE_HORSE, context -> new RenderHorseUndeadExtra(context, ModelLayers.ZOMBIE_HORSE));
+        EntityRenderers.register(EntityType.MULE, context -> new RenderHorseChestExtra<Mule>(context, 0.92F, ModelLayers.MULE));
+        EntityRenderers.register(EntityType.DONKEY, context -> new RenderHorseChestExtra<Donkey>(context, 0.92F, ModelLayers.DONKEY));
+        EntityRenderers.register(EntityType.LLAMA, context -> new RenderLlamaExtra(context, ModelLayers.LLAMA));
+        EntityRenderers.register(EntityType.WOLF, RenderWolfExtra::new);
+        EntityRenderers.register(EntityType.CAT, RenderCatExtra::new);
     }
 
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
-        mc.player.sendMessage(new StringTextComponent("")
-            .func_230529_a_((new StringTextComponent("[")).func_240699_a_(TextFormatting.GRAY))
-            .func_230529_a_((new StringTextComponent("HorseInfo")).func_240699_a_(TextFormatting.GOLD))
-            .func_230529_a_((new StringTextComponent("] ")).func_240699_a_(TextFormatting.GRAY))
-            .func_230529_a_((new StringTextComponent(s))), UUID.randomUUID());
+        mc.player.sendMessage(
+            new TextComponent("")
+                .append(new TextComponent("[").withStyle(ChatFormatting.GRAY))
+                .append(new TextComponent("HorseInfo").withStyle(ChatFormatting.GOLD))
+                .append(new TextComponent("] ").withStyle(ChatFormatting.GRAY))
+                .append(new TextComponent(s)),
+            UUID.randomUUID()
+        );
     }
 
     public static boolean isActive() {
@@ -108,7 +103,7 @@ public class HorseInfoMod
 
     @OnlyIn(Dist.CLIENT)
     public void onKeyInput(KeyInputEvent event) {
-        if (KEYBINDING_MODE.isPressed()) {
+        if (KEYBINDING_MODE.isDown()) {
             toggle();
         }
     }

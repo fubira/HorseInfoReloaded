@@ -6,18 +6,22 @@ import java.util.List;
 import java.util.UUID;
 
 import net.minecraftforge.common.UsernameCache;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 class HorseInfoUtil {
 
-    public static double getSpeed(AbstractHorseEntity entity) {
-        return entity.getAttribute(Attributes.field_233821_d_).getValue();
+    public static double getSpeed(AbstractHorse entity) {
+        return entity.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
     }
 
-    public static double getJumpHeight(double jumpStrength) {
-        double yVelocity = jumpStrength;
+    public static double getJumpStrength(AbstractHorse entity) {
+        return entity.getAttribute(Attributes.JUMP_STRENGTH).getValue();
+    }
+
+    public static double getJumpHeight(AbstractHorse entity) {
+        double yVelocity = getJumpStrength(entity);
         double jumpHeight = 0.0d;
 
         while (yVelocity > 0.0D) {
@@ -29,9 +33,9 @@ class HorseInfoUtil {
         return Math.floor(jumpHeight * 10.0D) / 10.0D ;
     }
 
-    public static double getEvaluateValue(AbstractHorseEntity entity) {
+    public static double getEvaluateValue(AbstractHorse entity) {
         double paramSpeed = HorseInfoUtil.getSpeed(entity);
-        double jumpHeight = HorseInfoUtil.getJumpHeight(entity.getHorseJumpStrength());
+        double jumpHeight = HorseInfoUtil.getJumpHeight(entity);
         double jumpRating = Math.floor(jumpHeight * 2.0D) / (2.0D * 5.0D);
 
         final double speedHeavy = 10.0D;
@@ -84,17 +88,17 @@ class HorseInfoUtil {
         return rankColor[pt];
     }
 
-    public static String getDisplayName(AbstractHorseEntity entity) {
+    public static String getDisplayName(AbstractHorse entity) {
         return entity.getDisplayName().getString();
     }
 
-    public static String getDisplayNameWithRank(AbstractHorseEntity entity) {
+    public static String getDisplayNameWithRank(AbstractHorse entity) {
         return getDisplayName(entity) +
                " [" + HorseInfoUtil.getEvaluateRankString(HorseInfoUtil.getEvaluateValue(entity)) + "]";
     }
 
-    public static String getOwner(AbstractHorseEntity entity) {
-        UUID ownerUUID = entity.getOwnerUniqueId();
+    public static String getOwner(AbstractHorse entity) {
+        UUID ownerUUID = entity.getOwnerUUID();
         if (ownerUUID == null)
             return null;
 
@@ -107,11 +111,11 @@ class HorseInfoUtil {
         return "(Owner: " + ownerName + ")";
     }
 
-    public static String getAgeOrOwnerString(AbstractHorseEntity entity) {
+    public static String getAgeOrOwnerString(AbstractHorse entity) {
         String str = null;
         List<Entity> passengers = entity.getPassengers();
         if (passengers == null || passengers.size() == 0) {
-            if (entity.isChild()) {
+            if (entity.isBaby()) {
                 str = "(Baby)";
             } else {
                 str = getOwner(entity);
@@ -120,15 +124,15 @@ class HorseInfoUtil {
         return str;
     }
 
-    public static List<String> getHorseInfoString(AbstractHorseEntity entity) {
+    public static List<String> getHorseInfoString(AbstractHorse entity) {
         List<String> stringArray = new ArrayList<String>();
         List<Entity> passengers = entity.getPassengers();
         if (passengers == null || passengers.size() == 0) {
             double paramHealth = entity.getHealth();
             double paramMaxHealth = entity.getMaxHealth();
             double paramSpeed = getSpeed(entity);
-            double paramJump = entity.getHorseJumpStrength();
-            double jumpHeight = getJumpHeight(paramJump);
+            double paramJump = getJumpStrength(entity);
+            double jumpHeight = getJumpHeight(entity);
             // double paramRank = getEvaluateValue(entity);
 
             stringArray.add(String.format("HP: %.2f/%.2f", paramHealth, paramMaxHealth));

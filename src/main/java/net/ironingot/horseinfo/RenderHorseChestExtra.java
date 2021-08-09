@@ -3,28 +3,28 @@ package net.ironingot.horseinfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.ChestedHorseRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.entity.passive.horse.AbstractChestedHorseEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderHorseChestExtra<T extends AbstractChestedHorseEntity> extends ChestedHorseRenderer<T> {
+public class RenderHorseChestExtra<T extends AbstractChestedHorse> extends ChestedHorseRenderer<T> {
     private static Logger logger = LogManager.getLogger();
 
-    public RenderHorseChestExtra(EntityRendererManager renderManager, float f) {
-        super(renderManager, f);
+    public RenderHorseChestExtra(EntityRendererProvider.Context context, float f, ModelLayerLocation loc) {
+        super(context, f, loc);
     }
 
     @Override
-    public void render(T entity, float yaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(T entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (HorseInfoMod.isActive()) {
@@ -37,7 +37,6 @@ public class RenderHorseChestExtra<T extends AbstractChestedHorseEntity> extends
                 stringInfo.add(stringAgeOrOwner);
 
             RenderUtil.renderEntityInfo(
-                renderManager,
                 entity,
                 stringInfo,
                 matrixStackIn,
