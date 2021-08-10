@@ -54,13 +54,13 @@ public class HorseInfoMod
 
     public static final PlayerNameManager playerNameManager = new PlayerNameManager();
 
-    private static boolean isActive = false;
-
     public HorseInfoMod() {
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, KeyInputEvent.class, this::onKeyInput);
 
+        Config.register(ModLoadingContext.get());
         modVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
+
         HorseInfoMod.logger.info("*** HorseInfoReloaded " + modVersion + " initialized ***");
     }
 
@@ -100,12 +100,13 @@ public class HorseInfoMod
     }
 
     public static boolean isActive() {
-        return isActive;
+        return Config.enableMod.get();
     }
 
     public static void toggle() {
-        isActive = isActive ? false : true;
-        message("HorseInfo " + ((isActive) ? "Enabled" : "Disabled"));
+        boolean flag = !isActive();
+        Config.enableMod.set(flag);
+        message("HorseInfo " + (flag ? "Enabled" : "Disabled"));
     }
 
     @OnlyIn(Dist.CLIENT)

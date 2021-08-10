@@ -17,6 +17,7 @@ Also, this mod can show the following animal names and owners:
 * Cat
 * Dog
 * Llama
+* Parrot
 
 ## Usage
 
