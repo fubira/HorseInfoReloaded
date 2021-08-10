@@ -18,7 +18,6 @@ public class PlayerNameManager
 
     private class PlayerNameResult
     {
-        public String id;
         public String name;
     }
 

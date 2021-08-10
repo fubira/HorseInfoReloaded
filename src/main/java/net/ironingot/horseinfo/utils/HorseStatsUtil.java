@@ -1,16 +1,11 @@
-package net.ironingot.horseinfo;
+package net.ironingot.horseinfo.utils;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
-import net.minecraftforge.common.UsernameCache;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-class HorseInfoUtil {
+public class HorseStatsUtil {
 
     public static double getSpeed(AbstractHorse entity) {
         return entity.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
@@ -34,8 +29,8 @@ class HorseInfoUtil {
     }
 
     public static double getEvaluateValue(AbstractHorse entity) {
-        double paramSpeed = HorseInfoUtil.getSpeed(entity);
-        double jumpHeight = HorseInfoUtil.getJumpHeight(entity);
+        double paramSpeed = HorseStatsUtil.getSpeed(entity);
+        double jumpHeight = HorseStatsUtil.getJumpHeight(entity);
         double jumpRating = Math.floor(jumpHeight * 2.0D) / (2.0D * 5.0D);
 
         final double speedHeavy = 10.0D;
@@ -86,59 +81,5 @@ class HorseInfoUtil {
         if (pt < 0)
             return rankColor[0];
         return rankColor[pt];
-    }
-
-    public static String getDisplayName(AbstractHorse entity) {
-        return entity.getDisplayName().getString();
-    }
-
-    public static String getDisplayNameWithRank(AbstractHorse entity) {
-        return getDisplayName(entity) +
-               " [" + HorseInfoUtil.getEvaluateRankString(HorseInfoUtil.getEvaluateValue(entity)) + "]";
-    }
-
-    public static String getOwner(AbstractHorse entity) {
-        UUID ownerUUID = entity.getOwnerUUID();
-        if (ownerUUID == null)
-            return null;
-
-        String ownerName = "Unknown";
-        if (UsernameCache.containsUUID(ownerUUID))
-            ownerName = UsernameCache.getLastKnownUsername(ownerUUID);
-        else
-            ownerName = HorseInfoMod.playerNameManager.getPlayerName(ownerUUID);
-
-        return "(Owner: " + ownerName + ")";
-    }
-
-    public static String getAgeOrOwnerString(AbstractHorse entity) {
-        String str = null;
-        List<Entity> passengers = entity.getPassengers();
-        if (passengers == null || passengers.size() == 0) {
-            if (entity.isBaby()) {
-                str = "(Baby)";
-            } else {
-                str = getOwner(entity);
-            }
-        }
-        return str;
-    }
-
-    public static List<String> getHorseInfoString(AbstractHorse entity) {
-        List<String> stringArray = new ArrayList<String>();
-        List<Entity> passengers = entity.getPassengers();
-        if (passengers == null || passengers.size() == 0) {
-            double paramHealth = entity.getHealth();
-            double paramMaxHealth = entity.getMaxHealth();
-            double paramSpeed = getSpeed(entity);
-            double paramJump = getJumpStrength(entity);
-            double jumpHeight = getJumpHeight(entity);
-            // double paramRank = getEvaluateValue(entity);
-
-            stringArray.add(String.format("HP: %.2f/%.2f", paramHealth, paramMaxHealth));
-            stringArray.add(String.format("SP: %.4f [%.1f(m/s)]", paramSpeed, paramSpeed * 43.0D));
-            stringArray.add(String.format("JP: %.4f [%.1f(m)]", paramJump, jumpHeight));
-        }
-        return stringArray;
     }
 }

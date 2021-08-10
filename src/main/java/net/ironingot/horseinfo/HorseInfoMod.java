@@ -23,7 +23,6 @@ import net.minecraft.world.entity.animal.horse.Donkey;
 import net.minecraft.world.entity.animal.horse.Mule;
 
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
 
 import java.util.UUID;
@@ -33,6 +32,13 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import net.ironingot.horseinfo.playername.PlayerNameManager;
+import net.ironingot.horseinfo.renderer.CatWithInfoRenderer;
+import net.ironingot.horseinfo.renderer.ChestedHorseWithInfoRenderer;
+import net.ironingot.horseinfo.renderer.HorseWithInfoRenderer;
+import net.ironingot.horseinfo.renderer.UndeadHorseWithInfoRenderer;
+import net.ironingot.horseinfo.renderer.LlamaWithInfoRenderer;
+import net.ironingot.horseinfo.renderer.ParrotWithInfoRenderer;
+import net.ironingot.horseinfo.renderer.WolfWithInfoRenderer;
 
 @Mod(HorseInfoMod.modId)
 public class HorseInfoMod
@@ -70,14 +76,15 @@ public class HorseInfoMod
     @OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
-        EntityRenderers.register(EntityType.HORSE, RenderHorseExtra::new);
-        EntityRenderers.register(EntityType.SKELETON_HORSE, context -> new RenderHorseUndeadExtra(context, ModelLayers.SKELETON_HORSE));
-        EntityRenderers.register(EntityType.ZOMBIE_HORSE, context -> new RenderHorseUndeadExtra(context, ModelLayers.ZOMBIE_HORSE));
-        EntityRenderers.register(EntityType.MULE, context -> new RenderHorseChestExtra<Mule>(context, 0.92F, ModelLayers.MULE));
-        EntityRenderers.register(EntityType.DONKEY, context -> new RenderHorseChestExtra<Donkey>(context, 0.92F, ModelLayers.DONKEY));
-        EntityRenderers.register(EntityType.LLAMA, context -> new RenderLlamaExtra(context, ModelLayers.LLAMA));
-        EntityRenderers.register(EntityType.WOLF, RenderWolfExtra::new);
-        EntityRenderers.register(EntityType.CAT, RenderCatExtra::new);
+        EntityRenderers.register(EntityType.HORSE, HorseWithInfoRenderer::new);
+        EntityRenderers.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE));
+        EntityRenderers.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE));
+        EntityRenderers.register(EntityType.MULE, context -> new ChestedHorseWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE));
+        EntityRenderers.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.92F, ModelLayers.DONKEY));
+        EntityRenderers.register(EntityType.LLAMA, context -> new LlamaWithInfoRenderer(context, ModelLayers.LLAMA));
+        EntityRenderers.register(EntityType.WOLF, WolfWithInfoRenderer::new);
+        EntityRenderers.register(EntityType.CAT, CatWithInfoRenderer::new);
+        EntityRenderers.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
     }
 
     public static void message(String s) {

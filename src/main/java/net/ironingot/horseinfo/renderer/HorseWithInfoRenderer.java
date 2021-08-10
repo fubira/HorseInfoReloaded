@@ -1,8 +1,6 @@
-package net.ironingot.horseinfo;
+package net.ironingot.horseinfo.renderer;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.EnumMap;
 import java.util.Map;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -20,15 +18,14 @@ import net.minecraft.world.entity.animal.horse.Variant;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 
+import net.ironingot.horseinfo.HorseInfoMod;
+import net.ironingot.horseinfo.utils.EntityInfoUtil;
+import net.ironingot.horseinfo.utils.RenderUtil;
+
 import com.google.common.collect.Maps;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 @OnlyIn(Dist.CLIENT)
-public class RenderHorseExtra extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
-    private static Logger logger = LogManager.getLogger();
-
+public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
     private static final Map<Variant, ResourceLocation> LOCATION_BY_VARIANT = Util.make(Maps.newEnumMap(Variant.class), map -> {
         map.put(Variant.WHITE, new ResourceLocation("textures/entity/horse/horse_white.png"));
         map.put(Variant.CREAMY, new ResourceLocation("textures/entity/horse/horse_creamy.png"));
@@ -39,9 +36,8 @@ public class RenderHorseExtra extends AbstractHorseRenderer<Horse, HorseModel<Ho
         map.put(Variant.DARKBROWN, new ResourceLocation("textures/entity/horse/horse_darkbrown.png"));
     });
 
-    public RenderHorseExtra(EntityRendererProvider.Context context) {
+    public HorseWithInfoRenderer(EntityRendererProvider.Context context) {
         super(context, new HorseModel<Horse>(context.bakeLayer(ModelLayers.HORSE)), 1.1F);
-
         addLayer(new HorseMarkingLayer(this));
         addLayer(new HorseArmorLayer(this, context.getModelSet()));
     }
@@ -54,22 +50,25 @@ public class RenderHorseExtra extends AbstractHorseRenderer<Horse, HorseModel<Ho
     public void render(Horse entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
-        if (HorseInfoMod.isActive()) {
-            List<String> stringInfo = new ArrayList<String>();
-            stringInfo.add(HorseInfoUtil.getDisplayNameWithRank(entity));
-            stringInfo.addAll(HorseInfoUtil.getHorseInfoString(entity));
-
-            String stringAgeOrOwner = HorseInfoUtil.getAgeOrOwnerString(entity);
-            if (stringAgeOrOwner != null)
-                stringInfo.add(stringAgeOrOwner);
-
-            RenderUtil.renderEntityInfo(
-                entity,
-                stringInfo,
-                matrixStackIn,
-                bufferIn,
-                packedLightIn
-            );
+        if (!HorseInfoMod.isActive()) {
+            return;
         }
+
+        ArrayList<String> infoString = new ArrayList<String>();
+        infoString.add(EntityInfoUtil.getDisplayNameWithRank(entity));
+        infoString.addAll(EntityInfoUtil.getHorseStatsString(entity));
+
+        String stringAgeOrOwner = EntityInfoUtil.getAgeOrOwnerString(entity);
+        if (stringAgeOrOwner != null) {
+            infoString.add(stringAgeOrOwner);
+        }
+
+        RenderUtil.renderEntityInfo(
+            entity,
+            infoString,
+            matrixStackIn,
+            bufferIn,
+            packedLightIn
+        );
     }
 }

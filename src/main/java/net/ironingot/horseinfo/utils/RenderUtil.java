@@ -1,8 +1,7 @@
-package net.ironingot.horseinfo;
+package net.ironingot.horseinfo.utils;
 
 import java.awt.Color;
 import java.util.List;
-
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -51,8 +50,8 @@ public class RenderUtil
 
         if (entity instanceof AbstractHorse)
         {
-            double evaluateValue = HorseInfoUtil.getEvaluateValue((AbstractHorse)entity);
-            Color evaluateColor = HorseInfoUtil.getEvaluateRankColor(evaluateValue);
+            double evaluateValue = HorseStatsUtil.getEvaluateValue((AbstractHorse)entity);
+            Color evaluateColor = HorseStatsUtil.getEvaluateRankColor(evaluateValue);
             if (evaluateColor != null)
                 color = evaluateColor;
         }
