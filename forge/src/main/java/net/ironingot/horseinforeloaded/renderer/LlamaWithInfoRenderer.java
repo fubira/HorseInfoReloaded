@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.ironingot.horseinforeloaded.HorseInfoMod;
-import net.ironingot.horseinforeloaded.utils.EntityInfoUtil;
+import net.ironingot.horseinforeloaded.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.utils.RenderUtil;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -31,8 +31,8 @@ public class LlamaWithInfoRenderer extends LlamaRenderer
         }
 
         ArrayList<String> infoString = new ArrayList<String>();
-        infoString.add(EntityInfoUtil.getDisplayNameString(entity));
-        infoString.add(EntityInfoUtil.getOwnerString(entity));
+        infoString.add(EntityUtil.getDisplayNameString(entity));
+        infoString.add(EntityUtil.getOwnerString(entity));
 
         if (entity.isTamed()) {
             RenderUtil.renderEntityInfo(

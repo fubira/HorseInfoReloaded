@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.ironingot.horseinforeloaded.HorseInfoMod;
-import net.ironingot.horseinforeloaded.utils.EntityInfoUtil;
+import net.ironingot.horseinforeloaded.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.utils.RenderUtil;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -29,8 +29,8 @@ public class UndeadHorseWithInfoRenderer extends UndeadHorseRenderer {
         }
 
         ArrayList<String> infoString = new ArrayList<String>();
-        infoString.add(EntityInfoUtil.getDisplayNameWithRank(entity));
-        infoString.addAll(EntityInfoUtil.getHorseStatsString(entity));
+        infoString.add(EntityUtil.getDisplayNameWithRank(entity));
+        infoString.addAll(EntityUtil.getHorseStatsString(entity));
 
         RenderUtil.renderEntityInfo(
             entity,

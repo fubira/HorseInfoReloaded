@@ -8,7 +8,7 @@ import net.ironingot.horseinforeloaded.common.HorseInfoStats;
 import java.awt.Color;
 import java.util.List;
 
-public class HorseStatsUtil {
+public class HorseEntityUtil {
     public static double getSpeed(AbstractHorse entity) {
         return entity.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
     }
@@ -23,32 +23,32 @@ public class HorseStatsUtil {
 
     public static double getEvaluateValue(AbstractHorse entity) {
         return HorseInfoStats.calcEvaluateValue(
-            HorseStatsUtil.getSpeed(entity),
-            HorseStatsUtil.getJumpHeight(entity)
+            HorseEntityUtil.getSpeed(entity),
+            HorseEntityUtil.getJumpHeight(entity)
         );
     }
 
     public static String getEvaluateRankString(AbstractHorse entity) {
         return HorseInfoStats.calcEvaluateRankString(
-            HorseStatsUtil.getSpeed(entity),
-            HorseStatsUtil.getJumpHeight(entity)
+            HorseEntityUtil.getSpeed(entity),
+            HorseEntityUtil.getJumpHeight(entity)
         );
     }
 
     public static Color getEvaluateRankColor(AbstractHorse entity) {
         return HorseInfoStats.calcEvaluateRankColor(
-            HorseStatsUtil.getSpeed(entity),
-            HorseStatsUtil.getJumpHeight(entity)
+            HorseEntityUtil.getSpeed(entity),
+            HorseEntityUtil.getJumpHeight(entity)
         );
     }
 
-    public static List<String> getHorseStatsStrings(AbstractHorse entity) {
+    public static List<String> getStatsStrings(AbstractHorse entity) {
         return HorseInfoStats.formatHorseStats(
             entity.getHealth(),
             entity.getMaxHealth(),
-            HorseStatsUtil.getSpeed(entity),
-            HorseStatsUtil.getJumpStrength(entity),
-            HorseStatsUtil.getJumpHeight(entity)
+            HorseEntityUtil.getSpeed(entity),
+            HorseEntityUtil.getJumpStrength(entity),
+            HorseEntityUtil.getJumpHeight(entity)
         );
     }
 }

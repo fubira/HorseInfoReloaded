@@ -12,7 +12,7 @@ import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.common.HorseInfoFormat;
 import net.minecraft.world.Nameable;
 
-public class EntityInfoUtil {
+public class EntityUtil {
     public static String getDisplayNameString(Nameable entity)
     {
         return entity.getDisplayName().getString();
@@ -50,8 +50,8 @@ public class EntityInfoUtil {
 
     public static String getDisplayNameWithRank(AbstractHorse entity) {
         return HorseInfoFormat.formatHorseNameWithRank(
-            EntityInfoUtil.getDisplayNameString(entity),
-            HorseStatsUtil.getEvaluateRankString(entity)
+            EntityUtil.getDisplayNameString(entity),
+            HorseEntityUtil.getEvaluateRankString(entity)
         );
     }
 
@@ -59,7 +59,7 @@ public class EntityInfoUtil {
         List<Entity> passengers = entity.getPassengers();
 
         if (passengers == null || passengers.size() == 0) {
-            return HorseStatsUtil.getHorseStatsStrings(entity);
+            return HorseEntityUtil.getStatsStrings(entity);
         }
         return null;
     }

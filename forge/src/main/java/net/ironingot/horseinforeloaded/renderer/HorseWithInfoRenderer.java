@@ -17,7 +17,7 @@ import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Variant;
 import net.minecraft.resources.ResourceLocation;
 import net.ironingot.horseinforeloaded.HorseInfoMod;
-import net.ironingot.horseinforeloaded.utils.EntityInfoUtil;
+import net.ironingot.horseinforeloaded.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.utils.RenderUtil;
 import net.minecraft.Util;
 
@@ -54,10 +54,10 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseMod
         }
 
         ArrayList<String> infoString = new ArrayList<String>();
-        infoString.add(EntityInfoUtil.getDisplayNameWithRank(entity));
-        infoString.addAll(EntityInfoUtil.getHorseStatsString(entity));
+        infoString.add(EntityUtil.getDisplayNameWithRank(entity));
+        infoString.addAll(EntityUtil.getHorseStatsString(entity));
 
-        String stringAgeOrOwner = EntityInfoUtil.getAgeOrOwnerString(entity);
+        String stringAgeOrOwner = EntityUtil.getAgeOrOwnerString(entity);
         if (stringAgeOrOwner != null) {
             infoString.add(stringAgeOrOwner);
         }

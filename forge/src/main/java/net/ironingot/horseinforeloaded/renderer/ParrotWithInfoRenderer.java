@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ParrotRenderer;
 import net.ironingot.horseinforeloaded.HorseInfoMod;
-import net.ironingot.horseinforeloaded.utils.EntityInfoUtil;
+import net.ironingot.horseinforeloaded.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.utils.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.animal.Parrot;
@@ -29,8 +29,8 @@ public class ParrotWithInfoRenderer extends ParrotRenderer
         }
 
         ArrayList<String> infoString = new ArrayList<String>();
-        infoString.add(EntityInfoUtil.getDisplayNameString(entity));
-        infoString.add(EntityInfoUtil.getOwnerString(entity));
+        infoString.add(EntityUtil.getDisplayNameString(entity));
+        infoString.add(EntityUtil.getOwnerString(entity));
 
         if (entity.isTame()) {
             RenderUtil.renderEntityInfo(
