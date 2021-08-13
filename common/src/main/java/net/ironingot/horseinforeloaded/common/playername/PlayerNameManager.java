@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded.playername;
+package net.ironingot.horseinforeloaded.common.playername;
 
 import java.util.HashMap;
 import java.util.ArrayList;

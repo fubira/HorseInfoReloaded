@@ -23,7 +23,7 @@ import net.minecraft.world.entity.animal.horse.Donkey;
 import net.minecraft.world.entity.animal.horse.Mule;
 
 import net.minecraft.network.chat.TextComponent;
-import net.ironingot.horseinforeloaded.playername.PlayerNameManager;
+import net.ironingot.horseinforeloaded.common.playername.PlayerNameManager;
 import net.ironingot.horseinforeloaded.renderer.CatWithInfoRenderer;
 import net.ironingot.horseinforeloaded.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.renderer.HorseWithInfoRenderer;

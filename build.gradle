@@ -21,6 +21,7 @@ allprojects {
     }
 
     dependencies {
+        implementation(libs.gson)
     }
 
     repositories {
