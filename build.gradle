@@ -1,79 +1,46 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
-        jcenter()
     }
+
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'net.minecraftforge.gradle'
+plugins{
+}
 
-def mc_version = "1.17.1"
-def forge_version = "37.0.27"
-def postfix_version = "b"
+allprojects {
+    apply plugin: "java"
 
-version = "${mc_version}-${postfix_version}"
-group = "net.ironingot.horseinfo"
-archivesBaseName = "HorseInfoReloaded"
+    java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.compilerArgs = ["-Xlint:deprecation"]
+    }
 
-minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    dependencies {
+    }
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                horseinfo {
-                    source sourceSets.main
-                }
-            }
-        }
-        server {
-            workingDirectory file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                horseinfo {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
+    repositories {
+        mavenCentral()
+        maven {
+            name = "Minecraft Libraries"
+            url = uri("https://libraries.minecraft.net")
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+group = "net.ironingot"
+archivesBaseName = "${project.modName}-${project.minecraft_version}"
 
+task buildJar(type: Jar, group: "modding") {
+    dependsOn ":common:build", ":forge:build"
 
-dependencies {
-    minecraft 'net.minecraftforge:forge:' + mc_version + '-' + forge_version
-}
-
-def defaultEncoding = 'UTF-8'
-tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
-
-jar {
-    archiveName = archivesBaseName + '-' + mc_version + '-' + postfix_version + '.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from zipTree("common/build/libs/common-${project.version}.jar"),
+        zipTree("forge/build/libs/forge-${project.version}.jar")
 
     from('./') {
         include 'LICENSE.md'
@@ -81,15 +48,14 @@ jar {
 
     manifest {
         attributes([
-            'Specification-Title'  : 'HorseInfoReloaded',
-            'Specification-Vendor' : 'fubira / kenmomine.club',
-            'Specification-Version': '1',
-
-            'Implementation-Title'  : 'HorseInforeloaded',
-            'Implementation-Vendor' : 'fubira / kenmomine.club',
-            'Implementation-Version': version,
-
-            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Specification-Title"     : project.modId,
+                "Specification-Vendor"    : project.vendor,
+                "Specification-Version"   : project.version,
+                "Implementation-Title"    : project.modName,
+                "Implementation-Version"  : project.version,
+                "Implementation-Vendor"   : project.vendor,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
+assemble.finalizedBy("buildJar")

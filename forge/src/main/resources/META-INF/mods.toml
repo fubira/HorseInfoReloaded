@@ -1,31 +1,31 @@
-modLoader="javafml"
-loaderVersion="[37,)" 
+modLoader = "javafml"
+loaderVersion = "[37,)" 
 
-author="fubira"
-license="Copyright (c) 2016-2020 fubira"
-issueTrackerURL="https://github.com/fubira/HorseInfoReloaded/issues"
+author = "${author}"
+license = "Copyright (c) ${vendor}"
+issueTrackerURL = "https://github.com/fubira/HorseInfoReloaded/issues"
 
 [[mods]]
-modId="horseinfo"
-version="${file.jarVersion}"
-displayName="HorseInfoReloaded"
+modId = "${modId}"
+version = "${version}"
+displayName = "${modName}"
 displayURL="https://github.com/fubira/HorseInfoReloaded/"
-credits="fubira/KenmoMinecraftClub"
-author="fubira"
+credits="${vendor}"
+author = "${author}"
 
 description='''
 HorseInfoReloaded is display mod for ability of Horses.
 inspired by HorseInfo/(by TTTA2)
 '''
 
-[[dependencies.horseinfo]]
+[[dependencies.horseinforeloaded]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.17,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.horseinfo]]
+[[dependencies.horseinforeloaded]]
     modId="forge"
     mandatory=true
     versionRange="[37,)"

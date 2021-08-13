@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        gradlePluginPortal()
+    }
+}
+
+enableFeaturePreview("VERSION_CATALOGS")
+rootProject.name = "HorseInfoReloaded"
+
+include("common")
+include("forge")

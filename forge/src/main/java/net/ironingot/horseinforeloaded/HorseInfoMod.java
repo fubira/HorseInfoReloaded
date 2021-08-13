@@ -1,4 +1,4 @@
-package net.ironingot.horseinfo;
+package net.ironingot.horseinforeloaded;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,6 +23,14 @@ import net.minecraft.world.entity.animal.horse.Donkey;
 import net.minecraft.world.entity.animal.horse.Mule;
 
 import net.minecraft.network.chat.TextComponent;
+import net.ironingot.horseinforeloaded.playername.PlayerNameManager;
+import net.ironingot.horseinforeloaded.renderer.CatWithInfoRenderer;
+import net.ironingot.horseinforeloaded.renderer.ChestedHorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.renderer.HorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.renderer.LlamaWithInfoRenderer;
+import net.ironingot.horseinforeloaded.renderer.ParrotWithInfoRenderer;
+import net.ironingot.horseinforeloaded.renderer.UndeadHorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.renderer.WolfWithInfoRenderer;
 import net.minecraft.ChatFormatting;
 
 import java.util.UUID;
@@ -31,21 +39,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
-import net.ironingot.horseinfo.playername.PlayerNameManager;
-import net.ironingot.horseinfo.renderer.CatWithInfoRenderer;
-import net.ironingot.horseinfo.renderer.ChestedHorseWithInfoRenderer;
-import net.ironingot.horseinfo.renderer.HorseWithInfoRenderer;
-import net.ironingot.horseinfo.renderer.UndeadHorseWithInfoRenderer;
-import net.ironingot.horseinfo.renderer.LlamaWithInfoRenderer;
-import net.ironingot.horseinfo.renderer.ParrotWithInfoRenderer;
-import net.ironingot.horseinfo.renderer.WolfWithInfoRenderer;
-
 @Mod(HorseInfoMod.modId)
 public class HorseInfoMod
 {
     private static final Logger logger = LogManager.getLogger();
 
-    public static final String modId ="horseinfo";
+    public static final String modId ="horseinforeloaded";
     public static final String buildId ="2021-1";
     public static String modVersion;
 

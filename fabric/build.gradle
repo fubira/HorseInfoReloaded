@@ -1,0 +1,95 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle'
+
+def mc_version = "1.17.1"
+def forge_version = "37.0.27"
+def postfix_version = "b"
+
+version = "${mc_version}-${postfix_version}"
+group = "net.ironingot.horseinfo"
+archivesBaseName = "HorseInfoReloaded"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+
+minecraft {
+    mappings channel: 'official', version: '1.17.1'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                horseinfo {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                horseinfo {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:' + mc_version + '-' + forge_version
+}
+
+def defaultEncoding = 'UTF-8'
+tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+
+jar {
+    archiveName = archivesBaseName + '-' + mc_version + '-' + postfix_version + '.jar'
+
+    from('./') {
+        include 'LICENSE.md'
+    }
+
+    manifest {
+        attributes([
+            'Specification-Title'  : 'HorseInfoReloaded',
+            'Specification-Vendor' : 'fubira / kenmomine.club',
+            'Specification-Version': '1',
+
+            'Implementation-Title'  : 'HorseInforeloaded',
+            'Implementation-Vendor' : 'fubira / kenmomine.club',
+            'Implementation-Version': version,
+
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}

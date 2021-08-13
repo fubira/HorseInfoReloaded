@@ -1,30 +1,27 @@
-package net.ironingot.horseinfo.renderer;
+package net.ironingot.horseinforeloaded.renderer;
 
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LlamaRenderer;
+import net.minecraft.client.renderer.entity.ParrotRenderer;
+import net.ironingot.horseinforeloaded.HorseInfoMod;
+import net.ironingot.horseinforeloaded.utils.EntityInfoUtil;
+import net.ironingot.horseinforeloaded.utils.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.entity.animal.horse.Llama;
-
-import net.ironingot.horseinfo.HorseInfoMod;
-import net.ironingot.horseinfo.utils.EntityInfoUtil;
-import net.ironingot.horseinfo.utils.RenderUtil;
+import net.minecraft.world.entity.animal.Parrot;
 
 @OnlyIn(Dist.CLIENT)
-public class LlamaWithInfoRenderer extends LlamaRenderer
+public class ParrotWithInfoRenderer extends ParrotRenderer
 {
-    public LlamaWithInfoRenderer(EntityRendererProvider.Context context, ModelLayerLocation location)
-    {
-        super(context, location);
+    public ParrotWithInfoRenderer(EntityRendererProvider.Context context) {
+        super(context);
     }
 
     @Override
-    public void render(Llama entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void render(Parrot entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (!HorseInfoMod.isActive()) {
@@ -35,7 +32,7 @@ public class LlamaWithInfoRenderer extends LlamaRenderer
         infoString.add(EntityInfoUtil.getDisplayNameString(entity));
         infoString.add(EntityInfoUtil.getOwnerString(entity));
 
-        if (entity.isTamed()) {
+        if (entity.isTame()) {
             RenderUtil.renderEntityInfo(
                 entity,
                 infoString,

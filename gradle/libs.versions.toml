@@ -1,0 +1,3 @@
+[libraries]
+minecraft = { group = "com.mojang", name = "minecraft", version = "1.17.1" }
+forge = { group = "net.minecraftforge", name = "forge", version = "1.17.1-37.0.27" }

@@ -1,4 +1,4 @@
-package net.ironingot.horseinfo.utils;
+package net.ironingot.horseinforeloaded.utils;
 
 import java.util.UUID;
 import java.util.ArrayList;
@@ -9,9 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.ironingot.horseinforeloaded.HorseInfoMod;
 import net.minecraft.world.Nameable;
-
-import net.ironingot.horseinfo.HorseInfoMod;
 
 public class EntityInfoUtil {
     public static String getDisplayNameString(Nameable entity)

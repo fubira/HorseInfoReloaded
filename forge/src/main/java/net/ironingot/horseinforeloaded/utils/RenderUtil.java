@@ -1,4 +1,4 @@
-package net.ironingot.horseinfo.utils;
+package net.ironingot.horseinforeloaded.utils;
 
 import java.awt.Color;
 import java.util.List;

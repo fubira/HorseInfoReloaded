@@ -1,4 +1,4 @@
-package net.ironingot.horseinfo.renderer;
+package net.ironingot.horseinforeloaded.renderer;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,11 +16,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Variant;
 import net.minecraft.resources.ResourceLocation;
+import net.ironingot.horseinforeloaded.HorseInfoMod;
+import net.ironingot.horseinforeloaded.utils.EntityInfoUtil;
+import net.ironingot.horseinforeloaded.utils.RenderUtil;
 import net.minecraft.Util;
-
-import net.ironingot.horseinfo.HorseInfoMod;
-import net.ironingot.horseinfo.utils.EntityInfoUtil;
-import net.ironingot.horseinfo.utils.RenderUtil;
 
 import com.google.common.collect.Maps;
 
