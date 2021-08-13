@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded;
+package net.ironingot.horseinforeloaded.forge;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,13 +25,13 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
-import net.ironingot.horseinforeloaded.renderer.CatWithInfoRenderer;
-import net.ironingot.horseinforeloaded.renderer.ChestedHorseWithInfoRenderer;
-import net.ironingot.horseinforeloaded.renderer.HorseWithInfoRenderer;
-import net.ironingot.horseinforeloaded.renderer.LlamaWithInfoRenderer;
-import net.ironingot.horseinforeloaded.renderer.ParrotWithInfoRenderer;
-import net.ironingot.horseinforeloaded.renderer.UndeadHorseWithInfoRenderer;
-import net.ironingot.horseinforeloaded.renderer.WolfWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.CatWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.ChestedHorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.HorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.LlamaWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.ParrotWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.UndeadHorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.forge.renderer.WolfWithInfoRenderer;
 
 import java.util.UUID;
 
@@ -100,7 +100,7 @@ public class HorseInfoMod
 
     @OnlyIn(Dist.CLIENT)
     public void onKeyInput(KeyInputEvent event) {
-        if (KEYBINDING_MODE.isDown()) {
+        if (KEYBINDING_MODE.consumeClick()) {
             toggle();
         }
     }

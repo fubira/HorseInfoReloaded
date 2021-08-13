@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded;
+package net.ironingot.horseinforeloaded.forge;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;

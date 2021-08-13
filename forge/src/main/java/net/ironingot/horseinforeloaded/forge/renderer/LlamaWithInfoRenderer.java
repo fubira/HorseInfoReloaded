@@ -1,13 +1,13 @@
-package net.ironingot.horseinforeloaded.renderer;
+package net.ironingot.horseinforeloaded.forge.renderer;
 
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.ironingot.horseinforeloaded.HorseInfoMod;
-import net.ironingot.horseinforeloaded.utils.EntityUtil;
-import net.ironingot.horseinforeloaded.utils.RenderUtil;
+import net.ironingot.horseinforeloaded.forge.HorseInfoMod;
+import net.ironingot.horseinforeloaded.forge.utils.EntityUtil;
+import net.ironingot.horseinforeloaded.forge.utils.RenderUtil;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LlamaRenderer;

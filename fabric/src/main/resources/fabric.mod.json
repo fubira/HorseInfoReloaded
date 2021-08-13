@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "${modId}",
+  "version": "${version}",
+  "name": "${modName}",
+  "description": "HorseInfoReloaded is display mod for ability of Horses.",
+  
+  "authors": [
+    "fubira"
+  ],
+  "contact": {
+    "homepage": "https://github.com/fubira/HorseInfoReloaded/",
+    "issues": "https://github.com/fubira/HorseInfoReloaded/issues"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.ironingot.horseinforeloaded.fabric.HorseInfoMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}

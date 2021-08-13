@@ -1,95 +1,51 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-    }
+plugins {
+    id("fabric-loom")
 }
-
-apply plugin: 'java'
-apply plugin: 'net.minecraftforge.gradle'
-
-def mc_version = "1.17.1"
-def forge_version = "37.0.27"
-def postfix_version = "b"
-
-version = "${mc_version}-${postfix_version}"
-group = "net.ironingot.horseinfo"
-archivesBaseName = "HorseInfoReloaded"
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
-
-minecraft {
-    mappings channel: 'official', version: '1.17.1'
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                horseinfo {
-                    source sourceSets.main
-                }
-            }
-        }
-        server {
-            workingDirectory file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                horseinfo {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:' + mc_version + '-' + forge_version
+    minecraft(libs.minecraft)
+    mappings(loom.officialMojangMappings())
+    modImplementation(libs.bundles.fabric)
+    implementation(project(":common"))
+
+    modImplementation(libs.clothConfigFabric)
+    include(libs.clothConfigFabric)
 }
 
-def defaultEncoding = 'UTF-8'
-tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+tasks {
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
-jar {
-    archiveName = archivesBaseName + '-' + mc_version + '-' + postfix_version + '.jar'
+        from("src/main/resources", "../common/src/main/resources")
 
-    from('./') {
-        include 'LICENSE.md'
+        filesMatching("fabric.mod.json") {
+            expand(project.properties)
+        }
     }
 
-    manifest {
-        attributes([
-            'Specification-Title'  : 'HorseInfoReloaded',
-            'Specification-Vendor' : 'fubira / kenmomine.club',
-            'Specification-Version': '1',
+    compileJava {
+        options.encoding = "UTF-8"
+        options.release.set(16)
+    }
+}
 
-            'Implementation-Title'  : 'HorseInforeloaded',
-            'Implementation-Vendor' : 'fubira / kenmomine.club',
-            'Implementation-Version': version,
+loom {
+    mixin {
+        getDefaultRefmapName().set("fabric.${modId}.refmap.json")
+    }
 
-            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+    runs {
+        create("horseInfoReloadedClient") {
+            client()
+
+            property("fabric.log.level", "debug")
+            vmArg("-XX:+ShowCodeDetailsInExceptionMessages")
+        }
+        create("horseInfoReloadedServer") {
+            server()
+
+            property("fabric.log.level", "debug")
+            vmArg("-XX:+ShowCodeDetailsInExceptionMessages")
+        }
     }
 }

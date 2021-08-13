@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded.utils;
+package net.ironingot.horseinforeloaded.forge.utils;
 
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.ai.attributes.Attributes;

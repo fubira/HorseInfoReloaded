@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded.renderer;
+package net.ironingot.horseinforeloaded.forge.renderer;
 
 import java.util.ArrayList;
 
@@ -6,22 +6,23 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ParrotRenderer;
-import net.ironingot.horseinforeloaded.HorseInfoMod;
-import net.ironingot.horseinforeloaded.utils.EntityUtil;
-import net.ironingot.horseinforeloaded.utils.RenderUtil;
+import net.minecraft.client.renderer.entity.WolfRenderer;
+import net.ironingot.horseinforeloaded.forge.HorseInfoMod;
+import net.ironingot.horseinforeloaded.forge.utils.EntityUtil;
+import net.ironingot.horseinforeloaded.forge.utils.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.animal.Wolf;
 
 @OnlyIn(Dist.CLIENT)
-public class ParrotWithInfoRenderer extends ParrotRenderer
+public class WolfWithInfoRenderer extends WolfRenderer
 {
-    public ParrotWithInfoRenderer(EntityRendererProvider.Context context) {
+    public WolfWithInfoRenderer(EntityRendererProvider.Context context)
+    {
         super(context);
     }
 
     @Override
-    public void render(Parrot entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void render(Wolf entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (!HorseInfoMod.isActive()) {

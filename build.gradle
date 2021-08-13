@@ -32,6 +32,10 @@ allprojects {
             name = "Minecraft Libraries"
             url = uri("https://libraries.minecraft.net")
         }
+        maven {
+            name = "Cloth Config"
+            url = "https://maven.shedaniel.me/"
+        }
     }
 }
 
@@ -39,10 +43,11 @@ group = "net.ironingot"
 archivesBaseName = "${project.modName}-${project.minecraft_version}"
 
 task buildJar(type: Jar, group: "modding") {
-    dependsOn ":common:build", ":forge:build"
+    dependsOn ":common:build", ":fabric:build", ":forge:build"
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from zipTree("common/build/libs/common-${project.version}.jar"),
+        zipTree("fabric/build/libs/fabric-${project.version}.jar"),
         zipTree("forge/build/libs/forge-${project.version}.jar")
 
     from('./') {

@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded.utils;
+package net.ironingot.horseinforeloaded.fabric.utils;
 
 import java.awt.Color;
 import java.util.List;

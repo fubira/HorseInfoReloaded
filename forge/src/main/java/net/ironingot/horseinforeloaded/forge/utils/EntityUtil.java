@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded.utils;
+package net.ironingot.horseinforeloaded.forge.utils;
 
 import java.util.UUID;
 import java.util.List;
