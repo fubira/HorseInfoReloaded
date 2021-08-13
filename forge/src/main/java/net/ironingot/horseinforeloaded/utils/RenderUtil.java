@@ -17,18 +17,9 @@ public class RenderUtil
 {
     public static float NAME_TAG_RANGE = 64.0f;
 
-    public static Entity getRider(Entity entity)
-    {
-        List<Entity> passengers = entity.getPassengers();
-        if (passengers == null || passengers.size() == 0)
-            return null;
-
-        return passengers.get(0);
-    }
-
     public static Color getRiderHelmColor(Entity entity)
     {
-        Entity rider = getRider(entity);
+        Entity rider = EntityUtil.getRider(entity);
 
         if (rider instanceof Player)
         {
@@ -44,7 +35,7 @@ public class RenderUtil
         return null;
     }
 
-    private static Color getLabelColor(Entity entity)
+    public static Color getLabelColor(Entity entity)
     {
         Color color = Color.BLACK;
 
@@ -65,7 +56,7 @@ public class RenderUtil
     public static void renderEntityInfo(Entity entity, List<String> infoString, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
     {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player.equals(getRider(entity)))
+        if (mc.player.equals(EntityUtil.getRider(entity)))
             return;
 
         double d0 = entity.distanceToSqr(mc.getCameraEntity());
@@ -86,7 +77,7 @@ public class RenderUtil
         matrixStackIn.scale(-scale, -scale, scale);
 
         int fontHeight = 10;
-        float baseY = (4 - infoString.size()) * fontHeight - ((getRider(entity) != null) ? fontHeight * 3 : fontHeight);
+        float baseY = (4 - infoString.size()) * fontHeight - ((EntityUtil.getRider(entity) != null) ? fontHeight * 3 : fontHeight);
 
         int width = mc.font.width(entity.getName().getString());
         for (int i = 0; i < infoString.size(); i++) {

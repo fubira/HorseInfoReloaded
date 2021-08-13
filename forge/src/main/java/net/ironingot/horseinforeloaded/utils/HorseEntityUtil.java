@@ -3,6 +3,7 @@ package net.ironingot.horseinforeloaded.utils;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+import net.ironingot.horseinforeloaded.common.HorseInfoFormat;
 import net.ironingot.horseinforeloaded.common.HorseInfoStats;
 
 import java.awt.Color;
@@ -43,7 +44,7 @@ public class HorseEntityUtil {
     }
 
     public static List<String> getStatsStrings(AbstractHorse entity) {
-        return HorseInfoStats.formatHorseStats(
+        return HorseInfoFormat.formatHorseStats(
             entity.getHealth(),
             entity.getMaxHealth(),
             HorseEntityUtil.getSpeed(entity),

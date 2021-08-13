@@ -5,7 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 
-public class Config {
+public class ForgeConfig {
     public static final ForgeConfigSpec spec;
     public static final BooleanValue enableMod;
 

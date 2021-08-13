@@ -47,7 +47,7 @@ public class HorseInfoMod
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, KeyInputEvent.class, this::onKeyInput);
 
-        Config.register(ModLoadingContext.get());
+        ForgeConfig.register(ModLoadingContext.get());
 
         String modVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
         HorseInfoCore.logger.info("*** HorseInfoReloaded " + modVersion + " initialized ***");
@@ -89,12 +89,12 @@ public class HorseInfoMod
     }
 
     public static boolean isActive() {
-        return Config.enableMod.get();
+        return ForgeConfig.enableMod.get();
     }
 
     public static void toggle() {
         boolean flag = !isActive();
-        Config.enableMod.set(flag);
+        ForgeConfig.enableMod.set(flag);
         message("HorseInfo " + (flag ? "Enabled" : "Disabled"));
     }
 

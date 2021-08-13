@@ -8,9 +8,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.Nameable;
+
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.common.HorseInfoFormat;
-import net.minecraft.world.Nameable;
 
 public class EntityUtil {
     public static String getDisplayNameString(Nameable entity)
@@ -62,5 +63,14 @@ public class EntityUtil {
             return HorseEntityUtil.getStatsStrings(entity);
         }
         return null;
+    }
+
+    public static Entity getRider(Entity entity)
+    {
+        List<Entity> passengers = entity.getPassengers();
+        if (passengers == null || passengers.size() == 0)
+            return null;
+
+        return passengers.get(0);
     }
 }
