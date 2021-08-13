@@ -2,12 +2,6 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-    }
-}
-
-plugins{
 }
 
 allprojects {

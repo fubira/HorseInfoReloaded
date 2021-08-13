@@ -9,7 +9,6 @@ dependencies {
     implementation(project(":common"))
 
     modImplementation(libs.clothConfigFabric)
-    include(libs.clothConfigFabric)
 }
 
 tasks {

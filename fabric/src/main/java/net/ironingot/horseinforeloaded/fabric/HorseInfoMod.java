@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 
-import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
@@ -40,7 +39,6 @@ public class HorseInfoMod implements ClientModInitializer
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KEYBINDING_MODE.consumeClick()) {
-                HorseInfoCore.logger.info("KEYBINDING_MODE.isDown");
                 toggle();
             }
         });
