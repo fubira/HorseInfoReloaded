@@ -50,8 +50,7 @@ public class RenderUtil
 
         if (entity instanceof AbstractHorse)
         {
-            double evaluateValue = HorseStatsUtil.getEvaluateValue((AbstractHorse)entity);
-            Color evaluateColor = HorseStatsUtil.getEvaluateRankColor(evaluateValue);
+            Color evaluateColor = HorseStatsUtil.getEvaluateRankColor((AbstractHorse)entity);
             if (evaluateColor != null)
                 color = evaluateColor;
         }

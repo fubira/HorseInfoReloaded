@@ -22,6 +22,8 @@ allprojects {
 
     dependencies {
         implementation(libs.gson)
+        implementation(libs.log4japi)
+        implementation(libs.log4jcore)
     }
 
     repositories {
