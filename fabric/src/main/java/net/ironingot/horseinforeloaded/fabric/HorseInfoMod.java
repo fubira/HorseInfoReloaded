@@ -73,6 +73,7 @@ public class HorseInfoMod implements ClientModInitializer
     public static void toggle() {
         boolean flag = !isActive();
         HorseInfoMod.config.enableMod = flag;
+        HorseInfoMod.config.save();
         message("HorseInfo " + (flag ? "Enabled" : "Disabled"));
     }
 }
