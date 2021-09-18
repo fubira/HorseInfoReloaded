@@ -1,8 +1,10 @@
 package net.ironingot.horseinforeloaded.fabric.renderer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -28,7 +30,11 @@ public class UndeadHorseWithInfoRenderer extends UndeadHorseRenderer {
 
         ArrayList<String> infoString = new ArrayList<String>();
         infoString.add(EntityUtil.getDisplayNameWithRank(entity));
-        infoString.addAll(EntityUtil.getHorseStatsString(entity));
+
+        List<String> statsString = EntityUtil.getHorseStatsString(entity);
+        if (statsString != null) {
+            infoString.addAll(statsString);
+        }
 
         RenderUtil.renderEntityInfo(
             entity,

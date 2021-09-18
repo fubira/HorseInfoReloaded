@@ -1,6 +1,7 @@
 package net.ironingot.horseinforeloaded.forge.renderer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,7 +31,11 @@ public class UndeadHorseWithInfoRenderer extends UndeadHorseRenderer {
 
         ArrayList<String> infoString = new ArrayList<String>();
         infoString.add(EntityUtil.getDisplayNameWithRank(entity));
-        infoString.addAll(EntityUtil.getHorseStatsString(entity));
+
+        List<String> statsString = EntityUtil.getHorseStatsString(entity);
+        if (statsString != null) {
+            infoString.addAll(statsString);
+        }
 
         RenderUtil.renderEntityInfo(
             entity,

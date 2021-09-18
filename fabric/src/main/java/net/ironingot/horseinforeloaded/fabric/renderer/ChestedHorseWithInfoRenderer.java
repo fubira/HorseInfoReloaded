@@ -1,6 +1,7 @@
 package net.ironingot.horseinforeloaded.fabric.renderer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.ChestedHorseRenderer;
@@ -28,11 +29,15 @@ public class ChestedHorseWithInfoRenderer<T extends AbstractChestedHorse> extend
 
         ArrayList<String> infoString = new ArrayList<String>();
         infoString.add(EntityUtil.getDisplayNameWithRank(entity));
-        infoString.addAll(EntityUtil.getHorseStatsString(entity));
 
-        String ageOrOwner = EntityUtil.getAgeOrOwnerString(entity);
-        if (ageOrOwner != null) {
-            infoString.add(ageOrOwner);
+        List<String> statsString = EntityUtil.getHorseStatsString(entity);
+        if (statsString != null) {
+            infoString.addAll(statsString);
+        }
+
+        String stringAgeOrOwner = EntityUtil.getAgeOrOwnerString(entity);
+        if (stringAgeOrOwner != null) {
+            infoString.add(stringAgeOrOwner);
         }
 
         RenderUtil.renderEntityInfo(

@@ -1,6 +1,7 @@
 package net.ironingot.horseinforeloaded.fabric.renderer;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -53,7 +54,11 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseMod
 
         ArrayList<String> infoString = new ArrayList<String>();
         infoString.add(EntityUtil.getDisplayNameWithRank(entity));
-        infoString.addAll(EntityUtil.getHorseStatsString(entity));
+
+        List<String> statsString = EntityUtil.getHorseStatsString(entity);
+        if (statsString != null) {
+            infoString.addAll(statsString);
+        }
 
         String stringAgeOrOwner = EntityUtil.getAgeOrOwnerString(entity);
         if (stringAgeOrOwner != null) {
