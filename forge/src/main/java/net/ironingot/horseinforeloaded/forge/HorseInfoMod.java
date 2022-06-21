@@ -21,8 +21,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.horse.Donkey;
 import net.minecraft.world.entity.animal.horse.Mule;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.forge.renderer.CatWithInfoRenderer;
@@ -32,8 +31,6 @@ import net.ironingot.horseinforeloaded.forge.renderer.LlamaWithInfoRenderer;
 import net.ironingot.horseinforeloaded.forge.renderer.ParrotWithInfoRenderer;
 import net.ironingot.horseinforeloaded.forge.renderer.UndeadHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.forge.renderer.WolfWithInfoRenderer;
-
-import java.util.UUID;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -78,13 +75,8 @@ public class HorseInfoMod
 
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
-        mc.player.sendMessage(
-            new TextComponent("")
-                .append(new TextComponent("[").withStyle(ChatFormatting.GRAY))
-                .append(new TextComponent("HorseInfo").withStyle(ChatFormatting.GOLD))
-                .append(new TextComponent("] ").withStyle(ChatFormatting.GRAY))
-                .append(new TextComponent(s)),
-            UUID.randomUUID()
+        mc.player.sendSystemMessage(
+            Component.Serializer.fromJson("[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"HorseInfo\",\"color\":\"gold\"},{\"text\":\"]\",\"color\":\"gray\"},{\"text\":\" " + s + "\"}]")
         );
     }
 
