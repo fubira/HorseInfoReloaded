@@ -4,14 +4,15 @@ import java.awt.Color;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.DyeableArmorItem;
-import com.mojang.math.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix4f;
 
 public class RenderUtil
 {
@@ -93,7 +94,7 @@ public class RenderUtil
         int j = ((int)(f1 * 255.0F) << 24) + ((int)(r * 255.0F) << 16) + ((int)(g * 255.0F) << 8) + ((int)(b * 255.0F));
 
         for (int i = 0; i < infoString.size(); i++) {
-            mc.font.drawInBatch(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, false, j, packedLightIn);
+            mc.font.drawInBatch(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, DisplayMode.NORMAL, j, packedLightIn);
         }
         matrixStackIn.popPose();
     }

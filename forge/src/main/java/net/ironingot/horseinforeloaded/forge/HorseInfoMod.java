@@ -3,14 +3,13 @@ package net.ironingot.horseinforeloaded.forge;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.event.InputEvent.Key;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;//.ClientRegistry;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -42,7 +41,7 @@ public class HorseInfoMod
 
     public HorseInfoMod() {
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, KeyInputEvent.class, this::onKeyInput);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, Key.class, this::onKeyInput);
 
         ForgeConfig.register(ModLoadingContext.get());
 
@@ -50,9 +49,9 @@ public class HorseInfoMod
         HorseInfoCore.logger.info("*** HorseInfoReloaded " + modVersion + " initialized ***");
     }
 
-    @SubscribeEvent
-    public void onClientSetup(FMLClientSetupEvent event) {
-        ClientRegistry.registerKeyBinding(KEYBINDING_MODE);
+    @OnlyIn(Dist.CLIENT)
+    public void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+        event.register(KEYBINDING_MODE);
     }
 
 	@SubscribeEvent
@@ -91,7 +90,7 @@ public class HorseInfoMod
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void onKeyInput(KeyInputEvent event) {
+    public void onKeyInput(Key event) {
         if (KEYBINDING_MODE.consumeClick()) {
             toggle();
         }

@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[41,)" 
+loaderVersion = "[44,)" 
 
 author = "${author}"
 license = "Copyright (c) ${vendor}"
@@ -21,14 +21,14 @@ inspired by HorseInfo/(by TTTA2)
 [[dependencies.horseinforeloaded]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,)"
+    versionRange="[1.20,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.horseinforeloaded]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[47,)"
     ordering="NONE"
     side="BOTH"
 
