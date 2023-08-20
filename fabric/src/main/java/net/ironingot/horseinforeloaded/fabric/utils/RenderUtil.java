@@ -94,7 +94,10 @@ public class RenderUtil
         int j = ((int)(f1 * 255.0F) << 24) + ((int)(r * 255.0F) << 16) + ((int)(g * 255.0F) << 8) + ((int)(b * 255.0F));
 
         for (int i = 0; i < infoString.size(); i++) {
-            mc.font.drawInBatch(infoString.get(i), -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, DisplayMode.NORMAL, j, packedLightIn);
+            String line = infoString.get(i);
+            if (line != null) {
+                mc.font.drawInBatch(line, -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, DisplayMode.NORMAL, j, packedLightIn);
+            }
         }
         matrixStackIn.popPose();
     }
