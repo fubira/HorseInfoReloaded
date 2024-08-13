@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.io.InputStream;
@@ -38,7 +39,7 @@ public class PlayerNameManager
 
                     try
                     {
-                        URL url = new URL(PROFILE_URL + suuid);
+                        URL url = new URI(PROFILE_URL + suuid).toURL();
                         URLConnection con = url.openConnection();
                         InputStream in = con.getInputStream();
                         byte[] buffer = new byte[con.getContentLength()];

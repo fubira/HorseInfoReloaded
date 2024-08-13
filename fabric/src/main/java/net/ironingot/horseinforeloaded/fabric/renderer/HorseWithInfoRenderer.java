@@ -25,13 +25,13 @@ import com.google.common.collect.Maps;
 
 public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
     private static final Map<Variant, ResourceLocation> LOCATION_BY_VARIANT = Util.make(Maps.newEnumMap(Variant.class), map -> {
-        map.put(Variant.WHITE, new ResourceLocation("textures/entity/horse/horse_white.png"));
-        map.put(Variant.CREAMY, new ResourceLocation("textures/entity/horse/horse_creamy.png"));
-        map.put(Variant.CHESTNUT, new ResourceLocation("textures/entity/horse/horse_chestnut.png"));
-        map.put(Variant.BROWN, new ResourceLocation("textures/entity/horse/horse_brown.png"));
-        map.put(Variant.BLACK, new ResourceLocation("textures/entity/horse/horse_black.png"));
-        map.put(Variant.GRAY, new ResourceLocation("textures/entity/horse/horse_gray.png"));
-        map.put(Variant.DARK_BROWN, new ResourceLocation("textures/entity/horse/horse_darkbrown.png"));
+        map.put(Variant.WHITE, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_white.png"));
+        map.put(Variant.CREAMY, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_creamy.png"));
+        map.put(Variant.CHESTNUT, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_chestnut.png"));
+        map.put(Variant.BROWN, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_brown.png"));
+        map.put(Variant.BLACK, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_black.png"));
+        map.put(Variant.GRAY, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_gray.png"));
+        map.put(Variant.DARK_BROWN, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_darkbrown.png"));
     });
 
     public HorseWithInfoRenderer(EntityRendererProvider.Context context) {

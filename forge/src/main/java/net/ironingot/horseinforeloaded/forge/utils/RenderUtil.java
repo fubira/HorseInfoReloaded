@@ -11,26 +11,30 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.DyeableArmorItem;
+import net.minecraft.world.item.component.DyedItemColor;
+
 import com.mojang.blaze3d.vertex.PoseStack;
+
 import org.joml.Matrix4f;
+
+import net.minecraft.world.item.DyeColor;
 
 public class RenderUtil
 {
     public static float NAME_TAG_RANGE = 64.0f;
 
-    public static Color getRiderHelmColor(Entity entity)
+    public static DyeColor getRiderHelmColor(Entity entity)
     {
         Entity rider = EntityUtil.getRider(entity);
 
-        if (rider instanceof Player)
+        if (rider instanceof Player player)
         {
-            Player player = (Player)rider;
             ItemStack helmStack = player.getInventory().armor.get(3);
 
-            if (helmStack != null && helmStack.getItem() instanceof DyeableArmorItem)
+            if (helmStack.getItem() instanceof DyeableArmorItem helmItem)
             {
-                DyeableArmorItem helmItem = (DyeableArmorItem)helmStack.getItem();
-                return new Color(helmItem.getColor(helmStack));
+                DyedItemColor
+                return helmItem.getColor(helmStack);
             }
         }
         return null;
