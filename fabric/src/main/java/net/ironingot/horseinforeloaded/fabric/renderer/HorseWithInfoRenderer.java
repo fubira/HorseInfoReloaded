@@ -16,7 +16,6 @@ import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Variant;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
-
 import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;

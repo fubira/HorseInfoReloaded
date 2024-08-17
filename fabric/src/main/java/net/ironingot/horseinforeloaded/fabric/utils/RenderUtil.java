@@ -6,12 +6,15 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+
 import org.joml.Matrix4f;
 
 public class RenderUtil
@@ -72,7 +75,7 @@ public class RenderUtil
         matrixStackIn.pushPose();
         matrixStackIn.translate(0.0D, (double)f, 0.0D);
         matrixStackIn.mulPose(mc.gameRenderer.getMainCamera().rotation());
-        matrixStackIn.scale(-scale, -scale, scale);
+        matrixStackIn.scale(scale, -scale, scale);
 
         int fontHeight = 10;
         float baseY = (4 - infoString.size()) * fontHeight - ((EntityUtil.getRider(entity) != null) ? fontHeight * 3 : fontHeight);
@@ -82,6 +85,7 @@ public class RenderUtil
             width = Math.max(mc.font.width(infoString.get(i)), width);
         }
         int widthHarf = width / 2;
+        int height = fontHeight * infoString.size();
 
         Matrix4f matrix4f = matrixStackIn.last().pose();
         float f1 = mc.options.getBackgroundOpacity(0.4F);
@@ -90,10 +94,16 @@ public class RenderUtil
         float b = (baseColor.getBlue() / 255.0F) / 2.0F;
         int j = ((int)(f1 * 255.0F) << 24) + ((int)(r * 255.0F) << 16) + ((int)(g * 255.0F) << 8) + ((int)(b * 255.0F));
 
+        VertexConsumer consumer = bufferIn.getBuffer(RenderType.textBackgroundSeeThrough());
+        consumer.addVertex(matrix4f, (float)-widthHarf - 1.0F, baseY - 1.0F, 0.0F).setColor(j).setLight(packedLightIn);
+        consumer.addVertex(matrix4f, (float)-widthHarf - 1.0F, baseY + (float)height - 1.0F, 0.0F).setColor(j).setLight(packedLightIn);
+        consumer.addVertex(matrix4f, (float) widthHarf, baseY + (float)height - 1.0F, 0.0F).setColor(j).setLight(packedLightIn);
+        consumer.addVertex(matrix4f, (float) widthHarf, baseY - 1.0F, 0.0F).setColor(j).setLight(packedLightIn);
+
         for (int i = 0; i < infoString.size(); i++) {
             String line = infoString.get(i);
             if (line != null) {
-                mc.font.drawInBatch(line, -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, DisplayMode.NORMAL, j, packedLightIn);
+                mc.font.drawInBatch(line, -widthHarf, (int)baseY + fontHeight * i, (i == 0) ? titleColor.getRGB() : fontColor.getRGB(), false, matrix4f, bufferIn, DisplayMode.NORMAL, 0, packedLightIn);
             }
         }
         matrixStackIn.popPose();

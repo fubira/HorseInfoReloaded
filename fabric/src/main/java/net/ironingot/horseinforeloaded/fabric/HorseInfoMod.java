@@ -5,6 +5,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.horse.Donkey;
+import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Mule;
 import net.minecraft.network.chat.Component;
 import net.fabricmc.api.ClientModInitializer;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
+import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
@@ -49,6 +51,7 @@ public class HorseInfoMod implements ClientModInitializer
         EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.WOLF, WolfWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
+        HorseInfoCore.logger.info("*** HorseInfoReloaded initialized ***");
     }
 
     public static void message(String s) {
