@@ -24,6 +24,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
+import net.ironingot.horseinforeloaded.neoforge.renderer.CamelWithInfoRenderer;
 import net.ironingot.horseinforeloaded.neoforge.renderer.CatWithInfoRenderer;
 import net.ironingot.horseinforeloaded.neoforge.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.neoforge.renderer.HorseWithInfoRenderer;
@@ -62,8 +63,9 @@ public class HorseInfoMod
         EntityRenderers.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE));
         EntityRenderers.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE));
         EntityRenderers.register(EntityType.MULE, context -> new ChestedHorseWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE));
-        EntityRenderers.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.92F, ModelLayers.DONKEY));
+        EntityRenderers.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.87F, ModelLayers.DONKEY));
         EntityRenderers.register(EntityType.LLAMA, context -> new LlamaWithInfoRenderer(context, ModelLayers.LLAMA));
+        EntityRenderers.register(EntityType.CAMEL, context -> new CamelWithInfoRenderer(context, ModelLayers.CAMEL));
         EntityRenderers.register(EntityType.WOLF, WolfWithInfoRenderer::new);
         EntityRenderers.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRenderers.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
