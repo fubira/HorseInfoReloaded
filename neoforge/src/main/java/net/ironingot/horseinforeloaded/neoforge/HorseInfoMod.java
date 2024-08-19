@@ -85,6 +85,7 @@ public class HorseInfoMod
     public static void toggle() {
         boolean flag = !isActive();
         NeoForgeConfig.enableMod.set(flag);
+        NeoForgeConfig.SPEC.save();
         message("HorseInfo " + (flag ? "Enabled" : "Disabled"));
     }
 
