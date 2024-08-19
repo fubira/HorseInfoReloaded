@@ -2,11 +2,9 @@ package net.ironingot.horseinforeloaded.fabric;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.horse.Donkey;
-import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Mule;
 import net.minecraft.network.chat.Component;
 import net.fabricmc.api.ClientModInitializer;
