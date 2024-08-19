@@ -1,10 +1,15 @@
-package net.ironingot.horseinforeloaded.fabric.renderer;
+package net.ironingot.horseinforeloaded.neoforge.renderer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
+import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
+import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
 import net.minecraft.client.model.HorseModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
@@ -16,12 +21,10 @@ import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Variant;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
-import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
-import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
-import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
 
 import com.google.common.collect.Maps;
 
+@OnlyIn(Dist.CLIENT)
 public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
     private static final Map<Variant, ResourceLocation> LOCATION_BY_VARIANT = Util.make(Maps.newEnumMap(Variant.class), map -> {
         map.put(Variant.WHITE, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_white.png"));
@@ -34,11 +37,12 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseMod
     });
 
     public HorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, new HorseModel<Horse>(context.bakeLayer(ModelLayers.HORSE)), 1.1F);
+        super(context, new HorseModel<>(context.bakeLayer(ModelLayers.HORSE)), 1.1F);
         addLayer(new HorseMarkingLayer(this));
         addLayer(new HorseArmorLayer(this, context.getModelSet()));
     }
 
+    @Override
     public ResourceLocation getTextureLocation(Horse entity) {
         return (ResourceLocation)LOCATION_BY_VARIANT.get(entity.getVariant());
     }
@@ -51,7 +55,7 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseMod
             return;
         }
 
-        ArrayList<String> infoString = new ArrayList<String>();
+        ArrayList<String> infoString = new ArrayList<>();
         infoString.add(EntityUtil.getDisplayNameWithRank(entity));
 
         List<String> statsString = EntityUtil.getHorseStatsString(entity);

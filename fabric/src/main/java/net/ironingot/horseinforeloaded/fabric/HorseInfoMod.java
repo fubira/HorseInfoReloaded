@@ -12,6 +12,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
+import net.ironingot.horseinforeloaded.common.HorseInfoCore;
+import net.ironingot.horseinforeloaded.fabric.renderer.CamelWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
@@ -44,17 +46,19 @@ public class HorseInfoMod implements ClientModInitializer
         EntityRendererRegistry.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE));
         EntityRendererRegistry.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE));
         EntityRendererRegistry.register(EntityType.MULE, context -> new ChestedHorseWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE));
-        EntityRendererRegistry.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.92F, ModelLayers.DONKEY));
+        EntityRendererRegistry.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.87F, ModelLayers.DONKEY));
         EntityRendererRegistry.register(EntityType.LLAMA, context -> new LlamaWithInfoRenderer(context, ModelLayers.LLAMA));
+        EntityRendererRegistry.register(EntityType.CAMEL, context -> new CamelWithInfoRenderer(context, ModelLayers.CAMEL));
         EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.WOLF, WolfWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
+        HorseInfoCore.logger.info("*** HorseInfoReloaded initialized ***");
     }
 
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
         mc.player.sendSystemMessage(
-            Component.Serializer.fromJson("[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"HorseInfo\",\"color\":\"gold\"},{\"text\":\"]\",\"color\":\"gray\"},{\"text\":\" " + s + "\"}]")
+            Component.Serializer.fromJson("[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"HorseInfo\",\"color\":\"gold\"},{\"text\":\"]\",\"color\":\"gray\"},{\"text\":\" " + s + "\"}]", mc.player.registryAccess())
         );
     }
 

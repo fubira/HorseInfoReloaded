@@ -1,4 +1,4 @@
-package net.ironingot.horseinforeloaded.fabric.utils;
+package net.ironingot.horseinforeloaded.neoforge.utils;
 
 import java.awt.Color;
 import java.util.List;
@@ -12,10 +12,12 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import org.joml.Matrix4f;
+
 
 public class RenderUtil
 {
@@ -46,10 +48,8 @@ public class RenderUtil
         }
 
         Color helmColor = getRiderHelmColor(entity);
-        if (helmColor != null) {
+        if (helmColor != null)
             color = helmColor;
-        }
-
 
         return color;
     }
@@ -60,7 +60,7 @@ public class RenderUtil
         if (mc.player.equals(EntityUtil.getRider(entity)))
             return;
 
-        double d0 = entity.distanceToSqr(mc.getCameraEntity());
+        double d0 = mc.getCameraEntity().distanceToSqr(entity);
         if (d0 >= 2048.0D) {
             return;
         }
