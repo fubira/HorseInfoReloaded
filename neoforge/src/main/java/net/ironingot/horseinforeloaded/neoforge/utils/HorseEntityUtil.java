@@ -1,5 +1,6 @@
 package net.ironingot.horseinforeloaded.neoforge.utils;
 
+import net.ironingot.horseinforeloaded.neoforge.render_state.HorseWithInfoRenderState;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
@@ -8,48 +9,49 @@ import net.ironingot.horseinforeloaded.common.HorseInfoStats;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Objects;
 
 public class HorseEntityUtil {
     public static double getSpeed(AbstractHorse entity) {
-        return entity.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
+        return Objects.requireNonNull(entity.getAttribute(Attributes.MOVEMENT_SPEED)).getValue();
     }
 
     public static double getJumpStrength(AbstractHorse entity) {
-        return entity.getAttribute(Attributes.JUMP_STRENGTH).getValue();
+        return Objects.requireNonNull(entity.getAttribute(Attributes.JUMP_STRENGTH)).getValue();
     }
 
     public static double getJumpHeight(AbstractHorse entity) {
         return HorseInfoStats.calcJumpHeight(getJumpStrength(entity));
     }
 
-    public static double getEvaluateValue(AbstractHorse entity) {
+    public static double getEvaluateValue(HorseWithInfoRenderState renderState) {
         return HorseInfoStats.calcEvaluateValue(
-            HorseEntityUtil.getSpeed(entity),
-            HorseEntityUtil.getJumpHeight(entity)
+                renderState.speed,
+                renderState.jumpHeight
         );
     }
 
-    public static String getEvaluateRankString(AbstractHorse entity) {
+    public static String getEvaluateRankString(HorseWithInfoRenderState renderState) {
         return HorseInfoStats.calcEvaluateRankString(
-            HorseEntityUtil.getSpeed(entity),
-            HorseEntityUtil.getJumpHeight(entity)
+                renderState.speed,
+                renderState.jumpHeight
         );
     }
 
-    public static Color getEvaluateRankColor(AbstractHorse entity) {
+    public static Color getEvaluateRankColor(HorseWithInfoRenderState renderState) {
         return HorseInfoStats.calcEvaluateRankColor(
-            HorseEntityUtil.getSpeed(entity),
-            HorseEntityUtil.getJumpHeight(entity)
+            renderState.speed,
+            renderState.jumpHeight
         );
     }
 
-    public static List<String> getStatsStrings(AbstractHorse entity) {
+    public static List<String> getStatsStrings(HorseWithInfoRenderState renderState) {
         return HorseInfoFormat.formatHorseStats(
-            entity.getHealth(),
-            entity.getMaxHealth(),
-            HorseEntityUtil.getSpeed(entity),
-            HorseEntityUtil.getJumpStrength(entity),
-            HorseEntityUtil.getJumpHeight(entity)
+            renderState.health,
+            renderState.maxHealth,
+            renderState.speed,
+            renderState.jumpStrength,
+            renderState.jumpHeight
         );
     }
 }

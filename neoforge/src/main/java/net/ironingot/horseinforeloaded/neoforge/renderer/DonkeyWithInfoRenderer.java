@@ -1,37 +1,36 @@
-package net.ironingot.horseinforeloaded.fabric.renderer;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
-import net.ironingot.horseinforeloaded.fabric.render_state.HorseWithInfoRenderState;
-import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
-import net.ironingot.horseinforeloaded.fabric.utils.HorseEntityUtil;
-import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
-import net.minecraft.client.model.AbstractEquineModel;
-import net.minecraft.client.model.HorseModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.state.EquineRenderState;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import org.jetbrains.annotations.NotNull;
+package net.ironingot.horseinforeloaded.neoforge.renderer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
-public class UndeadHorseWithInfoRenderer extends AbstractHorseRenderer<AbstractHorse, HorseWithInfoRenderState, AbstractEquineModel<EquineRenderState>> {
-    private static final ResourceLocation ZOMBIE_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_zombie.png");
-    private static final ResourceLocation SKELETON_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_skeleton.png");
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
+import net.ironingot.horseinforeloaded.neoforge.render_state.HorseWithInfoRenderState;
+import net.ironingot.horseinforeloaded.neoforge.render_state.model.DonkeyWithInfoModel;
+import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
+import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
+import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
+import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
+import org.jetbrains.annotations.NotNull;
+
+@OnlyIn(Dist.CLIENT)
+public class DonkeyWithInfoRenderer<T extends AbstractChestedHorse> extends AbstractHorseRenderer<T, HorseWithInfoRenderState, DonkeyWithInfoModel> {
+    public static final ResourceLocation DONKEY_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/horse/donkey.png");
+    public static final ResourceLocation MULE_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/horse/mule.png");
     private final ResourceLocation texture;
 
-    public UndeadHorseWithInfoRenderer(EntityRendererProvider.Context context, ModelLayerLocation loc, ModelLayerLocation loc_baby, boolean skeleton) {
-        super(context, new HorseModel(context.bakeLayer(loc)), new HorseModel(context.bakeLayer(loc_baby)), 1.0F);
-        this.texture = skeleton ? SKELETON_TEXTURE : ZOMBIE_TEXTURE;
+    public DonkeyWithInfoRenderer(EntityRendererProvider.Context context, float f, ModelLayerLocation loc, ModelLayerLocation loc_baby, boolean mule) {
+        super(context, new DonkeyWithInfoModel(context.bakeLayer(loc)), new DonkeyWithInfoModel(context.bakeLayer(loc_baby)), f);
+        this.texture = mule ? MULE_TEXTURE : DONKEY_TEXTURE;
     }
+
     public @NotNull ResourceLocation getTextureLocation(@NotNull HorseWithInfoRenderState renderState) {
         return this.texture;
     }
@@ -40,9 +39,9 @@ public class UndeadHorseWithInfoRenderer extends AbstractHorseRenderer<AbstractH
         return new HorseWithInfoRenderState();
     }
 
-    public void extractRenderState(@NotNull AbstractHorse entity, @NotNull HorseWithInfoRenderState renderState, float partialTick) {
+    public void extractRenderState(@NotNull T entity, @NotNull HorseWithInfoRenderState renderState, float partialTick) {
         super.extractRenderState(entity, renderState, partialTick);
-        renderState.bodyArmorItem = entity.getBodyArmorItem().copy();
+        renderState.hasChest = entity.hasChest();
 
         // Set our own variables
         renderState.displayName = EntityUtil.getDisplayNameString(entity);
@@ -54,7 +53,6 @@ public class UndeadHorseWithInfoRenderer extends AbstractHorseRenderer<AbstractH
         renderState.jumpStrength = HorseEntityUtil.getJumpStrength(entity);
         renderState.health = entity.getHealth();
         renderState.maxHealth = entity.getMaxHealth();
-
         renderState.isTamed = entity.isTamed();
     }
 
@@ -66,7 +64,7 @@ public class UndeadHorseWithInfoRenderer extends AbstractHorseRenderer<AbstractH
             return;
         }
 
-        ArrayList<String> infoString = new ArrayList<String>();
+        ArrayList<String> infoString = new ArrayList<>();
         infoString.add(EntityUtil.getDisplayNameWithRank(renderState));
         if (renderState.isTamed || renderState.isBaby) {
             infoString.add(renderState.owner);
