@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.ironingot.horseinforeloaded.neoforge.render_state.layer.HorseWithInfoArmorLayer;
+import net.ironingot.horseinforeloaded.neoforge.render_state.layer.HorseWithInfoMarkingLayer;
+import net.ironingot.horseinforeloaded.neoforge.render_state.HorseWithInfoRenderState;
+import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
@@ -14,8 +18,6 @@ import net.minecraft.client.model.HorseModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.layers.HorseArmorLayer;
-import net.minecraft.client.renderer.entity.layers.HorseMarkingLayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Variant;
@@ -23,9 +25,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.Util;
 
 import com.google.common.collect.Maps;
+import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
-public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
+public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseWithInfoRenderState, HorseModel> {
     private static final Map<Variant, ResourceLocation> LOCATION_BY_VARIANT = Util.make(Maps.newEnumMap(Variant.class), map -> {
         map.put(Variant.WHITE, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_white.png"));
         map.put(Variant.CREAMY, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_creamy.png"));
@@ -37,39 +40,64 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseMod
     });
 
     public HorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, new HorseModel<>(context.bakeLayer(ModelLayers.HORSE)), 1.1F);
-        addLayer(new HorseMarkingLayer(this));
-        addLayer(new HorseArmorLayer(this, context.getModelSet()));
+        super(context, new HorseModel(context.bakeLayer(ModelLayers.HORSE)), new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY)), 1.1F);
+        addLayer(new HorseWithInfoMarkingLayer(this));
+        addLayer(new HorseWithInfoArmorLayer(this, context.getModelSet(), context.getEquipmentRenderer()));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Horse entity) {
-        return (ResourceLocation)LOCATION_BY_VARIANT.get(entity.getVariant());
+    public @NotNull ResourceLocation getTextureLocation(HorseWithInfoRenderState renderState) {
+        return (ResourceLocation)LOCATION_BY_VARIANT.get(renderState.variant);
+    }
+
+    public @NotNull HorseWithInfoRenderState createRenderState() {
+        return new HorseWithInfoRenderState();
+    }
+
+    public void extractRenderState(@NotNull Horse entity, @NotNull HorseWithInfoRenderState renderState, float partialTick) {
+        super.extractRenderState(entity, renderState, partialTick);
+        renderState.variant = entity.getVariant();
+        renderState.markings = entity.getMarkings();
+        renderState.bodyArmorItem = entity.getBodyArmorItem().copy();
+
+        // Set our own variables
+        renderState.displayName = EntityUtil.getDisplayNameString(entity);
+        renderState.owner = EntityUtil.getAgeOrOwnerString(entity);
+        renderState.rider = EntityUtil.getRider(entity);
+
+        renderState.speed = HorseEntityUtil.getSpeed(entity);
+        renderState.jumpHeight = HorseEntityUtil.getJumpHeight(entity);
+        renderState.jumpStrength = HorseEntityUtil.getJumpStrength(entity);
+        renderState.health = entity.getHealth();
+        renderState.maxHealth = entity.getMaxHealth();
+
+        renderState.isTamed = entity.isTamed();
     }
 
     @Override
-    public void render(Horse entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+    public void render(@NotNull HorseWithInfoRenderState renderState, @NotNull PoseStack matrixStackIn, @NotNull MultiBufferSource bufferIn, int packedLightIn) {
+        super.render(renderState, matrixStackIn, bufferIn, packedLightIn);
 
         if (!HorseInfoMod.isActive()) {
             return;
         }
 
         ArrayList<String> infoString = new ArrayList<>();
-        infoString.add(EntityUtil.getDisplayNameWithRank(entity));
+        infoString.add(EntityUtil.getDisplayNameWithRank(renderState));
+        if (renderState.isTamed || renderState.isBaby) {
+            infoString.add(renderState.owner);
+        }
 
-        List<String> statsString = EntityUtil.getHorseStatsString(entity);
+        infoString.add("Variant: " + renderState.variant.toString());
+
+        List<String> statsString = EntityUtil.getHorseStatsString(renderState);
         if (statsString != null) {
             infoString.addAll(statsString);
         }
 
-        String stringAgeOrOwner = EntityUtil.getAgeOrOwnerString(entity);
-        if (stringAgeOrOwner != null) {
-            infoString.add(stringAgeOrOwner);
-        }
-
         RenderUtil.renderEntityInfo(
-            entity,
+            renderState.rider,
+            renderState,
             infoString,
             matrixStackIn,
             bufferIn,

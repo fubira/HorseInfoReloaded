@@ -15,7 +15,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.fabric.renderer.CamelWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.DonkeyWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.LlamaWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
@@ -43,12 +43,12 @@ public class HorseInfoMod implements ClientModInitializer
         });
 
         EntityRendererRegistry.register(EntityType.HORSE, HorseWithInfoRenderer::new);
-        EntityRendererRegistry.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE));
-        EntityRendererRegistry.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE));
-        EntityRendererRegistry.register(EntityType.MULE, context -> new ChestedHorseWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE));
-        EntityRendererRegistry.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.87F, ModelLayers.DONKEY));
-        EntityRendererRegistry.register(EntityType.LLAMA, context -> new LlamaWithInfoRenderer(context, ModelLayers.LLAMA));
-        EntityRendererRegistry.register(EntityType.CAMEL, context -> new CamelWithInfoRenderer(context, ModelLayers.CAMEL));
+        EntityRendererRegistry.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE, ModelLayers.SKELETON_HORSE_BABY, true));
+        EntityRendererRegistry.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE, ModelLayers.ZOMBIE_HORSE_BABY, false));
+        EntityRendererRegistry.register(EntityType.MULE, context -> new DonkeyWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE, ModelLayers.MULE_BABY, true));
+        EntityRendererRegistry.register(EntityType.DONKEY, context -> new DonkeyWithInfoRenderer<Donkey>(context, 0.87F, ModelLayers.DONKEY, ModelLayers.DONKEY_BABY, false));
+        EntityRendererRegistry.register(EntityType.LLAMA, LlamaWithInfoRenderer::new);
+        EntityRendererRegistry.register(EntityType.CAMEL, CamelWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.WOLF, WolfWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
@@ -57,8 +57,10 @@ public class HorseInfoMod implements ClientModInitializer
 
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
-        mc.player.sendSystemMessage(
-            Component.Serializer.fromJson("[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"HorseInfo\",\"color\":\"gold\"},{\"text\":\"]\",\"color\":\"gray\"},{\"text\":\" " + s + "\"}]", mc.player.registryAccess())
+        assert mc.player != null;
+        mc.player.displayClientMessage(
+            Component.Serializer.fromJson("[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"HorseInfo\",\"color\":\"gold\"},{\"text\":\"]\",\"color\":\"gray\"},{\"text\":\" " + s + "\"}]", mc.player.registryAccess()),
+            false
         );
     }
 
