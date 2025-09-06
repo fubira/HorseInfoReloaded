@@ -1,17 +1,17 @@
-modLoader = "javafml"
-loaderVersion = "${fml_loader_version_range}"
+modLoader = "${modloader}"
+loaderVersion = "${modloader_version_range}"
 
-author = "${authors}"
-license = "${license}, Copyright (c) ${vendor}"
+author = "${mod_authors}"
+license = "${mod_license}, Copyright (c) ${mod_vendor}"
 issueTrackerURL = "https://github.com/fubira/HorseInfoReloaded/issues"
 
 [[mods]]
 modId = "${mod_id}"
-version = "${version}"
+version = "${mod_version}"
 displayName = "${mod_name}"
 displayURL="https://github.com/fubira/HorseInfoReloaded/"
-credits="${vendor}"
-author = "${authors}"
+credits="${mod_vendor}"
+author = "${mod_authors}"
 
 description='''
 HorseInfoReloaded is display mod for ability of Horses.
