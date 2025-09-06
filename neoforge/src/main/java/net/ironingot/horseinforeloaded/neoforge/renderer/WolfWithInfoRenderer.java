@@ -10,8 +10,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.WolfRenderer;
+import net.minecraft.client.renderer.entity.state.WolfRenderState;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 
 @OnlyIn(Dist.CLIENT)
 public class WolfWithInfoRenderer extends WolfRenderer
@@ -22,8 +24,8 @@ public class WolfWithInfoRenderer extends WolfRenderer
     }
 
     @Override
-    public void render(Wolf entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+    public void render(WolfRenderState renderState, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+        super.render(renderState, matrixStackIn, bufferIn, packedLightIn);
 
         if (!HorseInfoMod.isActive()) {
             return;
