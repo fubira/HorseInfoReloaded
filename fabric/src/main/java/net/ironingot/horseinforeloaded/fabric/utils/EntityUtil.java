@@ -30,19 +30,19 @@ public class EntityUtil {
     }
     
     public static String getOwnerString(OwnableEntity entity) {
-        return getOwnerString(entity.getOwnerUUID());
+        return getOwnerString(entity.getOwner().getUUID());
     }
 
     public static String getOwnerString(AbstractHorse entity) {
-        return getOwnerString(entity.getOwnerUUID());
+        return getOwnerString(entity.getOwner().getUUID());
     }
 
     public static String getAgeOrOwnerString(TamableAnimal entity) {
-        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwnerUUID());
+        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwner().getUUID());
     }
 
     public static String getAgeOrOwnerString(AbstractHorse entity) {
-        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwnerUUID());
+        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwner().getUUID());
     }
 
     public static String getDisplayNameWithRank(AbstractHorse entity) {

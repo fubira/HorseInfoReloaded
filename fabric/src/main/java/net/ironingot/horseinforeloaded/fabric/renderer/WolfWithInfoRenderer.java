@@ -1,12 +1,13 @@
 package net.ironingot.horseinforeloaded.fabric.renderer;
-
+/*
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.WolfRenderer;
+import net.minecraft.client.renderer.entity.state.WolfRenderState;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.entity.animal.Wolf;
 
 import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
@@ -20,8 +21,8 @@ public class WolfWithInfoRenderer extends WolfRenderer
     }
 
     @Override
-    public void render(Wolf entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+    public void render(WolfRenderState state, PoseStack matrixStackIn, MultiBufferSource bufferIn, int i) {
+        super.render(state, matrixStackIn, bufferIn, i);
 
         if (!HorseInfoMod.isActive()) {
             return;
@@ -42,3 +43,4 @@ public class WolfWithInfoRenderer extends WolfRenderer
         }
     }
 }
+*/

@@ -1,5 +1,5 @@
 package net.ironingot.horseinforeloaded.fabric.renderer;
-
+/*
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -41,3 +41,4 @@ public class CatWithInfoRenderer extends CatRenderer
         }
     }
 }
+*/

@@ -1,5 +1,5 @@
 package net.ironingot.horseinforeloaded.fabric.renderer;
-
+/*
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,3 +45,4 @@ public class UndeadHorseWithInfoRenderer extends UndeadHorseRenderer {
         );
     }
 }
+*/

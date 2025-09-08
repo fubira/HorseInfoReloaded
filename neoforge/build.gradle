@@ -11,7 +11,7 @@ dependencies {
 }
 
 neoForge {
-    version = neoforge_version
+    version = neo_version
 
     parchment {
         mappingsVersion = parchment_mappings_version

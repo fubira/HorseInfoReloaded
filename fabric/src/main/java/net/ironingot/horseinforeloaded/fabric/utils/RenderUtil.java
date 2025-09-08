@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public class RenderUtil
 
         if (rider instanceof Player player)
         {
-            ItemStack helmStack = player.getInventory().armor.get(3);
+            ItemStack helmStack = player.getItemBySlot(EquipmentSlot.HEAD);
 
             return new Color(DyedItemColor.getOrDefault(helmStack, Color.BLACK.getRGB()));
         }

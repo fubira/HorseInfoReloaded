@@ -1,11 +1,16 @@
 package net.ironingot.horseinforeloaded.neoforge.utils;
 
 import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import java.util.List;
 
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.Nameable;
 import net.neoforged.neoforge.common.UsernameCache;
@@ -19,7 +24,7 @@ public class EntityUtil {
         return entity.getDisplayName().getString();
     }
 
-    private static String getOwnerString(UUID uuid) {
+    public static String getOwnerString(UUID uuid) {
         UUID ownerUUID = uuid;
         if (ownerUUID == null)
             return null;
@@ -32,24 +37,19 @@ public class EntityUtil {
     
         return "(Owner: " + ownerName + ")";
     }
-    
+
     public static String getOwnerString(OwnableEntity entity) {
-        return getOwnerString(entity.getOwnerUUID());
+        EntityReference<LivingEntity> ref = entity.getOwnerReference();
+        return ref != null ? getOwnerString(ref.getUUID()) : "Owner is null";
     }
 
-    public static String getOwnerString(AbstractHorse entity) {
-        return getOwnerString(entity.getOwnerUUID());
-    }
-
-    public static String getAgeOrOwnerString(TamableAnimal entity) {
-        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwnerUUID());
-    }
-
-    public static String getAgeOrOwnerString(AbstractHorse entity) {
-        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwnerUUID());
+    @Nullable
+    public static String getAgeString(AgeableMob entity) {
+        return entity.isBaby() ? String.format("(Baby)") : null;
     }
 
     public static String getDisplayNameWithRank(AbstractHorse entity) {
+        
         return HorseInfoFormat.formatHorseNameWithRank(
             EntityUtil.getDisplayNameString(entity),
             HorseEntityUtil.getEvaluateRankString(entity)
@@ -63,14 +63,5 @@ public class EntityUtil {
             return HorseEntityUtil.getStatsStrings(entity);
         }
         return null;
-    }
-
-    public static Entity getRider(Entity entity)
-    {
-        List<Entity> passengers = entity.getPassengers();
-        if (passengers == null || passengers.size() == 0)
-            return null;
-
-        return passengers.get(0);
     }
 }

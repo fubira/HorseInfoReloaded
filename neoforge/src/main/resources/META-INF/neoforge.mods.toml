@@ -28,7 +28,7 @@ inspired by HorseInfo/(by TTTA2)
 [[dependencies.horseinforeloaded]]
     modId="neoforge"
     mandatory=true
-    versionRange="${neoforge_version_range}"
+    versionRange="${neo_version_range}"
     ordering="NONE"
     side="BOTH"
 

@@ -13,20 +13,25 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
-import net.ironingot.horseinforeloaded.fabric.renderer.CamelWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.CamelWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.LlamaWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.UndeadHorseWithInfoRenderer;
-import net.ironingot.horseinforeloaded.fabric.renderer.WolfWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.LlamaWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.UndeadHorseWithInfoRenderer;
+//import net.ironingot.horseinforeloaded.fabric.renderer.WolfWithInfoRenderer;
 
 import org.lwjgl.glfw.GLFW;
 
 public class HorseInfoMod implements ClientModInitializer
 {
     public static FabricConfig config;
+
+    public static Component modMessageHeader = Component.empty()
+        .append(Component.literal("[").withStyle(net.minecraft.ChatFormatting.GRAY))
+        .append(Component.literal("HorseInfo").withStyle(net.minecraft.ChatFormatting.GOLD))
+        .append(Component.literal("]").withStyle(net.minecraft.ChatFormatting.GRAY));
 
     @Override
     public void onInitializeClient() {
@@ -43,6 +48,7 @@ public class HorseInfoMod implements ClientModInitializer
         });
 
         EntityRendererRegistry.register(EntityType.HORSE, HorseWithInfoRenderer::new);
+        /*
         EntityRendererRegistry.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE));
         EntityRendererRegistry.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE));
         EntityRendererRegistry.register(EntityType.MULE, context -> new ChestedHorseWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE));
@@ -52,13 +58,17 @@ public class HorseInfoMod implements ClientModInitializer
         EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.WOLF, WolfWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
+        */
+
         HorseInfoCore.logger.info("*** HorseInfoReloaded initialized ***");
     }
 
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
-        mc.player.sendSystemMessage(
-            Component.Serializer.fromJson("[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"HorseInfo\",\"color\":\"gold\"},{\"text\":\"]\",\"color\":\"gray\"},{\"text\":\" " + s + "\"}]", mc.player.registryAccess())
+
+        mc.gui.getChat().addMessage(Component.empty()
+            .append(modMessageHeader)
+            .append(Component.literal(" " + s))
         );
     }
 

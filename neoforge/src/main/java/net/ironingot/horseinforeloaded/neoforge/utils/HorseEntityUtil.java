@@ -6,7 +6,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.ironingot.horseinforeloaded.common.HorseInfoFormat;
 import net.ironingot.horseinforeloaded.common.HorseInfoStats;
 
-import java.awt.Color;
 import java.util.List;
 
 public class HorseEntityUtil {
@@ -36,11 +35,11 @@ public class HorseEntityUtil {
         );
     }
 
-    public static Color getEvaluateRankColor(AbstractHorse entity) {
+    public static int getEvaluateRankColor(AbstractHorse entity) {
         return HorseInfoStats.calcEvaluateRankColor(
             HorseEntityUtil.getSpeed(entity),
             HorseEntityUtil.getJumpHeight(entity)
-        );
+        ).getRGB();
     }
 
     public static List<String> getStatsStrings(AbstractHorse entity) {

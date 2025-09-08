@@ -9,8 +9,10 @@ import net.minecraft.client.model.HorseModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.layers.HorseArmorLayer;
 import net.minecraft.client.renderer.entity.layers.HorseMarkingLayer;
+import net.minecraft.client.renderer.entity.layers.SimpleEquipmentLayer;
+import net.minecraft.client.renderer.entity.state.HorseRenderState;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Variant;
@@ -22,7 +24,7 @@ import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
 
 import com.google.common.collect.Maps;
 
-public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseModel<Horse>> {
+public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseRenderState, HorseModel> {
     private static final Map<Variant, ResourceLocation> LOCATION_BY_VARIANT = Util.make(Maps.newEnumMap(Variant.class), map -> {
         map.put(Variant.WHITE, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_white.png"));
         map.put(Variant.CREAMY, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_creamy.png"));
@@ -34,18 +36,47 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseMod
     });
 
     public HorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, new HorseModel<Horse>(context.bakeLayer(ModelLayers.HORSE)), 1.1F);
-        addLayer(new HorseMarkingLayer(this));
-        addLayer(new HorseArmorLayer(this, context.getModelSet()));
-    }
+        super(context, new HorseModel(context.bakeLayer(ModelLayers.HORSE)), new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY)));
 
-    public ResourceLocation getTextureLocation(Horse entity) {
-        return (ResourceLocation)LOCATION_BY_VARIANT.get(entity.getVariant());
+        this.addLayer(new HorseMarkingLayer(this));
+        this.addLayer(new SimpleEquipmentLayer<>(
+            this,
+            context.getEquipmentRenderer(),
+            EquipmentClientInfo.LayerType.HORSE_BODY,
+            renderState -> renderState.bodyArmorItem,
+            new HorseModel(context.bakeLayer(ModelLayers.HORSE_ARMOR)),
+            new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY_ARMOR))
+        ));
+        this.addLayer(new SimpleEquipmentLayer<>(
+            this,
+            context.getEquipmentRenderer(),
+            EquipmentClientInfo.LayerType.HORSE_SADDLE,
+            renderState -> renderState.saddle,
+            new HorseModel(context.bakeLayer(ModelLayers.HORSE_SADDLE)),
+            new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY_SADDLE))
+        ));
     }
 
     @Override
+    public ResourceLocation getTextureLocation(HorseRenderState renderState) {
+        return (ResourceLocation)LOCATION_BY_VARIANT.get(renderState.variant);
+    }
+
+    @Override
+    public HorseRenderState createRenderState() {
+        return new HorseRenderState();
+    }
+
+    @Override
+    public void extractRenderState(Horse entity, HorseRenderState renderState, float partialTicks) {
+        super.extractRenderState(entity, renderState, partialTicks);
+        renderState.variant = entity.getVariant();
+        renderState.markings = entity.getMarkings();
+        renderState.bodyArmorItem = entity.getBodyArmorItem().copy();
+    }
+
     public void render(Horse entity, float yaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        // super.render(entity, yaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
         if (!HorseInfoMod.isActive()) {
             return;
