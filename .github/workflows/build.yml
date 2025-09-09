@@ -36,18 +36,11 @@ jobs:
       env:
         JVM_OPTS: -Xmx3200m
     
-    - name: Upload Fabric artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: fabric-artifacts
-        path: fabric/build/libs
-        if-no-files-found: error
-    
-    - name: Upload NeoForge artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: neoforge-artifacts
-        path: neoforge/build/libs
+        name: artifacts
+        path: build/libs
         if-no-files-found: error
     
     - name: Upload build reports
