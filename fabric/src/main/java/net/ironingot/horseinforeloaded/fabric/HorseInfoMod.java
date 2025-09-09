@@ -1,7 +1,6 @@
 package net.ironingot.horseinforeloaded.fabric;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.network.chat.Component;
@@ -13,17 +12,10 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
 import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.DonkeyWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.CamelWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.MuleWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.SkeletonHorseWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.LlamaWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.UndeadHorseWithInfoRenderer;
-//import net.ironingot.horseinforeloaded.fabric.renderer.WolfWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.WolfWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.ZombieHorseWithInfoRenderer;
 
