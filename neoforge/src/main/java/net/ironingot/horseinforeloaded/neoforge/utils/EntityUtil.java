@@ -8,8 +8,6 @@ import java.util.List;
 
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityReference;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.Nameable;
@@ -39,8 +37,11 @@ public class EntityUtil {
     }
 
     public static String getOwnerString(OwnableEntity entity) {
-        EntityReference<LivingEntity> ref = entity.getOwnerReference();
-        return ref != null ? getOwnerString(ref.getUUID()) : "Owner is null";
+        if (entity.getOwner() == null) {
+            return null;
+        }
+
+        return getOwnerString(entity.getOwner().getUUID());
     }
 
     @Nullable
@@ -49,7 +50,6 @@ public class EntityUtil {
     }
 
     public static String getDisplayNameWithRank(AbstractHorse entity) {
-        
         return HorseInfoFormat.formatHorseNameWithRank(
             EntityUtil.getDisplayNameString(entity),
             HorseEntityUtil.getEvaluateRankString(entity)

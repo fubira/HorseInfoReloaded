@@ -1,11 +1,9 @@
 package net.ironingot.horseinforeloaded.fabric;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.horse.Donkey;
-import net.minecraft.world.entity.animal.horse.Mule;
 import net.minecraft.network.chat.Component;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -13,14 +11,21 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;
+import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.DonkeyWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.CamelWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.CatWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.ChestedHorseWithInfoRenderer;
 import net.ironingot.horseinforeloaded.fabric.renderer.HorseWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.MuleWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.SkeletonHorseWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.LlamaWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.ParrotWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.UndeadHorseWithInfoRenderer;
 //import net.ironingot.horseinforeloaded.fabric.renderer.WolfWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.WolfWithInfoRenderer;
+import net.ironingot.horseinforeloaded.fabric.renderer.ZombieHorseWithInfoRenderer;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -48,17 +53,14 @@ public class HorseInfoMod implements ClientModInitializer
         });
 
         EntityRendererRegistry.register(EntityType.HORSE, HorseWithInfoRenderer::new);
-        /*
-        EntityRendererRegistry.register(EntityType.SKELETON_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.SKELETON_HORSE));
-        EntityRendererRegistry.register(EntityType.ZOMBIE_HORSE, context -> new UndeadHorseWithInfoRenderer(context, ModelLayers.ZOMBIE_HORSE));
-        EntityRendererRegistry.register(EntityType.MULE, context -> new ChestedHorseWithInfoRenderer<Mule>(context, 0.92F, ModelLayers.MULE));
-        EntityRendererRegistry.register(EntityType.DONKEY, context -> new ChestedHorseWithInfoRenderer<Donkey>(context, 0.87F, ModelLayers.DONKEY));
-        EntityRendererRegistry.register(EntityType.LLAMA, context -> new LlamaWithInfoRenderer(context, ModelLayers.LLAMA));
-        EntityRendererRegistry.register(EntityType.CAMEL, context -> new CamelWithInfoRenderer(context, ModelLayers.CAMEL));
-        EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
+        EntityRendererRegistry.register(EntityType.HORSE, HorseWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.WOLF, WolfWithInfoRenderer::new);
+        EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
-        */
+        EntityRendererRegistry.register(EntityType.DONKEY, DonkeyWithInfoRenderer::new);
+        EntityRendererRegistry.register(EntityType.MULE, MuleWithInfoRenderer::new);
+        EntityRendererRegistry.register(EntityType.SKELETON_HORSE, SkeletonHorseWithInfoRenderer::new);
+        EntityRendererRegistry.register(EntityType.ZOMBIE_HORSE, ZombieHorseWithInfoRenderer::new);
 
         HorseInfoCore.logger.info("*** HorseInfoReloaded initialized ***");
     }

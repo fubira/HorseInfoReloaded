@@ -3,9 +3,9 @@ package net.ironingot.horseinforeloaded.fabric.utils;
 import java.util.UUID;
 import java.util.List;
 
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.Nameable;
 
@@ -18,7 +18,7 @@ public class EntityUtil {
         return entity.getDisplayName().getString();
     }
 
-    private static String getOwnerString(UUID uuid) {
+    public static String getOwnerString(UUID uuid) {
         UUID ownerUUID = uuid;
         if (ownerUUID == null)
             return null;
@@ -30,19 +30,15 @@ public class EntityUtil {
     }
     
     public static String getOwnerString(OwnableEntity entity) {
+        if (entity.getOwner() == null) {
+            return null;
+        }
+
         return getOwnerString(entity.getOwner().getUUID());
     }
 
-    public static String getOwnerString(AbstractHorse entity) {
-        return getOwnerString(entity.getOwner().getUUID());
-    }
-
-    public static String getAgeOrOwnerString(TamableAnimal entity) {
-        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwner().getUUID());
-    }
-
-    public static String getAgeOrOwnerString(AbstractHorse entity) {
-        return entity.isBaby() ? "(Baby)" : getOwnerString(entity.getOwner().getUUID());
+    public static String getAgeString(AgeableMob entity) {
+        return entity.isBaby() ? String.format("(Baby)") : null;
     }
 
     public static String getDisplayNameWithRank(AbstractHorse entity) {
@@ -59,14 +55,5 @@ public class EntityUtil {
             return HorseEntityUtil.getStatsStrings(entity);
         }
         return null;
-    }
-
-    public static Entity getRider(Entity entity)
-    {
-        List<Entity> passengers = entity.getPassengers();
-        if (passengers == null || passengers.size() == 0)
-            return null;
-
-        return passengers.get(0);
     }
 }
