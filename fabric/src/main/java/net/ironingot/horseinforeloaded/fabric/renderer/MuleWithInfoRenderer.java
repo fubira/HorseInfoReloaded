@@ -34,7 +34,7 @@ public class MuleWithInfoRenderer extends DonkeyRenderer<Mule> {
     public void extractRenderState(Mule entity, DonkeyRenderState renderState, float partialTicks) {
         super.extractRenderState(entity, renderState, partialTicks);
 
-        DonkeyWithInfoRenderState withInfoRenderState = (DonkeyWithInfoRenderState) renderState;
+        MuleWithInfoRenderState withInfoRenderState = (MuleWithInfoRenderState) renderState;
         withInfoRenderState.hasChest = entity.hasChest();
 
         ArrayList<String> infoString = new ArrayList<>();
