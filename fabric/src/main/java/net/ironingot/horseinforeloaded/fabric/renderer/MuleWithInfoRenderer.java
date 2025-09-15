@@ -6,7 +6,6 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
-import net.ironingot.horseinforeloaded.fabric.renderer.state.DonkeyWithInfoRenderState;
 import net.ironingot.horseinforeloaded.fabric.renderer.state.MuleWithInfoRenderState;
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.HorseEntityUtil;

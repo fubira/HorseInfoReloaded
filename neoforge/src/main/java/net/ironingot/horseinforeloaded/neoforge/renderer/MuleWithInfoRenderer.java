@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
-import net.ironingot.horseinforeloaded.neoforge.renderer.state.DonkeyWithInfoRenderState;
 import net.ironingot.horseinforeloaded.neoforge.renderer.state.MuleWithInfoRenderState;
 import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
