@@ -27,5 +27,5 @@ public class FabricConfig implements ConfigData {
         FabricConfig.configHolder.load();
     }
 
-    public boolean enableMod = false;
+    public boolean enableMod = true;
 }

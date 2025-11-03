@@ -11,6 +11,8 @@ import java.net.URLConnection;
 import java.io.InputStream;
 import com.google.gson.Gson;
 
+import net.ironingot.horseinforeloaded.common.HorseInfoCore;
+
 public class PlayerNameManager
 {
     private final String PROFILE_URL = "https://sessionserver.mojang.com/session/minecraft/profile/";
@@ -51,7 +53,7 @@ public class PlayerNameManager
                     }
                     catch (Exception e)
                     {
-                        e.printStackTrace();
+                        HorseInfoCore.logger.error("Failed to fetch player name for UUID: {}", uuid, e);
                     }
 
                     int index = requestList.indexOf(uuid);

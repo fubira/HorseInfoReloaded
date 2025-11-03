@@ -45,7 +45,6 @@ public class HorseInfoMod implements ClientModInitializer
         });
 
         EntityRendererRegistry.register(EntityType.HORSE, HorseWithInfoRenderer::new);
-        EntityRendererRegistry.register(EntityType.HORSE, HorseWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.WOLF, WolfWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.CAT, CatWithInfoRenderer::new);
         EntityRendererRegistry.register(EntityType.PARROT, ParrotWithInfoRenderer::new);
