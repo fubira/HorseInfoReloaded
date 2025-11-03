@@ -1,34 +1,67 @@
 # HorseInfoReloaded
 
-HorseInfo is an information mod for Minecraft forge that displays the horse's detailed parameter.
+A client-side Minecraft mod that displays detailed information about horses and other tameable animals.
 
-* Name
-* Life
-* Speed
-* Jump
-* Owner
+**Supported Platforms:** Fabric & NeoForge
+**Minecraft Version:** 1.21.8
+**Mod Version:** 2.8
 
-If the horse has a good ability, the information is displayed in a colored window.
+## Features
+
+### Horse Information Display
+
+- **Name** - Custom or default name
+- **Health** - Current/Max HP
+- **Speed** - Movement speed in m/s
+- **Jump Height** - Jump capability in meters
+- **Owner** - Player who tamed the animal
+- **Rank** - Performance rating (G to LEGEND)
+
+Horses with exceptional abilities are displayed with color-coded information windows based on their rank.
 
 ![screenshot](https://i.imgur.com/hQ7fqVn.jpg)
 
-Also, this mod can show the following animal names and owners:
+### Supported Animals
 
-* Cat
-* Dog
-* Llama
-* Camel
-* Parrot
+- **Horse** (all variants)
+- **Donkey**
+- **Mule**
+- **Skeleton Horse**
+- **Zombie Horse**
+- **Wolf** (Dog)
+- **Cat**
+- **Parrot**
+- **Llama**
+- **Camel**
 
 ## Usage
 
-1. Install to mod directory.
-2. Press H key after starting the client.
+1. Install the mod to your mods directory
+2. Launch Minecraft
+3. Press `H` key to toggle the mod ON/OFF
+4. Look at a horse or supported animal to see its information
+
+## Configuration
+
+The mod can be enabled/disabled using the `H` key (default).
+Configuration file location:
+- **Fabric:** `.minecraft/config/horseinforeloaded.json`
+- **NeoForge:** `.minecraft/config/horseinforeloaded-client.toml`
 
 ## Download
 
 [Releases](https://github.com/fubira/HorseInfoReloaded/releases)
 
-## Getting the source
+## Building from Source
 
-[GitHub](https://github.com/fubira/HorseInfoReloaded.git)
+```bash
+git clone https://github.com/fubira/HorseInfoReloaded.git
+cd HorseInfoReloaded
+./gradlew build
+```
+
+Built JAR file: `build/libs/HorseInfoReloaded-1.21.8-2.8.jar`
+
+## License
+
+MIT License - See [LICENSE.md](LICENSE.md) for details
