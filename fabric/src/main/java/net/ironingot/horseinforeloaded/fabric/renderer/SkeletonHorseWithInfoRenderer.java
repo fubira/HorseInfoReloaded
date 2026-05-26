@@ -10,18 +10,21 @@ import net.ironingot.horseinforeloaded.fabric.renderer.state.SkeletonHorseWithIn
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.HorseEntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.state.EquineRenderState;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 
 public class SkeletonHorseWithInfoRenderer extends UndeadHorseRenderer {
     public SkeletonHorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, UndeadHorseRenderer.Type.SKELETON);
+        super(context, EquipmentClientInfo.LayerType.SKELETON_HORSE_SADDLE, ModelLayers.SKELETON_HORSE_SADDLE, UndeadHorseRenderer.Type.SKELETON, UndeadHorseRenderer.Type.SKELETON_BABY);
     }
 
     @Override
@@ -66,8 +69,8 @@ public class SkeletonHorseWithInfoRenderer extends UndeadHorseRenderer {
     }
 
     @Override
-    public void render(EquineRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        super.render(state, poseStack, bufferSource, packedLight);
+    public void submit(EquineRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
@@ -79,8 +82,9 @@ public class SkeletonHorseWithInfoRenderer extends UndeadHorseRenderer {
         SkeletonHorseWithInfoRenderState renderState = (SkeletonHorseWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
             poseStack,
-            bufferSource,
-            packedLight,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             renderState.isRidden,

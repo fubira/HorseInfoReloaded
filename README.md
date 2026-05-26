@@ -3,7 +3,7 @@
 A client-side Minecraft mod that displays detailed information about horses and other tameable animals.
 
 **Supported Platforms:** Fabric & NeoForge
-**Minecraft Version:** 1.21.8
+**Minecraft Version:** 26.1.2
 **Mod Version:** 2.8
 
 ## Features
@@ -60,7 +60,7 @@ cd HorseInfoReloaded
 ./gradlew build
 ```
 
-Built JAR file: `build/libs/HorseInfoReloaded-1.21.8-2.8.jar`
+Built JAR file: `build/libs/HorseInfoReloaded-26.1.2-2.8.jar`
 
 ## License
 

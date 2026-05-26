@@ -7,10 +7,12 @@ buildscript {
 allprojects {
     apply plugin: "java"
 
+    java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
         options.compilerArgs = ["-Xlint:deprecation"]
-        options.release.set(21)
+        options.release.set(25)
     }
 
     dependencies {

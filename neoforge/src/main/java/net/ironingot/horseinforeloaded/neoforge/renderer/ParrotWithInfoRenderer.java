@@ -2,29 +2,26 @@ package net.ironingot.horseinforeloaded.neoforge.renderer;
 
 import java.util.ArrayList;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
 import net.ironingot.horseinforeloaded.neoforge.renderer.state.ParrotWithInfoRenderState;
 import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ParrotRenderer;
 import net.minecraft.client.renderer.entity.state.ParrotRenderState;
 import net.minecraft.util.ARGB;
-import net.minecraft.client.model.ParrotModel;
 import net.minecraft.world.entity.EntityAttachment;
-import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.animal.parrot.Parrot;
 
-@OnlyIn(Dist.CLIENT)
 public class ParrotWithInfoRenderer extends ParrotRenderer
 {
     public ParrotWithInfoRenderer(EntityRendererProvider.Context context)
     {
         super(context);
-        NeoForge.EVENT_BUS.addListener(this::onPostRenderInfo);
     }
 
     @Override
@@ -45,20 +42,23 @@ public class ParrotWithInfoRenderer extends ParrotRenderer
         withInfoRenderState.nameTagAttachment = entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, entity.getYRot());
     }
 
-    public void onPostRenderInfo(RenderLivingEvent.Post<Parrot, ParrotRenderState, ParrotModel> event) {
+    @Override
+    public void submit(ParrotRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
-   
-        if (!(event.getRenderState() instanceof ParrotWithInfoRenderState)) {
+
+        if (!(state instanceof ParrotWithInfoRenderState)) {
             return;
         }
 
-        ParrotWithInfoRenderState renderState = (ParrotWithInfoRenderState) event.getRenderState();
+        ParrotWithInfoRenderState renderState = (ParrotWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
-            event.getPoseStack(),
-            event.getMultiBufferSource(),
-            event.getPackedLight(),
+            poseStack,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             false,

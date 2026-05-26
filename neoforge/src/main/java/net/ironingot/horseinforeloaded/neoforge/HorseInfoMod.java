@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -34,8 +35,10 @@ import org.lwjgl.glfw.GLFW;
 @Mod(HorseInfoCore.modId)
 public class HorseInfoMod
 {
+    private static final KeyMapping.Category KEY_CATEGORY =
+        new KeyMapping.Category(Identifier.fromNamespaceAndPath(HorseInfoCore.modId, "keybinding.category"));
     public static final KeyMapping KEYBINDING_MODE =
-        new KeyMapping("horseinforeloaded.keybinding.desc.toggle", GLFW.GLFW_KEY_H, "horseinforeloaded.keybinding.category");
+        new KeyMapping("horseinforeloaded.keybinding.desc.toggle", GLFW.GLFW_KEY_H, KEY_CATEGORY);
 
     public static Component modMessageHeader = Component.empty()
         .append(Component.literal("[").withStyle(net.minecraft.ChatFormatting.GRAY))
@@ -73,7 +76,7 @@ public class HorseInfoMod
     public static void message(String s) {
         Minecraft mc = Minecraft.getInstance();
 
-        mc.gui.getChat().addMessage(Component.empty()
+        mc.gui.getChat().addClientSystemMessage(Component.empty()
             .append(modMessageHeader)
             .append(Component.literal(" " + s))
         );

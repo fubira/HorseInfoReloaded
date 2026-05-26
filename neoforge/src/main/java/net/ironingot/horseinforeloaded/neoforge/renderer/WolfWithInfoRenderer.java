@@ -2,29 +2,26 @@ package net.ironingot.horseinforeloaded.neoforge.renderer;
 
 import java.util.ArrayList;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
 import net.ironingot.horseinforeloaded.neoforge.renderer.state.WolfWithInfoRenderState;
 import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
 import net.minecraft.util.ARGB;
-import net.minecraft.client.model.WolfModel;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
-@OnlyIn(Dist.CLIENT)
 public class WolfWithInfoRenderer extends WolfRenderer
 {
     public WolfWithInfoRenderer(EntityRendererProvider.Context context)
     {
         super(context);
-        NeoForge.EVENT_BUS.addListener(this::onPostRenderInfo);
     }
 
     @Override
@@ -45,20 +42,23 @@ public class WolfWithInfoRenderer extends WolfRenderer
         withInfoRenderState.nameTagAttachment = entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, entity.getYRot());
     }
 
-    public void onPostRenderInfo(RenderLivingEvent.Post<Wolf, WolfRenderState, WolfModel> event) {
+    @Override
+    public void submit(WolfRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
 
-        if (!(event.getRenderState() instanceof WolfWithInfoRenderState)) {
+        if (!(state instanceof WolfWithInfoRenderState)) {
             return;
         }
 
-        WolfWithInfoRenderState renderState = (WolfWithInfoRenderState) event.getRenderState();
+        WolfWithInfoRenderState renderState = (WolfWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
-            event.getPoseStack(),
-            event.getMultiBufferSource(),
-            event.getPackedLight(),
+            poseStack,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             false,

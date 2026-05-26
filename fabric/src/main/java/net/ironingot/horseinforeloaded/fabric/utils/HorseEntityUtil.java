@@ -1,6 +1,6 @@
 package net.ironingot.horseinforeloaded.fabric.utils;
 
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoFormat;

@@ -10,18 +10,21 @@ import net.ironingot.horseinforeloaded.fabric.renderer.state.ZombieHorseWithInfo
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.HorseEntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.state.EquineRenderState;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 
 public class ZombieHorseWithInfoRenderer extends UndeadHorseRenderer {
     public ZombieHorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, UndeadHorseRenderer.Type.ZOMBIE);
+        super(context, EquipmentClientInfo.LayerType.ZOMBIE_HORSE_SADDLE, ModelLayers.ZOMBIE_HORSE_SADDLE, UndeadHorseRenderer.Type.ZOMBIE, UndeadHorseRenderer.Type.ZOMBIE_BABY);
     }
 
     @Override
@@ -66,8 +69,8 @@ public class ZombieHorseWithInfoRenderer extends UndeadHorseRenderer {
     }
 
     @Override
-    public void render(EquineRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        super.render(state, poseStack, bufferSource, packedLight);
+    public void submit(EquineRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
@@ -79,8 +82,9 @@ public class ZombieHorseWithInfoRenderer extends UndeadHorseRenderer {
         ZombieHorseWithInfoRenderState renderState = (ZombieHorseWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
             poseStack,
-            bufferSource,
-            packedLight,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             renderState.isRidden,

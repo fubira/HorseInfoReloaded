@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.Nameable;
 
 import net.ironingot.horseinforeloaded.common.HorseInfoCore;

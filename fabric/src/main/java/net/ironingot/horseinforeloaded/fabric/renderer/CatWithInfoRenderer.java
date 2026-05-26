@@ -9,12 +9,13 @@ import net.ironingot.horseinforeloaded.fabric.renderer.state.CatWithInfoRenderSt
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.CatRenderer;
 import net.minecraft.client.renderer.entity.state.CatRenderState;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
-import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.feline.Cat;
 
 public class CatWithInfoRenderer extends CatRenderer
 {
@@ -42,8 +43,8 @@ public class CatWithInfoRenderer extends CatRenderer
     }
 
     @Override
-    public void render(CatRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        super.render(state, poseStack, bufferSource, packedLight);
+    public void submit(CatRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
@@ -55,8 +56,9 @@ public class CatWithInfoRenderer extends CatRenderer
         CatWithInfoRenderState renderState = (CatWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
             poseStack,
-            bufferSource,
-            packedLight,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             false,

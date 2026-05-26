@@ -3,27 +3,28 @@ package net.ironingot.horseinforeloaded.neoforge.renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
 import net.ironingot.horseinforeloaded.neoforge.renderer.state.SkeletonHorseWithInfoRenderState;
 import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
-import net.minecraft.client.model.AbstractEquineModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
 import net.minecraft.client.renderer.entity.state.EquineRenderState;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.animal.horse.SkeletonHorse;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 
 public class SkeletonHorseWithInfoRenderer extends UndeadHorseRenderer {
     public SkeletonHorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, UndeadHorseRenderer.Type.SKELETON);
-        NeoForge.EVENT_BUS.addListener(this::onPostRenderInfo);
+        super(context, EquipmentClientInfo.LayerType.SKELETON_HORSE_SADDLE, ModelLayers.SKELETON_HORSE_SADDLE, UndeadHorseRenderer.Type.SKELETON, UndeadHorseRenderer.Type.SKELETON_BABY);
     }
 
     @Override
@@ -67,20 +68,23 @@ public class SkeletonHorseWithInfoRenderer extends UndeadHorseRenderer {
         withInfoRenderState.bgColor = bgColor; 
     }
 
-    public void onPostRenderInfo(RenderLivingEvent.Post<SkeletonHorse, EquineRenderState, AbstractEquineModel<EquineRenderState>> event) {
+    @Override
+    public void submit(EquineRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
-   
-        if (!(event.getRenderState() instanceof SkeletonHorseWithInfoRenderState)) {
+
+        if (!(state instanceof SkeletonHorseWithInfoRenderState)) {
             return;
         }
 
-        SkeletonHorseWithInfoRenderState renderState = (SkeletonHorseWithInfoRenderState) event.getRenderState();
+        SkeletonHorseWithInfoRenderState renderState = (SkeletonHorseWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
-            event.getPoseStack(),
-            event.getMultiBufferSource(),
-            event.getPackedLight(),
+            poseStack,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             renderState.isRidden,
@@ -90,5 +94,4 @@ public class SkeletonHorseWithInfoRenderer extends UndeadHorseRenderer {
             renderState.infoStrings
         );
     }
-
 }

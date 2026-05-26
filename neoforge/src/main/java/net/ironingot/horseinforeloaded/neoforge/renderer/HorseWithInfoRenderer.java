@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
-import net.ironingot.horseinforeloaded.neoforge.renderer.state.HorseWithInfoRenderState;
-import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
-import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
-import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
-import net.minecraft.client.model.HorseModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.animal.equine.BabyHorseModel;
+import net.minecraft.client.model.animal.equine.EquineSaddleModel;
+import net.minecraft.client.model.animal.equine.HorseModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -17,32 +15,33 @@ import net.minecraft.client.renderer.entity.layers.HorseMarkingLayer;
 import net.minecraft.client.renderer.entity.layers.SimpleEquipmentLayer;
 import net.minecraft.client.renderer.entity.state.HorseRenderState;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.horse.Horse;
-import net.minecraft.world.entity.animal.horse.Variant;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.equine.Horse;
+import net.minecraft.world.entity.animal.equine.Variant;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
-import net.minecraft.Util;
-
-import com.google.common.collect.Maps;
+import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
+import net.ironingot.horseinforeloaded.neoforge.renderer.state.HorseWithInfoRenderState;
+import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
+import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
+import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
 
 public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseRenderState, HorseModel> {
-    private static final Map<Variant, ResourceLocation> LOCATION_BY_VARIANT = Util.make(Maps.newEnumMap(Variant.class), map -> {
-        map.put(Variant.WHITE, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_white.png"));
-        map.put(Variant.CREAMY, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_creamy.png"));
-        map.put(Variant.CHESTNUT, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_chestnut.png"));
-        map.put(Variant.BROWN, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_brown.png"));
-        map.put(Variant.BLACK, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_black.png"));
-        map.put(Variant.GRAY, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_gray.png"));
-        map.put(Variant.DARK_BROWN, ResourceLocation.withDefaultNamespace("textures/entity/horse/horse_darkbrown.png"));
-    });
+    private static final Map<Variant, Identifier> LOCATION_BY_VARIANT = Map.of(
+        Variant.WHITE, Identifier.withDefaultNamespace("textures/entity/horse/horse_white.png"),
+        Variant.CREAMY, Identifier.withDefaultNamespace("textures/entity/horse/horse_creamy.png"),
+        Variant.CHESTNUT, Identifier.withDefaultNamespace("textures/entity/horse/horse_chestnut.png"),
+        Variant.BROWN, Identifier.withDefaultNamespace("textures/entity/horse/horse_brown.png"),
+        Variant.BLACK, Identifier.withDefaultNamespace("textures/entity/horse/horse_black.png"),
+        Variant.GRAY, Identifier.withDefaultNamespace("textures/entity/horse/horse_gray.png"),
+        Variant.DARK_BROWN, Identifier.withDefaultNamespace("textures/entity/horse/horse_darkbrown.png")
+    );
 
     public HorseWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, new HorseModel(context.bakeLayer(ModelLayers.HORSE)), new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY)));
-        NeoForge.EVENT_BUS.addListener(this::onPostRenderInfo);
+        super(context, new HorseModel(context.bakeLayer(ModelLayers.HORSE)), new BabyHorseModel(context.bakeLayer(ModelLayers.HORSE_BABY)));
 
         this.addLayer(new HorseMarkingLayer(this));
         this.addLayer(new SimpleEquipmentLayer<>(
@@ -51,32 +50,33 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseRen
             EquipmentClientInfo.LayerType.HORSE_BODY,
             renderState -> renderState.bodyArmorItem,
             new HorseModel(context.bakeLayer(ModelLayers.HORSE_ARMOR)),
-            new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY_ARMOR))
+            null,
+            2
         ));
         this.addLayer(new SimpleEquipmentLayer<>(
             this,
             context.getEquipmentRenderer(),
             EquipmentClientInfo.LayerType.HORSE_SADDLE,
             renderState -> renderState.saddle,
-            new HorseModel(context.bakeLayer(ModelLayers.HORSE_SADDLE)),
-            new HorseModel(context.bakeLayer(ModelLayers.HORSE_BABY_SADDLE))
+            new EquineSaddleModel(context.bakeLayer(ModelLayers.HORSE_SADDLE)),
+            null,
+            2
         ));
-    }
-    
-    @Override
-    public ResourceLocation getTextureLocation(HorseRenderState renderState) {
-        return (ResourceLocation)LOCATION_BY_VARIANT.get(renderState.variant);
     }
 
     @Override
-    public HorseWithInfoRenderState createRenderState() {
+    public Identifier getTextureLocation(HorseRenderState renderState) {
+        return (Identifier)LOCATION_BY_VARIANT.get(renderState.variant);
+    }
+
+    @Override
+    public HorseRenderState createRenderState() {
         return new HorseWithInfoRenderState();
     }
 
     @Override
     public void extractRenderState(Horse entity, HorseRenderState renderState, float partialTicks) {
         super.extractRenderState(entity, renderState, partialTicks);
-
         HorseWithInfoRenderState withInfoRenderState = (HorseWithInfoRenderState) renderState;
 
         withInfoRenderState.variant = entity.getVariant();
@@ -113,21 +113,23 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseRen
         withInfoRenderState.bgColor = bgColor; 
     }
 
-    public void onPostRenderInfo(RenderLivingEvent.Post<Horse, HorseRenderState, HorseModel> event) {
+    @Override
+    public void submit(HorseRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
-   
-        if (!(event.getRenderState() instanceof HorseWithInfoRenderState)) {
+
+        if (!(state instanceof HorseWithInfoRenderState)) {
             return;
         }
 
-        HorseWithInfoRenderState renderState = (HorseWithInfoRenderState) event.getRenderState();
-
+        HorseWithInfoRenderState renderState = (HorseWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
-            event.getPoseStack(),
-            event.getMultiBufferSource(),
-            event.getPackedLight(),
+            poseStack,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             renderState.isRidden,
@@ -137,5 +139,4 @@ public class HorseWithInfoRenderer extends AbstractHorseRenderer<Horse, HorseRen
             renderState.infoStrings
         );
     }
-
 }

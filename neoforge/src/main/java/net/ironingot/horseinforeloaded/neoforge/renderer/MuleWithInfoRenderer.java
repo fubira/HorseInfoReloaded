@@ -3,26 +3,28 @@ package net.ironingot.horseinforeloaded.neoforge.renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.ironingot.horseinforeloaded.neoforge.HorseInfoMod;
 import net.ironingot.horseinforeloaded.neoforge.renderer.state.MuleWithInfoRenderState;
 import net.ironingot.horseinforeloaded.neoforge.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.HorseEntityUtil;
 import net.ironingot.horseinforeloaded.neoforge.utils.RenderUtil;
-import net.minecraft.client.model.DonkeyModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.DonkeyRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.DonkeyRenderState;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.horse.Mule;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import net.minecraft.world.entity.animal.equine.Mule;
 
 public class MuleWithInfoRenderer extends DonkeyRenderer<Mule> {
     public MuleWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, DonkeyRenderer.Type.MULE);
-        NeoForge.EVENT_BUS.addListener(this::onPostRenderInfo);
+        super(context, EquipmentClientInfo.LayerType.MULE_SADDLE, ModelLayers.MULE_SADDLE, DonkeyRenderer.Type.MULE, DonkeyRenderer.Type.MULE_BABY);
     }
 
     @Override
@@ -67,21 +69,23 @@ public class MuleWithInfoRenderer extends DonkeyRenderer<Mule> {
         withInfoRenderState.bgColor = bgColor; 
     }
 
-    public void onPostRenderInfo(RenderLivingEvent.Post<Mule, DonkeyRenderState, DonkeyModel> event) {
+    @Override
+    public void submit(DonkeyRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
 
-        if (!(event.getRenderState() instanceof MuleWithInfoRenderState)) {
+        if (!(state instanceof MuleWithInfoRenderState)) {
             return;
         }
 
-        MuleWithInfoRenderState renderState = (MuleWithInfoRenderState) event.getRenderState();
-
+        MuleWithInfoRenderState renderState = (MuleWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
-            event.getPoseStack(),
-            event.getMultiBufferSource(),
-            event.getPackedLight(),
+            poseStack,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             renderState.isRidden,

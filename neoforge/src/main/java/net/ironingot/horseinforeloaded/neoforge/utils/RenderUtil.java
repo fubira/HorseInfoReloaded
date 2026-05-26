@@ -3,17 +3,17 @@ package net.ironingot.horseinforeloaded.neoforge.utils;
 import java.awt.Color;
 import java.util.List;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -50,8 +50,9 @@ public class RenderUtil
 
     public static void RenderInfoString(
         PoseStack poseStack,
-        MultiBufferSource bufferSource,
-        int packedLight,
+        SubmitNodeCollector submitNodeCollector,
+        CameraRenderState cameraRenderState,
+        int lightCoords,
         double distanceToCameraSq,
         Vec3 pos,
         boolean isRidden,
@@ -60,37 +61,40 @@ public class RenderUtil
         int bgColor,
         List<String> infoStrings
     ) {
-        Minecraft mc = Minecraft.getInstance();
-   
         if (distanceToCameraSq >= RenderUtil.NAME_TAG_RANGE) {
             return;
         }
 
+        Minecraft mc = Minecraft.getInstance();
+
         poseStack.pushPose();
         poseStack.translate(pos.x, pos.y + 2.5, pos.z);
-        poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
+        poseStack.mulPose(cameraRenderState.orientation);
         poseStack.scale(0.025F, -0.025F, 0.025F);
-        Matrix4f matrix4f = poseStack.last().pose();
 
         int fontHeight = 10;
         float baseY = (4 - infoStrings.size()) * fontHeight - (isRidden ? fontHeight * 3 : fontHeight);
-        int widthHalf = -infoStrings.stream().map(mc.font::width).max(Integer::compare).get() / 2;
+        int leftX = -infoStrings.stream()
+            .filter(line -> line != null)
+            .map(mc.font::width)
+            .max(Integer::compare)
+            .orElse(0) / 2;
 
         for (int i = 0; i < infoStrings.size(); i++) {
             String line = infoStrings.get(i);
             int lineFontColor = (i == 0) ? titleColor : fontColor;
             if (line != null) {
-                mc.font.drawInBatch(
-                    line,
-                    widthHalf,
-                    (float) baseY + fontHeight * i,
-                    lineFontColor,
+                submitNodeCollector.submitText(
+                    poseStack,
+                    leftX,
+                    baseY + fontHeight * i,
+                    Component.literal(line).withColor(lineFontColor).getVisualOrderText(),
                     false,
-                    matrix4f,
-                    bufferSource,
                     DisplayMode.NORMAL,
+                    lightCoords,
+                    lineFontColor,
                     bgColor,
-                    packedLight
+                    0
                 );
             }
         }

@@ -8,7 +8,8 @@ import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
 import net.ironingot.horseinforeloaded.fabric.renderer.state.WolfWithInfoRenderState;
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
@@ -42,8 +43,8 @@ public class WolfWithInfoRenderer extends WolfRenderer
     }
 
     @Override
-    public void render(WolfRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        super.render(state, poseStack, bufferSource, packedLight);
+    public void submit(WolfRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
@@ -55,8 +56,9 @@ public class WolfWithInfoRenderer extends WolfRenderer
         WolfWithInfoRenderState renderState = (WolfWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
             poseStack,
-            bufferSource,
-            packedLight,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             false,

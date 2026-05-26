@@ -10,18 +10,21 @@ import net.ironingot.horseinforeloaded.fabric.renderer.state.DonkeyWithInfoRende
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.HorseEntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.DonkeyRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.DonkeyRenderState;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.horse.Donkey;
+import net.minecraft.world.entity.animal.equine.Donkey;
 
 public class DonkeyWithInfoRenderer extends DonkeyRenderer<Donkey> {
     public DonkeyWithInfoRenderer(EntityRendererProvider.Context context) {
-        super(context, DonkeyRenderer.Type.DONKEY);
+        super(context, EquipmentClientInfo.LayerType.DONKEY_SADDLE, ModelLayers.DONKEY_SADDLE, DonkeyRenderer.Type.DONKEY, DonkeyRenderer.Type.DONKEY_BABY);
     }
 
     @Override
@@ -67,8 +70,8 @@ public class DonkeyWithInfoRenderer extends DonkeyRenderer<Donkey> {
     }
 
     @Override
-    public void render(DonkeyRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        super.render(state, poseStack, bufferSource, packedLight);
+    public void submit(DonkeyRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
@@ -80,8 +83,9 @@ public class DonkeyWithInfoRenderer extends DonkeyRenderer<Donkey> {
         DonkeyWithInfoRenderState renderState = (DonkeyWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
             poseStack,
-            bufferSource,
-            packedLight,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             renderState.isRidden,

@@ -8,13 +8,14 @@ import net.ironingot.horseinforeloaded.fabric.HorseInfoMod;
 import net.ironingot.horseinforeloaded.fabric.renderer.state.ParrotWithInfoRenderState;
 import net.ironingot.horseinforeloaded.fabric.utils.EntityUtil;
 import net.ironingot.horseinforeloaded.fabric.utils.RenderUtil;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ParrotRenderer;
 import net.minecraft.client.renderer.entity.state.ParrotRenderState;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityAttachment;
-import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.animal.parrot.Parrot;
 
 public class ParrotWithInfoRenderer extends ParrotRenderer
 {
@@ -42,8 +43,8 @@ public class ParrotWithInfoRenderer extends ParrotRenderer
     }
 
     @Override
-    public void render(ParrotRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        super.render(state, poseStack, bufferSource, packedLight);
+    public void submit(ParrotRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
         if (!HorseInfoMod.isActive()) {
             return;
         }
@@ -55,8 +56,9 @@ public class ParrotWithInfoRenderer extends ParrotRenderer
         ParrotWithInfoRenderState renderState = (ParrotWithInfoRenderState) state;
         RenderUtil.RenderInfoString(
             poseStack,
-            bufferSource,
-            packedLight,
+            submitNodeCollector,
+            cameraRenderState,
+            renderState.lightCoords,
             renderState.distanceToCameraSq,
             renderState.nameTagAttachment,
             false,
